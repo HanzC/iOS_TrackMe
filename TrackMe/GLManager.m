@@ -134,32 +134,41 @@ const double MPH_to_METERSPERSECOND = 0.447;
     
     NSString *endpoint = [[NSUserDefaults standardUserDefaults] stringForKey:GLAPIEndpointDefaultsName];
     
-    if(endpoint == nil) {
-        NSLog(@"No API endpoint is set, not sending data");
-        return;
-    }
+    //[self sendingStarted];
+//    if(endpoint == nil) {
+//        NSLog(@"No API endpoint is set, not sending data");
+//        return;
+//    }
     
     __block long _numInQueue = 0;
     
-    [self.db accessCollection:GLLocationQueueName withBlock:^(id<LOLDatabaseAccessor> accessor) {
-        
-        [accessor enumerateKeysAndObjectsUsingBlock:^(NSString *key, NSDictionary *object) {
-            if(key && object) {
+    [self.db accessCollection:GLLocationQueueName withBlock:^(id<LOLDatabaseAccessor> accessor)
+    {
+        [accessor enumerateKeysAndObjectsUsingBlock:^(NSString *key, NSDictionary *object)
+        {
+            if(key && object)
+            {
                 [syncedUpdates addObject:key];
                 [locationUpdates addObject:object];
-            } else if(key) {
+            }
+            else if(key)
+            {
                 // Remove nil objects
                 [accessor removeDictionaryForKey:key];
             }
             return (BOOL)(locationUpdates.count >= _pointsPerBatch);
         }];
         
-        [accessor countObjectsUsingBlock:^(long num) {
+        [accessor countObjectsUsingBlock:^(long num)
+        {
             _numInQueue = num;
         }];
     }];
+    NSLog(@" *** LocationUpdates: %@", locationUpdates);
     
     NSMutableDictionary *postData = [NSMutableDictionary dictionaryWithDictionary:@{@"locations": locationUpdates}];
+    //[self sendingFinished];
+    //return;
 
     // If there are still more in the queue, then send the current location as a separate property.
     // This allows the server to know where the user is immediately even if there are many thousands of points in the backlog.
@@ -173,6 +182,7 @@ const double MPH_to_METERSPERSECOND = 0.447;
         [postData setObject:currentTripInfo forKey:@"trip"];
     }
 
+    NSLog(@" *** postData: %@", postData); // //
     NSLog(@"Endpoint: %@", endpoint);
     NSLog(@"Updates in post: %lu", (unsigned long)locationUpdates.count);
     
@@ -182,39 +192,56 @@ const double MPH_to_METERSPERSECOND = 0.447;
     }
     
     [self sendingStarted];
+    
+    
+    //==================
+    //==================
 
-    [_httpClient POST:endpoint parameters:postData progress:NULL success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+    [_httpClient POST:endpoint parameters:postData progress:NULL success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject)
+    {
         NSLog(@"Response: %@", responseObject);
         
-        if(![responseObject respondsToSelector:@selector(objectForKey:)]) {
+        if(![responseObject respondsToSelector:@selector(objectForKey:)])
+        {
             self.batchInProgress = NO;
             [self notify:@"Server did not return a JSON object" withTitle:@"Server Error"];
             [self sendingFinished];
             return;
         }
         
-        if([responseObject objectForKey:@"result"] && [[responseObject objectForKey:@"result"] isEqualToString:@"ok"]) {
+        if([responseObject objectForKey:@"result"] && [[responseObject objectForKey:@"result"] isEqualToString:@"ok"])
+        {
             self.lastSentDate = NSDate.date;
             NSDictionary *geocode = [responseObject objectForKey:@"geocode"];
-            if(geocode && ![geocode isEqual:[NSNull null]]) {
+            if(geocode && ![geocode isEqual:[NSNull null]])
+            {
                 self.lastLocationName = [geocode objectForKey:@"full_name"];
-            } else {
+            }
+            else
+            {
                 self.lastLocationName = @"";
             }
             
-            [self.db accessCollection:GLLocationQueueName withBlock:^(id<LOLDatabaseAccessor> accessor) {
-                for(NSString *key in syncedUpdates) {
+            [self.db accessCollection:GLLocationQueueName withBlock:^(id<LOLDatabaseAccessor> accessor)
+            {
+                for(NSString *key in syncedUpdates)
+                {
                     [accessor removeDictionaryForKey:key];
                 }
             }];
 
-            [self.db accessCollection:GLLocationQueueName withBlock:^(id<LOLDatabaseAccessor> accessor) {
-                [accessor countObjectsUsingBlock:^(long num) {
+            [self.db accessCollection:GLLocationQueueName withBlock:^(id<LOLDatabaseAccessor> accessor)
+            {
+                [accessor countObjectsUsingBlock:^(long num)
+                {
                     _currentPointsInQueue = num;
                     NSLog(@"Number remaining: %ld", num);
-                    if(num >= _pointsPerBatch) {
+                    if(num >= _pointsPerBatch)
+                    {
                         self.batchInProgress = YES;
-                    } else {
+                    }
+                    else
+                    {
                         self.batchInProgress = NO;
                     }
                 }];
@@ -222,19 +249,24 @@ const double MPH_to_METERSPERSECOND = 0.447;
                 [self sendingFinished];
             }];
             
-        } else {
-            
+        }
+        else
+        {
             self.batchInProgress = NO;
             
-            if([responseObject objectForKey:@"error"]) {
+            if([responseObject objectForKey:@"error"])
+            {
                 [self notify:[responseObject objectForKey:@"error"] withTitle:@"Server Error"];
                 [self sendingFinished];
-            } else {
+            }
+            else
+            {
                 [self notify:@"Server did not acknowledge the data was received, and did not return an error message" withTitle:@"Server Error"];
                 [self sendingFinished];
             }
         }
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error)
+    {
         self.batchInProgress = NO;
         [self notify:error.localizedDescription withTitle:@"HTTP Error"];
         [self sendingFinished];

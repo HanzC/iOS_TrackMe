@@ -10,7 +10,7 @@
 		428A0CFBBFBB6DCEB3468C99 /* libPods-TrackMe.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F5D3507B8FB0DF3B2B7B277E /* libPods-TrackMe.a */; };
 		90B4A7BE261F6CD600AAE27E /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 90B4A7BD261F6CD600AAE27E /* AppDelegate.m */; };
 		90B4A7C1261F6CD600AAE27E /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 90B4A7C0261F6CD600AAE27E /* SceneDelegate.m */; };
-		90B4A7C4261F6CD600AAE27E /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90B4A7C3261F6CD600AAE27E /* ViewController.m */; };
+		90B4A7C4261F6CD600AAE27E /* FirstViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90B4A7C3261F6CD600AAE27E /* FirstViewController.m */; };
 		90B4A7C7261F6CD600AAE27E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 90B4A7C5261F6CD600AAE27E /* Main.storyboard */; };
 		90B4A7C9261F6CD600AAE27E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 90B4A7C8261F6CD600AAE27E /* Assets.xcassets */; };
 		90B4A7CC261F6CD600AAE27E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 90B4A7CA261F6CD600AAE27E /* LaunchScreen.storyboard */; };
@@ -50,8 +50,8 @@
 		90B4A7BD261F6CD600AAE27E /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		90B4A7BF261F6CD600AAE27E /* SceneDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SceneDelegate.h; sourceTree = "<group>"; };
 		90B4A7C0261F6CD600AAE27E /* SceneDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SceneDelegate.m; sourceTree = "<group>"; };
-		90B4A7C2261F6CD600AAE27E /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		90B4A7C3261F6CD600AAE27E /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		90B4A7C2261F6CD600AAE27E /* FirstViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FirstViewController.h; sourceTree = "<group>"; };
+		90B4A7C3261F6CD600AAE27E /* FirstViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FirstViewController.m; sourceTree = "<group>"; };
 		90B4A7C6261F6CD600AAE27E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		90B4A7C8261F6CD600AAE27E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		90B4A7CB261F6CD600AAE27E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -139,8 +139,8 @@
 				90B4A7BD261F6CD600AAE27E /* AppDelegate.m */,
 				90B4A7BF261F6CD600AAE27E /* SceneDelegate.h */,
 				90B4A7C0261F6CD600AAE27E /* SceneDelegate.m */,
-				90B4A7C2261F6CD600AAE27E /* ViewController.h */,
-				90B4A7C3261F6CD600AAE27E /* ViewController.m */,
+				90B4A7C2261F6CD600AAE27E /* FirstViewController.h */,
+				90B4A7C3261F6CD600AAE27E /* FirstViewController.m */,
 				90B4A80F2620A80E00AAE27E /* GLManager.h */,
 				90B4A8102620A80E00AAE27E /* GLManager.m */,
 				90B4A7C5261F6CD600AAE27E /* Main.storyboard */,
@@ -376,7 +376,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				90B4A7C4261F6CD600AAE27E /* ViewController.m in Sources */,
+				90B4A7C4261F6CD600AAE27E /* FirstViewController.m in Sources */,
 				90B4A7BE261F6CD600AAE27E /* AppDelegate.m in Sources */,
 				90B4A8112620A80E00AAE27E /* GLManager.m in Sources */,
 				90B4A7CF261F6CD600AAE27E /* main.m in Sources */,
