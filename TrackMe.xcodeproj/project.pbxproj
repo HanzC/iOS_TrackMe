@@ -17,6 +17,13 @@
 		90B4A7CF261F6CD600AAE27E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 90B4A7CE261F6CD600AAE27E /* main.m */; };
 		90B4A7D9261F6CD600AAE27E /* TrackMeTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 90B4A7D8261F6CD600AAE27E /* TrackMeTests.m */; };
 		90B4A7E4261F6CD600AAE27E /* TrackMeUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 90B4A7E3261F6CD600AAE27E /* TrackMeUITests.m */; };
+		90B4A8112620A80E00AAE27E /* GLManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 90B4A8102620A80E00AAE27E /* GLManager.m */; };
+		90B4A8162620A8AB00AAE27E /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 90B4A8152620A8AB00AAE27E /* CoreLocation.framework */; };
+		90B4A8182620A8B600AAE27E /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 90B4A8172620A8B600AAE27E /* CoreMotion.framework */; };
+		90B4A81A2620A8C400AAE27E /* ExternalAccessory.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 90B4A8192620A8C400AAE27E /* ExternalAccessory.framework */; };
+		90B4A81C2620A8CF00AAE27E /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 90B4A81B2620A8CF00AAE27E /* SystemConfiguration.framework */; };
+		90B4A81E2620A8D700AAE27E /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 90B4A81D2620A8D700AAE27E /* UIKit.framework */; };
+		90B4A8202620A8DF00AAE27E /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 90B4A81F2620A8DF00AAE27E /* UserNotifications.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,6 +62,14 @@
 		90B4A7DF261F6CD600AAE27E /* TrackMeUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TrackMeUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		90B4A7E3261F6CD600AAE27E /* TrackMeUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TrackMeUITests.m; sourceTree = "<group>"; };
 		90B4A7E5261F6CD600AAE27E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		90B4A80F2620A80E00AAE27E /* GLManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GLManager.h; sourceTree = "<group>"; };
+		90B4A8102620A80E00AAE27E /* GLManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GLManager.m; sourceTree = "<group>"; };
+		90B4A8152620A8AB00AAE27E /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		90B4A8172620A8B600AAE27E /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
+		90B4A8192620A8C400AAE27E /* ExternalAccessory.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ExternalAccessory.framework; path = System/Library/Frameworks/ExternalAccessory.framework; sourceTree = SDKROOT; };
+		90B4A81B2620A8CF00AAE27E /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		90B4A81D2620A8D700AAE27E /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		90B4A81F2620A8DF00AAE27E /* UserNotifications.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotifications.framework; path = System/Library/Frameworks/UserNotifications.framework; sourceTree = SDKROOT; };
 		A9806CF75E1FB6C5A278FC78 /* Pods-TrackMe.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TrackMe.debug.xcconfig"; path = "Target Support Files/Pods-TrackMe/Pods-TrackMe.debug.xcconfig"; sourceTree = "<group>"; };
 		CD93D988FC995F9707D4BC61 /* Pods-TrackMe.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TrackMe.release.xcconfig"; path = "Target Support Files/Pods-TrackMe/Pods-TrackMe.release.xcconfig"; sourceTree = "<group>"; };
 		F5D3507B8FB0DF3B2B7B277E /* libPods-TrackMe.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-TrackMe.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -65,7 +80,13 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				90B4A8162620A8AB00AAE27E /* CoreLocation.framework in Frameworks */,
+				90B4A81E2620A8D700AAE27E /* UIKit.framework in Frameworks */,
+				90B4A81C2620A8CF00AAE27E /* SystemConfiguration.framework in Frameworks */,
+				90B4A8182620A8B600AAE27E /* CoreMotion.framework in Frameworks */,
+				90B4A81A2620A8C400AAE27E /* ExternalAccessory.framework in Frameworks */,
 				428A0CFBBFBB6DCEB3468C99 /* libPods-TrackMe.a in Frameworks */,
+				90B4A8202620A8DF00AAE27E /* UserNotifications.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -117,6 +138,8 @@
 				90B4A7C0261F6CD600AAE27E /* SceneDelegate.m */,
 				90B4A7C2261F6CD600AAE27E /* ViewController.h */,
 				90B4A7C3261F6CD600AAE27E /* ViewController.m */,
+				90B4A80F2620A80E00AAE27E /* GLManager.h */,
+				90B4A8102620A80E00AAE27E /* GLManager.m */,
 				90B4A7C5261F6CD600AAE27E /* Main.storyboard */,
 				90B4A7C8261F6CD600AAE27E /* Assets.xcassets */,
 				90B4A7CA261F6CD600AAE27E /* LaunchScreen.storyboard */,
@@ -147,6 +170,12 @@
 		B8A56CBC9572EF2D2EFFF8E4 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				90B4A81F2620A8DF00AAE27E /* UserNotifications.framework */,
+				90B4A81D2620A8D700AAE27E /* UIKit.framework */,
+				90B4A81B2620A8CF00AAE27E /* SystemConfiguration.framework */,
+				90B4A8192620A8C400AAE27E /* ExternalAccessory.framework */,
+				90B4A8172620A8B600AAE27E /* CoreMotion.framework */,
+				90B4A8152620A8AB00AAE27E /* CoreLocation.framework */,
 				F5D3507B8FB0DF3B2B7B277E /* libPods-TrackMe.a */,
 			);
 			name = Frameworks;
@@ -158,7 +187,6 @@
 				A9806CF75E1FB6C5A278FC78 /* Pods-TrackMe.debug.xcconfig */,
 				CD93D988FC995F9707D4BC61 /* Pods-TrackMe.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -319,6 +347,7 @@
 			files = (
 				90B4A7C4261F6CD600AAE27E /* ViewController.m in Sources */,
 				90B4A7BE261F6CD600AAE27E /* AppDelegate.m in Sources */,
+				90B4A8112620A80E00AAE27E /* GLManager.m in Sources */,
 				90B4A7CF261F6CD600AAE27E /* main.m in Sources */,
 				90B4A7C1261F6CD600AAE27E /* SceneDelegate.m in Sources */,
 			);
@@ -426,7 +455,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -479,7 +508,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -496,6 +525,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = V48EBS92V9;
 				INFOPLIST_FILE = TrackMe/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -515,6 +545,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = V48EBS92V9;
 				INFOPLIST_FILE = TrackMe/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
