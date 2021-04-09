@@ -6,6 +6,11 @@
 //
 
 #import "GLManager.h"
+#import "AFHTTPSessionManager.h"
+#import "LOLDatabase.h"
+#import "FMDatabase.h"
+#import "SystemConfiguration/CaptiveNetwork.h"
+@import UserNotifications;
 
 @implementation GLManager
 

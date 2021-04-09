@@ -57,4 +57,78 @@ typedef enum {
 
 @interface GLManager : NSObject <CLLocationManagerDelegate, UNUserNotificationCenterDelegate>
 
++ (GLManager *)sharedManager;
+
++ (NSString *)currentWifiHotSpotName;
+
+@property (strong, nonatomic, readonly) CLLocationManager *locationManager;
+@property (strong, nonatomic, readonly) CMMotionActivityManager *motionActivityManager;
+
+@property (strong, nonatomic) NSNumber *sendingInterval;
+@property BOOL pausesAutomatically;
+@property BOOL gogoTrackerEnabled;
+@property BOOL includeTrackingStats;
+@property BOOL notificationsEnabled;
+@property (nonatomic) CLLocationDistance resumesAfterDistance;
+@property (nonatomic) GLSignificantLocationMode significantLocationMode;
+@property (nonatomic) CLActivityType activityType;
+@property (nonatomic) CLLocationAccuracy desiredAccuracy;
+@property (nonatomic) CLLocationDistance defersLocationUpdates;
+@property (nonatomic) int pointsPerBatch;
+
+@property (readonly) BOOL trackingEnabled;
+@property (readonly) BOOL sendInProgress;
+@property (strong, nonatomic, readonly) CLLocation *lastLocation;
+@property (strong, nonatomic, readonly) NSDictionary *lastLocationDictionary;
+@property (strong, nonatomic, readonly) CMMotionActivity *lastMotion;
+@property (strong, nonatomic, readonly) NSString *lastMotionString;
+@property (strong, nonatomic, readonly) NSNumber *lastStepCount;
+@property (strong, nonatomic, readonly) NSDate *lastSentDate;
+@property (strong, nonatomic, readonly) NSString *lastLocationName;
+@property (strong, nonatomic, readonly) NSString *currentFlightSummary;
+
+- (void)startAllUpdates;
+- (void)stopAllUpdates;
+- (void)refreshLocation;
+
+- (void)saveNewAPIEndpoint:(NSString *)endpoint andAccessToken:(NSString *)accessToken;
+- (NSString *)apiEndpointURL;
+- (NSString *)apiAccessToken;
+- (void)saveNewDeviceId:(NSString *)deviceId;
+- (NSString *)deviceId;
+
+- (void)logAction:(NSString *)action;
+- (void)sendQueueNow;
+- (void)notify:(NSString *)message withTitle:(NSString *)title;
+- (void)askToEndTrip;
+
+- (void)numberOfLocationsInQueue:(void(^)(long num))callback;
+- (void)numberOfObjectsInQueue:(void(^)(long locations, long trips, long stats))callback;
+- (void)accountInfo:(void(^)(NSString *name))block;
+- (NSSet <__kindof CLRegion *>*)monitoredRegions;
+
+- (void)requestNotificationPermission;
+
+@property (strong, nonatomic, readonly) NSString *wifiZoneName;
+@property (strong, nonatomic, readonly) NSString *wifiZoneLatitude;
+@property (strong, nonatomic, readonly) NSString *wifiZoneLongitude;
+- (void)saveNewWifiZone:(NSString *)name withLatitude:(NSString *)latitude andLongitude:(NSString *)longitude;
+
+#pragma mark - Trips
+
++ (NSArray *)GLTripModes;
+- (BOOL)tripInProgress;
+@property (nonatomic) NSString *currentTripMode;
+- (NSDate *)currentTripStart;
+- (CLLocationDistance)currentTripDistance;
+- (NSTimeInterval)currentTripDuration;
+- (void)startTrip;
+- (void)endTrip;
+
+#pragma mark -
+
+- (void)applicationWillTerminate;
+- (void)applicationDidEnterBackground;
+- (void)applicationWillResignActive;
+
 @end
