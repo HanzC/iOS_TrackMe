@@ -7,10 +7,12 @@
 
 #import "FirstViewController.h"
 #import "GLManager.h"
+#import <QuartzCore/QuartzCore.h>
 
 @interface FirstViewController ()
 
 @property (strong, nonatomic) NSTimer *viewRefreshTimer;
+@property (weak, nonatomic) IBOutlet UIView *popUpView;
 
 @end
 
@@ -36,6 +38,10 @@ NSArray *intervalMapStrings;
 //    [self.sendNowButton.layer setCornerRadius:4.0];
 //    [self.tripStartStopButton.layer setCornerRadius:4.0];
 //    [self setNeedsStatusBarAppearanceUpdate];
+    
+    self.popUpView.layer.cornerRadius = 5;
+    self.popUpView.layer.shadowOpacity = 0.8;
+    self.popUpView.layer.shadowOffset = CGSizeMake(0.0f, 0.0f);
 }
 
 - (UIStatusBarStyle)preferredStatusBarStyle {
@@ -345,6 +351,47 @@ NSArray *intervalMapStrings;
         return @"minutes";
     } else {
         return @"hours";
+    }
+}
+
+#pragma mark - Pop Up Window
+- (void)showAnimate
+{
+    self.popUpView.transform = CGAffineTransformMakeScale(1.3, 1.3);
+    self.popUpView.alpha = 0;
+    [UIView animateWithDuration:.25 animations:^{
+        self.popUpView.alpha = 1;
+        self.popUpView.transform = CGAffineTransformMakeScale(1, 1);
+    }];
+}
+
+- (void)removeAnimate
+{
+    [UIView animateWithDuration:.25 animations:^{
+        self.popUpView.transform = CGAffineTransformMakeScale(1.3, 1.3);
+        self.popUpView.alpha = 0.0;
+    } completion:^(BOOL finished) {
+        if (finished) {
+            //[self.popUpView removeFromSuperview];
+        }
+    }];
+}
+
+- (IBAction)showPopup:(id)sender
+{
+    [self showAnimate];
+}
+
+- (IBAction)closePopup:(id)sender
+{
+    [self removeAnimate];
+}
+
+- (void)showInView:(UIView *)aView animated:(BOOL)animated
+{
+    [aView addSubview:self.view];
+    if (animated) {
+        [self showAnimate];
     }
 }
 
