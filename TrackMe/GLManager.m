@@ -150,11 +150,13 @@ const double MPH_to_METERSPERSECOND = 0.447;
             {
                 [syncedUpdates addObject:key];
                 [locationUpdates addObject:object];
+                NSLog(@" *** HERE 1 ***");
             }
             else if(key)
             {
                 // Remove nil objects
                 [accessor removeDictionaryForKey:key];
+                NSLog(@" *** HERE 2 ***");
             }
             return (BOOL)(locationUpdates.count >= _pointsPerBatch);
         }];
@@ -165,6 +167,7 @@ const double MPH_to_METERSPERSECOND = 0.447;
         }];
     }];
     NSLog(@" *** LocationUpdates: %@", locationUpdates);
+    NSLog(@" *** PointsPerBatch:  %d", _pointsPerBatch);
     
     NSMutableDictionary *postData = [NSMutableDictionary dictionaryWithDictionary:@{@"locations": locationUpdates}];
     //[self sendingFinished];
@@ -182,7 +185,7 @@ const double MPH_to_METERSPERSECOND = 0.447;
         [postData setObject:currentTripInfo forKey:@"trip"];
     }
 
-    NSLog(@" *** postData: %@", postData); // //
+    //NSLog(@" *** postData: %@", postData); // //
     NSLog(@"Endpoint: %@", endpoint);
     NSLog(@"Updates in post: %lu", (unsigned long)locationUpdates.count);
     
@@ -195,6 +198,44 @@ const double MPH_to_METERSPERSECOND = 0.447;
     
     
     //==================
+    self.lastSentDate = NSDate.date;
+//    NSDictionary *geocode = [responseObject objectForKey:@"geocode"];
+//    if(geocode && ![geocode isEqual:[NSNull null]])
+//    {
+//        self.lastLocationName = [geocode objectForKey:@"full_name"];
+//    }
+//    else
+//    {
+//        self.lastLocationName = @"";
+//    }
+    
+    [self.db accessCollection:GLLocationQueueName withBlock:^(id<LOLDatabaseAccessor> accessor)
+    {
+        for(NSString *key in syncedUpdates)
+        {
+            [accessor removeDictionaryForKey:key];
+        }
+    }];
+
+    [self.db accessCollection:GLLocationQueueName withBlock:^(id<LOLDatabaseAccessor> accessor)
+    {
+        [accessor countObjectsUsingBlock:^(long num)
+        {
+            _currentPointsInQueue = num;
+            NSLog(@"Number remaining: %ld", num);
+            if(num >= _pointsPerBatch)
+            {
+                self.batchInProgress = YES;
+            }
+            else
+            {
+                self.batchInProgress = NO;
+            }
+        }];
+
+        [self sendingFinished];
+    }];
+    return;
     //==================
 
     [_httpClient POST:endpoint parameters:postData progress:NULL success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject)

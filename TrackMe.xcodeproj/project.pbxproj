@@ -25,6 +25,7 @@
 		90B4A81E2620A8D700AAE27E /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 90B4A81D2620A8D700AAE27E /* UIKit.framework */; };
 		90B4A8202620A8DF00AAE27E /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 90B4A81F2620A8DF00AAE27E /* UserNotifications.framework */; };
 		90B4A8272620AB0800AAE27E /* LOLDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = 90B4A8262620AB0800AAE27E /* LOLDatabase.m */; };
+		90B4A87C2624C0BB00AAE27E /* SecondViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90B4A87B2624C0BB00AAE27E /* SecondViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -73,6 +74,8 @@
 		90B4A81F2620A8DF00AAE27E /* UserNotifications.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotifications.framework; path = System/Library/Frameworks/UserNotifications.framework; sourceTree = SDKROOT; };
 		90B4A8252620AB0800AAE27E /* LOLDatabase.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LOLDatabase.h; sourceTree = "<group>"; };
 		90B4A8262620AB0800AAE27E /* LOLDatabase.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LOLDatabase.m; sourceTree = "<group>"; };
+		90B4A87A2624C0BB00AAE27E /* SecondViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SecondViewController.h; sourceTree = "<group>"; };
+		90B4A87B2624C0BB00AAE27E /* SecondViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SecondViewController.m; sourceTree = "<group>"; };
 		A9806CF75E1FB6C5A278FC78 /* Pods-TrackMe.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TrackMe.debug.xcconfig"; path = "Target Support Files/Pods-TrackMe/Pods-TrackMe.debug.xcconfig"; sourceTree = "<group>"; };
 		CD93D988FC995F9707D4BC61 /* Pods-TrackMe.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TrackMe.release.xcconfig"; path = "Target Support Files/Pods-TrackMe/Pods-TrackMe.release.xcconfig"; sourceTree = "<group>"; };
 		F5D3507B8FB0DF3B2B7B277E /* libPods-TrackMe.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-TrackMe.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -141,6 +144,8 @@
 				90B4A7C0261F6CD600AAE27E /* SceneDelegate.m */,
 				90B4A7C2261F6CD600AAE27E /* FirstViewController.h */,
 				90B4A7C3261F6CD600AAE27E /* FirstViewController.m */,
+				90B4A87A2624C0BB00AAE27E /* SecondViewController.h */,
+				90B4A87B2624C0BB00AAE27E /* SecondViewController.m */,
 				90B4A80F2620A80E00AAE27E /* GLManager.h */,
 				90B4A8102620A80E00AAE27E /* GLManager.m */,
 				90B4A7C5261F6CD600AAE27E /* Main.storyboard */,
@@ -379,6 +384,7 @@
 				90B4A7C4261F6CD600AAE27E /* FirstViewController.m in Sources */,
 				90B4A7BE261F6CD600AAE27E /* AppDelegate.m in Sources */,
 				90B4A8112620A80E00AAE27E /* GLManager.m in Sources */,
+				90B4A87C2624C0BB00AAE27E /* SecondViewController.m in Sources */,
 				90B4A7CF261F6CD600AAE27E /* main.m in Sources */,
 				90B4A8272620AB0800AAE27E /* LOLDatabase.m in Sources */,
 				90B4A7C1261F6CD600AAE27E /* SceneDelegate.m in Sources */,
