@@ -51,7 +51,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="610"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="F5E-Ca-U1Q" userLabel="ContentView">
-                                        <rect key="frame" x="0.0" y="0.0" width="375" height="650"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="710"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Bhw-FT-DrV">
                                                 <rect key="frame" x="0.0" y="0.0" width="375" height="160"/>
@@ -451,7 +451,7 @@ IAogA
                                                             <action selector="closePopup:" destination="DGN-l6-I3l" eventType="touchUpInside" id="5eV-ex-hA1"/>
                                                         </connections>
                                                     </button>
-                                                    <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" showsUserLocation="YES" translatesAutoresizingMaskIntoConstraints="NO" id="TrI-rL-nZB">
+                                                    <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="TrI-rL-nZB">
                                                         <rect key="frame" x="5" y="46" width="349" height="462"/>
                                                     </mapView>
                                                 </subviews>
@@ -475,7 +475,7 @@ IAogA
                                             <constraint firstAttribute="trailing" secondItem="nlz-Pi-Xai" secondAttribute="trailing" constant="20" id="HoX-8z-tqq"/>
                                             <constraint firstItem="Bhw-FT-DrV" firstAttribute="top" secondItem="F5E-Ca-U1Q" secondAttribute="top" id="JA1-yZ-k8U"/>
                                             <constraint firstItem="nlz-Pi-Xai" firstAttribute="top" secondItem="Bhw-FT-DrV" secondAttribute="bottom" constant="20" id="ShC-Y0-MMU"/>
-                                            <constraint firstAttribute="height" constant="650" id="aaB-Ez-gxS"/>
+                                            <constraint firstAttribute="height" constant="710" id="aaB-Ez-gxS"/>
                                             <constraint firstAttribute="trailing" secondItem="Bhw-FT-DrV" secondAttribute="trailing" id="jc6-Uf-xkb"/>
                                             <constraint firstItem="uRk-YZ-oy7" firstAttribute="centerX" secondItem="F5E-Ca-U1Q" secondAttribute="centerX" id="wBO-00-fUh"/>
                                             <constraint firstItem="5Ue-D4-meD" firstAttribute="leading" secondItem="F5E-Ca-U1Q" secondAttribute="leading" constant="8" id="xx0-nM-6Vs"/>
@@ -513,6 +513,7 @@ IAogA
                         <outlet property="locationLabel" destination="wtc-hx-yzS" id="Z44-tL-VzL"/>
                         <outlet property="locationSpeedLabel" destination="fIB-7B-V1o" id="zhY-NX-FRA"/>
                         <outlet property="locationSpeedUnitLabel" destination="3Qt-jN-qKi" id="iMa-76-akS"/>
+                        <outlet property="mapView" destination="TrI-rL-nZB" id="QUS-nw-hII"/>
                         <outlet property="motionTypeLabel" destination="Zrl-qS-kkX" id="YEr-Gn-DeU"/>
                         <outlet property="popUpView" destination="5Ue-D4-meD" id="jsn-kQ-9Dk"/>
                         <outlet property="queueAgeLabel" destination="ARq-6m-Pxw" id="jb4-eu-jQu"/>

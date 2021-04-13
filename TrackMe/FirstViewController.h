@@ -6,10 +6,14 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <MapKit/MapKit.h>
 
-@interface FirstViewController : UIViewController
+@interface FirstViewController : UIViewController <MKMapViewDelegate>
+
++ (FirstViewController *)sharedManager;
 
 @property BOOL usesMetricSystem;
+@property (weak, nonatomic) IBOutlet MKMapView *mapView;
 
 @property (strong, nonatomic) IBOutlet UISlider *sendIntervalSlider;
 @property (strong, nonatomic) IBOutlet UILabel *sendIntervalLabel;

@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		428A0CFBBFBB6DCEB3468C99 /* libPods-TrackMe.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F5D3507B8FB0DF3B2B7B277E /* libPods-TrackMe.a */; };
+		9086DD3E262631E900DBA956 /* MapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9086DD3D262631E900DBA956 /* MapViewController.m */; };
 		90B4A7BE261F6CD600AAE27E /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 90B4A7BD261F6CD600AAE27E /* AppDelegate.m */; };
 		90B4A7C1261F6CD600AAE27E /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 90B4A7C0261F6CD600AAE27E /* SceneDelegate.m */; };
 		90B4A7C4261F6CD600AAE27E /* FirstViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90B4A7C3261F6CD600AAE27E /* FirstViewController.m */; };
@@ -46,6 +47,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		9086DD3C262631E900DBA956 /* MapViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MapViewController.h; sourceTree = "<group>"; };
+		9086DD3D262631E900DBA956 /* MapViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MapViewController.m; sourceTree = "<group>"; };
 		90B4A7B9261F6CD600AAE27E /* TrackMe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TrackMe.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		90B4A7BC261F6CD600AAE27E /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		90B4A7BD261F6CD600AAE27E /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -146,6 +149,8 @@
 				90B4A7C3261F6CD600AAE27E /* FirstViewController.m */,
 				90B4A87A2624C0BB00AAE27E /* SecondViewController.h */,
 				90B4A87B2624C0BB00AAE27E /* SecondViewController.m */,
+				9086DD3C262631E900DBA956 /* MapViewController.h */,
+				9086DD3D262631E900DBA956 /* MapViewController.m */,
 				90B4A80F2620A80E00AAE27E /* GLManager.h */,
 				90B4A8102620A80E00AAE27E /* GLManager.m */,
 				90B4A7C5261F6CD600AAE27E /* Main.storyboard */,
@@ -384,6 +389,7 @@
 				90B4A7C4261F6CD600AAE27E /* FirstViewController.m in Sources */,
 				90B4A7BE261F6CD600AAE27E /* AppDelegate.m in Sources */,
 				90B4A8112620A80E00AAE27E /* GLManager.m in Sources */,
+				9086DD3E262631E900DBA956 /* MapViewController.m in Sources */,
 				90B4A87C2624C0BB00AAE27E /* SecondViewController.m in Sources */,
 				90B4A7CF261F6CD600AAE27E /* main.m in Sources */,
 				90B4A8272620AB0800AAE27E /* LOLDatabase.m in Sources */,

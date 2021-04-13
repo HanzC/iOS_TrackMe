@@ -18,6 +18,22 @@
 
 @implementation FirstViewController
 
++ (FirstViewController *)sharedManager
+{
+    static FirstViewController *_instance = nil;
+    
+    @synchronized (self)
+    {
+        if (_instance == nil)
+        {
+            _instance = [[self alloc] init];
+            [_instance.mapView removeFromSuperview];
+        }
+    }
+    
+    return _instance;
+}
+
 NSArray *intervalMap;
 NSArray *intervalMapStrings;
 
@@ -98,6 +114,15 @@ NSArray *intervalMapStrings;
     } else {
         [UIApplication sharedApplication].idleTimerDisabled = NO;
     }
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    
+//    _mapView = [GLManager sharedManager].mapView;
+//    [GLManager sharedManager].mapView.delegate = self;
+//    [GLManager sharedManager].mapView.showsUserLocation = TRUE;
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
