@@ -10,7 +10,6 @@
 
 @interface FirstViewController : UIViewController <MKMapViewDelegate>
 
-+ (FirstViewController *)sharedManager;
 
 @property BOOL usesMetricSystem;
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;

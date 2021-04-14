@@ -10,7 +10,6 @@
 #import "LOLDatabase.h"
 #import "FMDatabase.h"
 #import "SystemConfiguration/CaptiveNetwork.h"
-#import "FirstViewController.h"
 @import UserNotifications;
 
 @interface GLManager()
@@ -32,7 +31,6 @@
 
 @property (strong, nonatomic) LOLDatabase *db;
 @property (strong, nonatomic) FMDatabase *tripdb;
-@property (strong, nonatomic) FirstViewController *firstController;
 
 @end
 
@@ -75,7 +73,6 @@ const double MPH_to_METERSPERSECOND = 0.447;
             [_instance setupHTTPClient];
             [_instance restoreTrackingState];
             [_instance initializeNotifications];
-//            [[FirstViewController sharedManager].mapView removeFromSuperview];
         }
     }
     
@@ -703,14 +700,8 @@ const double MPH_to_METERSPERSECOND = 0.447;
         _locationManager.allowsBackgroundLocationUpdates = YES;
         _locationManager.pausesLocationUpdatesAutomatically = self.pausesAutomatically;
         _locationManager.activityType = self.activityType;
-        
-        //_mapView.delegate = self;
-        //_mapView.showsUserLocation = TRUE;
-        
-//        [FirstViewController sharedManager].mapView.showsUserLocation = YES;
-//        [FirstViewController sharedManager].mapView.delegate = [FirstViewController sharedManager].mapView.delegate.self;
     }
-    NSLog(@" *** GLManager > locationManager > LocationManager: %@", _locationManager.location);
+//    NSLog(@" *** GLManager > locationManager > LocationManager: %@", _locationManager.location);
     return _locationManager;
 }
 

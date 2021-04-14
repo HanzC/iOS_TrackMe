@@ -14,8 +14,8 @@
             filePath = "TrackMe/FirstViewController.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "250"
-            endingLineNumber = "250"
+            startingLineNumber = "233"
+            endingLineNumber = "233"
             landmarkName = "-sendQueue:"
             landmarkType = "7">
          </BreakpointContent>
@@ -30,8 +30,8 @@
             filePath = "TrackMe/GLManager.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "197"
-            endingLineNumber = "197"
+            startingLineNumber = "194"
+            endingLineNumber = "194"
             landmarkName = "-sendQueueNow"
             landmarkType = "7">
          </BreakpointContent>
@@ -39,16 +39,16 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "980C50A2-9836-4E05-8252-D5C03B2A77DC"
-            shouldBeEnabled = "No"
+            uuid = "277033E3-C8CA-40A1-804B-EE43D9EF397D"
+            shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "TrackMe/FirstViewController.m"
+            filePath = "TrackMe/MapViewController.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "124"
-            endingLineNumber = "124"
-            landmarkName = "-viewDidAppear:"
+            startingLineNumber = "122"
+            endingLineNumber = "122"
+            landmarkName = "-mapView:regionWillChangeAnimated:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

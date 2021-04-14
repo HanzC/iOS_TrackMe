@@ -533,6 +533,7 @@ IAogA
                 <tapGestureRecognizer id="L0c-XQ-y9k">
                     <connections>
                         <action selector="locationAgeWasTapped:" destination="DGN-l6-I3l" id="dfu-Bl-UNp"/>
+                        <segue destination="3Pv-k2-KjS" kind="presentation" id="Vbe-zC-rKZ"/>
                     </connections>
                 </tapGestureRecognizer>
                 <pongPressGestureRecognizer allowableMovement="10" minimumPressDuration="0.5" id="ao0-M7-zjz">
@@ -546,7 +547,59 @@ IAogA
                     </connections>
                 </pongPressGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="157.59999999999999" y="-185.75712143928038"/>
+            <point key="canvasLocation" x="201" y="-196"/>
+        </scene>
+        <!--Map View Controller-->
+        <scene sceneID="eFU-uc-lGL">
+            <objects>
+                <viewController storyboardIdentifier="MapView" id="3Pv-k2-KjS" customClass="MapViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="9k5-Pu-ZdE">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="647"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" showsScale="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cSW-YA-lkg">
+                                <rect key="frame" x="5" y="5" width="365" height="572"/>
+                            </mapView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fol-Vx-L4P">
+                                <rect key="frame" x="168" y="602" width="39" height="30"/>
+                                <state key="normal" title="Close"/>
+                                <connections>
+                                    <action selector="closeMapView:" destination="3Pv-k2-KjS" eventType="touchUpInside" id="dMU-cB-8X8"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xa4-hR-Vo6">
+                                <rect key="frame" x="312" y="66" width="47" height="47"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="47" id="VGG-V3-QbI"/>
+                                    <constraint firstAttribute="height" constant="47" id="rhH-Cy-dt0"/>
+                                </constraints>
+                                <state key="normal" title="Button" image="arrowClear"/>
+                                <connections>
+                                    <action selector="changeRegion:" destination="3Pv-k2-KjS" eventType="touchUpInside" id="qKs-P2-RcP"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="6Mf-6p-yt3"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="6Mf-6p-yt3" firstAttribute="trailing" secondItem="cSW-YA-lkg" secondAttribute="trailing" constant="5" id="2M7-Mf-pC2"/>
+                            <constraint firstItem="xa4-hR-Vo6" firstAttribute="top" secondItem="6Mf-6p-yt3" secondAttribute="top" constant="66" id="c0l-Zt-bUe"/>
+                            <constraint firstItem="6Mf-6p-yt3" firstAttribute="trailing" secondItem="xa4-hR-Vo6" secondAttribute="trailing" constant="16" id="hbL-gO-d1m"/>
+                            <constraint firstItem="cSW-YA-lkg" firstAttribute="top" secondItem="6Mf-6p-yt3" secondAttribute="top" constant="5" id="lMF-ot-Cwm"/>
+                            <constraint firstItem="fol-Vx-L4P" firstAttribute="centerX" secondItem="6Mf-6p-yt3" secondAttribute="centerX" id="skD-78-wU6"/>
+                            <constraint firstItem="6Mf-6p-yt3" firstAttribute="bottom" secondItem="fol-Vx-L4P" secondAttribute="bottom" constant="15" id="vru-Uc-W8V"/>
+                            <constraint firstItem="6Mf-6p-yt3" firstAttribute="bottom" secondItem="cSW-YA-lkg" secondAttribute="bottom" constant="70" id="zXa-dL-D3P"/>
+                            <constraint firstItem="cSW-YA-lkg" firstAttribute="leading" secondItem="6Mf-6p-yt3" secondAttribute="leading" constant="5" id="znq-Tv-ujX"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="arrowButton" destination="xa4-hR-Vo6" id="6Ch-WI-nk2"/>
+                        <outlet property="mapView" destination="cSW-YA-lkg" id="VBv-Ot-0zL"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="OVR-EA-HQN" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="994" y="-533"/>
         </scene>
         <!--Settings-->
         <scene sceneID="JGy-HQ-wEq">
@@ -878,6 +931,7 @@ IAogA
         </scene>
     </scenes>
     <resources>
+        <image name="arrowClear" width="47" height="47"/>
         <image name="map-pin" width="30" height="30"/>
         <image name="settings" width="28" height="29"/>
         <systemColor name="systemBackgroundColor">

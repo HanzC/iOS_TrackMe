@@ -6,17 +6,138 @@
 //
 
 #import "MapViewController.h"
+#import <QuartzCore/QuartzCore.h>
 
 @interface MapViewController ()
+
+@property (nonatomic, strong) IBOutlet UIButton *arrowButton;
+@property (nonatomic, assign) BOOL nextRegionChangeIsFromUserInteraction;
 
 @end
 
 @implementation MapViewController
 
-- (void)viewDidLoad {
+- (void)viewDidLoad
+{
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    
+    _mapView.layer.cornerRadius = 5;
+    _mapView.layer.shadowOpacity = 0.8;
+    _mapView.layer.shadowOffset = CGSizeMake(0.0f, 0.0f);
+    
+    _mapView.showsUserLocation = YES;
+    _mapView.delegate = self;
+    
+    self.arrowButton.tag = 111;
 }
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+}
+
+- (IBAction)closeMapView:(id)sender
+{
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+
+- (void)mapView:(MKMapView *)aMapView didUpdateUserLocation:(MKUserLocation *)aUserLocation
+{
+    /*
+    MKCoordinateRegion region;
+    MKCoordinateSpan span;
+    span.latitudeDelta = 0.005;
+    span.longitudeDelta = 0.005;
+    CLLocationCoordinate2D location;
+    location.latitude = aUserLocation.coordinate.latitude;
+    location.longitude = aUserLocation.coordinate.longitude;
+    region.span = span;
+    region.center = location;
+    [aMapView setRegion:region animated:YES];
+    */
+    
+    //[self.mapView setCenterCoordinate:aUserLocation.location.coordinate animated:YES];
+}
+
+
+- (IBAction)changeRegion:(id)sender
+{
+    /*
+    MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(self.mapView.userLocation.coordinate, 200.0f, 200.0f);
+    //MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(self.mapView.centerCoordinate, 100.0f, 100.0f);
+    [self.mapView setRegion:region animated:YES];
+    */
+    
+    MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(self.mapView.userLocation.coordinate, 300.0f, 300.0f);
+    if(self.arrowButton.tag == 111)
+    {
+        //this is the Arrow Clear state
+        [self.arrowButton setImage:[UIImage imageNamed:@"arrowBlue"] forState:UIControlStateNormal];
+        self.arrowButton.tag = 222;
+        [self.mapView setRegion:region animated:YES];
+        return;
+    }
+    if(self.arrowButton.tag == 222)
+    {
+        //this is the Arrow Blue state
+        [self.arrowButton setImage:[UIImage imageNamed:@"arrowUp"] forState:UIControlStateNormal];
+        self.arrowButton.tag = 333;
+        self.mapView.userTrackingMode = MKUserTrackingModeFollowWithHeading;
+        return;
+    }
+    if(self.arrowButton.tag == 333)
+    {
+        //this is the Arrow Up state
+        [self.arrowButton setImage:[UIImage imageNamed:@"arrowClear"] forState:UIControlStateNormal];
+        self.arrowButton.tag = 111;
+        self.mapView.userTrackingMode = MKUserTrackingModeFollow;
+    }
+}
+
+
+#pragma mark - MapView Delegates
+- (void)mapView:(MKMapView *)mapView regionWillChangeAnimated:(BOOL)animated
+{
+    UIView *view = mapView.subviews.firstObject;
+    
+    //    Look through gesture recognizers to determine
+    //    whether this region change is from user interaction
+    for(UIGestureRecognizer* recognizer in view.gestureRecognizers)
+    {
+        //    The user cause of this...
+        if(recognizer.state == UIGestureRecognizerStateBegan || recognizer.state == UIGestureRecognizerStateEnded)
+        {
+            self.nextRegionChangeIsFromUserInteraction = YES;
+            
+            CLLocationCoordinate2D center = self.mapView.userLocation.coordinate;
+            //center.latitude = self.mapView.region.span.latitudeDelta * 0.25;
+            //NSLog(@" *** MapViewController > regionWillChangeAnimated > Latitude: %f", center.latitude);
+            NSLog(@" *** MapViewController > regionWillChangeAnimated > Latitude 2: %f", self.mapView.region.center.latitude);
+            //if (center.latitude < (center.latitude + 0.000005))
+            if ((center.latitude+=0.1) < center.latitude)
+            {
+                [self.arrowButton setImage:[UIImage imageNamed:@"arrowClear"] forState:UIControlStateNormal];
+                self.arrowButton.tag = 111;
+            }
+            break;
+        }
+    }
+}
+
+- (void)mapView:(MKMapView *)mapView regionDidChangeAnimated:(BOOL)animated
+{
+    if(self.nextRegionChangeIsFromUserInteraction)
+    {
+        self.nextRegionChangeIsFromUserInteraction = NO;
+        
+        //    Perform code here
+//        [self.arrowButton setImage:[UIImage imageNamed:@"arrowClear"] forState:UIControlStateNormal];
+//        self.arrowButton.tag = 111;
+    }
+}
+
 
 /*
 #pragma mark - Navigation

@@ -8,31 +8,18 @@
 #import "FirstViewController.h"
 #import "GLManager.h"
 #import <QuartzCore/QuartzCore.h>
+#import "MapViewController.h"
 
 @interface FirstViewController ()
 
 @property (strong, nonatomic) NSTimer *viewRefreshTimer;
 @property (weak, nonatomic) IBOutlet UIView *popUpView;
+@property (strong, nonatomic) MapViewController *mapController;
 
 @end
 
 @implementation FirstViewController
 
-+ (FirstViewController *)sharedManager
-{
-    static FirstViewController *_instance = nil;
-    
-    @synchronized (self)
-    {
-        if (_instance == nil)
-        {
-            _instance = [[self alloc] init];
-            [_instance.mapView removeFromSuperview];
-        }
-    }
-    
-    return _instance;
-}
 
 NSArray *intervalMap;
 NSArray *intervalMapStrings;
@@ -119,10 +106,6 @@ NSArray *intervalMapStrings;
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    
-//    _mapView = [GLManager sharedManager].mapView;
-//    [GLManager sharedManager].mapView.delegate = self;
-//    [GLManager sharedManager].mapView.showsUserLocation = TRUE;
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
@@ -382,12 +365,22 @@ NSArray *intervalMapStrings;
 #pragma mark - Pop Up Window
 - (void)showAnimate
 {
-    self.popUpView.transform = CGAffineTransformMakeScale(1.3, 1.3);
-    self.popUpView.alpha = 0;
-    [UIView animateWithDuration:.25 animations:^{
-        self.popUpView.alpha = 1;
-        self.popUpView.transform = CGAffineTransformMakeScale(1, 1);
-    }];
+//    self.popUpView.transform = CGAffineTransformMakeScale(1.3, 1.3);
+//    self.popUpView.alpha = 0;
+//    [UIView animateWithDuration:.25 animations:^{
+//        self.popUpView.alpha = 1;
+//        self.popUpView.transform = CGAffineTransformMakeScale(1, 1);
+//    }];
+    
+    
+//    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MapViewController" bundle:nil];
+//    UIViewController *ivc = [storyboard instantiateViewControllerWithIdentifier:@"MapView"];
+//    [(UINavigationController*)_mapController presentViewController:ivc animated:NO completion:nil];
+//    NSLog(@"It's hitting log");
+    
+    _mapController = [self.storyboard instantiateViewControllerWithIdentifier:@"MapView"];
+    [self presentViewController:_mapController animated:YES completion:nil];
+    
 }
 
 - (void)removeAnimate
