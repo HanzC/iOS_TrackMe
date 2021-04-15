@@ -103,6 +103,7 @@
     }
     
     int pointsPerBatch = [GLManager sharedManager].pointsPerBatch;
+    [GLManager sharedManager].pointsPerBatch = pointsPerBatch;
     if(pointsPerBatch == 50)
     {
         self.pointsPerBatchControl.selectedSegmentIndex = 0;

@@ -59,7 +59,7 @@ typedef enum {
 
 + (GLManager *)sharedManager;
 
-+ (NSString *)currentWifiHotSpotName;
+//+ (NSString *)currentWifiHotSpotName;
 
 @property (strong, nonatomic, readonly) CLLocationManager *locationManager;
 @property (strong, nonatomic, readonly) CMMotionActivityManager *motionActivityManager;

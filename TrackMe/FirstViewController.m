@@ -13,8 +13,8 @@
 @interface FirstViewController ()
 
 @property (strong, nonatomic) NSTimer *viewRefreshTimer;
-@property (weak, nonatomic) IBOutlet UIView *popUpView;
 @property (strong, nonatomic) MapViewController *mapController;
+@property (nonatomic, assign) BOOL nextRegionChangeIsFromUserInteraction;
 
 @end
 
@@ -23,6 +23,8 @@
 
 NSArray *intervalMap;
 NSArray *intervalMapStrings;
+NSString *tmpLabel;
+MKPointAnnotation *point;
 
 - (void)viewDidLoad
 {
@@ -42,9 +44,12 @@ NSArray *intervalMapStrings;
 //    [self.tripStartStopButton.layer setCornerRadius:4.0];
 //    [self setNeedsStatusBarAppearanceUpdate];
     
-    self.popUpView.layer.cornerRadius = 5;
-    self.popUpView.layer.shadowOpacity = 0.8;
-    self.popUpView.layer.shadowOffset = CGSizeMake(0.0f, 0.0f);
+    _mapController = [self.storyboard instantiateViewControllerWithIdentifier:@"MapView"];
+    
+    _mapView.showsUserLocation = YES;
+    _mapView.delegate = self;
+    
+    self.nextRegionChangeIsFromUserInteraction = YES;
 }
 
 - (UIStatusBarStyle)preferredStatusBarStyle {
@@ -127,6 +132,47 @@ NSArray *intervalMapStrings;
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
+
+#pragma mark - MapView Delegates
+- (void)mapView:(MKMapView *)aMapView didUpdateUserLocation:(MKUserLocation *)aUserLocation
+{
+    MKCoordinateRegion region;
+//    MKCoordinateSpan span;
+//    span.latitudeDelta = 0.005;
+//    span.longitudeDelta = 0.005;
+//    CLLocationCoordinate2D location;
+//    location.latitude = aUserLocation.coordinate.latitude;
+//    location.longitude = aUserLocation.coordinate.longitude;
+//    region.span = span;
+//    region.center = location;
+//    [aMapView setRegion:region animated:YES];
+//    [self.mapView setCenterCoordinate:aUserLocation.location.coordinate animated:YES];
+    
+    if(self.nextRegionChangeIsFromUserInteraction)
+    {
+        self.nextRegionChangeIsFromUserInteraction = NO;
+        region = MKCoordinateRegionMakeWithDistance(self.mapView.userLocation.coordinate, 1000.0f, 1000.0f);
+        [self.mapView setRegion:region animated:YES];
+    }
+}
+
+- (void)mapView:(MKMapView *)mapView regionWillChangeAnimated:(BOOL)animated
+{
+    UIView *view = mapView.subviews.firstObject;
+    
+    //    Look through gesture recognizers to determine
+    //    whether this region change is from user interaction
+    for(UIGestureRecognizer* recognizer in view.gestureRecognizers)
+    {
+        //    The user cause of this...
+        if(recognizer.state == UIGestureRecognizerStateBegan || recognizer.state == UIGestureRecognizerStateEnded)
+        {
+            //self.nextRegionChangeIsFromUserInteraction = YES;
+        }
+    }
+}
+
+
 #pragma mark - Tracking Interface
 
 - (void)newDataReceived {
@@ -152,6 +198,7 @@ NSArray *intervalMapStrings;
         self.sendNowButton.backgroundColor = [UIColor colorWithRed:106.0/255.0 green:212.0/255.0 blue:150.0/255.0 alpha:1.0];
         self.sendNowButton.enabled = YES;
     }
+    [self.mapView removeAnnotations:self.mapView.annotations];
 }
 
 - (NSString *)speedUnitText {
@@ -163,7 +210,24 @@ NSArray *intervalMapStrings;
 }
 
 - (void)refreshView {
+    
+    NSString *stringLoc = [NSString stringWithFormat:@"%.06f", [GLManager sharedManager].lastLocation.coordinate.latitude];
+    if (![stringLoc isEqualToString:tmpLabel])
+    {
+        NSLog(@" *** FirstViewController > refreshView > NOT EQUAL *** ");
+        NSLog(@" *** FirstViewController > refreshView > String:    %@", stringLoc);
+        NSLog(@" *** FirstViewController > refreshView > Text:      %@", tmpLabel);
+        NSLog(@"\n\n");
+        
+        point = [[MKPointAnnotation alloc] init];
+        point.coordinate = [GLManager sharedManager].lastLocation.coordinate;
+        //point.title = @"Where am I?";
+        //point.subtitle = @"I'm here!!!";
+        [self.mapView addAnnotation:point];
+    }
+    
     CLLocation *location = [GLManager sharedManager].lastLocation;
+    tmpLabel = [NSString stringWithFormat:@"%.06f", location.coordinate.latitude];
     self.locationLabel.text = [NSString stringWithFormat:@"%-4.4f\n%-4.4f", location.coordinate.latitude, location.coordinate.longitude];
     self.locationAltitudeLabel.text = [NSString stringWithFormat:@"+/-%dm %dm", (int)round(location.horizontalAccuracy), (int)round(location.altitude)];
 
@@ -216,6 +280,7 @@ NSArray *intervalMapStrings;
     
     [[GLManager sharedManager] numberOfLocationsInQueue:^(long num) {
         self.queueLabel.text = [NSString stringWithFormat:@"%ld", num];
+        point.title = [NSString stringWithFormat:@"%ld", num];
     }];
 
     [self updateTripState];
@@ -365,20 +430,12 @@ NSArray *intervalMapStrings;
 #pragma mark - Pop Up Window
 - (void)showAnimate
 {
-//    self.popUpView.transform = CGAffineTransformMakeScale(1.3, 1.3);
-//    self.popUpView.alpha = 0;
-//    [UIView animateWithDuration:.25 animations:^{
-//        self.popUpView.alpha = 1;
-//        self.popUpView.transform = CGAffineTransformMakeScale(1, 1);
-//    }];
-    
-    
 //    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MapViewController" bundle:nil];
 //    UIViewController *ivc = [storyboard instantiateViewControllerWithIdentifier:@"MapView"];
 //    [(UINavigationController*)_mapController presentViewController:ivc animated:NO completion:nil];
 //    NSLog(@"It's hitting log");
     
-    _mapController = [self.storyboard instantiateViewControllerWithIdentifier:@"MapView"];
+    //_mapController = [self.storyboard instantiateViewControllerWithIdentifier:@"MapView"];
     [self presentViewController:_mapController animated:YES completion:nil];
     
 }
@@ -386,11 +443,9 @@ NSArray *intervalMapStrings;
 - (void)removeAnimate
 {
     [UIView animateWithDuration:.25 animations:^{
-        self.popUpView.transform = CGAffineTransformMakeScale(1.3, 1.3);
-        self.popUpView.alpha = 0.0;
+        
     } completion:^(BOOL finished) {
         if (finished) {
-            //[self.popUpView removeFromSuperview];
         }
     }];
 }

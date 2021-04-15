@@ -108,20 +108,21 @@
     {
         //    The user cause of this...
         if(recognizer.state == UIGestureRecognizerStateBegan || recognizer.state == UIGestureRecognizerStateEnded)
+        //if(recognizer.state == UIGestureRecognizerStateBegan)
         {
             self.nextRegionChangeIsFromUserInteraction = YES;
             
             CLLocationCoordinate2D center = self.mapView.userLocation.coordinate;
             //center.latitude = self.mapView.region.span.latitudeDelta * 0.25;
             //NSLog(@" *** MapViewController > regionWillChangeAnimated > Latitude: %f", center.latitude);
-            NSLog(@" *** MapViewController > regionWillChangeAnimated > Latitude 2: %f", self.mapView.region.center.latitude);
+            NSLog(@" *** MapViewController > regionWillChangeAnimated > Latitude: %f", self.mapView.region.center.latitude);
             //if (center.latitude < (center.latitude + 0.000005))
-            if ((center.latitude+=0.1) < center.latitude)
-            {
+//            if ((center.latitude+=0.1) < center.latitude)
+//            {
                 [self.arrowButton setImage:[UIImage imageNamed:@"arrowClear"] forState:UIControlStateNormal];
                 self.arrowButton.tag = 111;
-            }
-            break;
+//            }
+            //break;
         }
     }
 }
@@ -133,8 +134,9 @@
         self.nextRegionChangeIsFromUserInteraction = NO;
         
         //    Perform code here
-//        [self.arrowButton setImage:[UIImage imageNamed:@"arrowClear"] forState:UIControlStateNormal];
-//        self.arrowButton.tag = 111;
+        [self.arrowButton setImage:[UIImage imageNamed:@"arrowClear"] forState:UIControlStateNormal];
+        self.arrowButton.tag = 111;
+        self.mapView.userTrackingMode = MKUserTrackingModeNone;
     }
 }
 

@@ -68,7 +68,7 @@
         NSString *token    = [self queryValueForKey:@"token" fromQueryItems:queryItems];
         NSString *deviceId = [self queryValueForKey:@"device_id" fromQueryItems:queryItems];
         NSLog(@"Saving new config endpoint=%@ token=%@ device_id=%@", endpoint, token, deviceId);
-        [[GLManager sharedManager] saveNewDeviceId:deviceId];
+        //[[GLManager sharedManager] saveNewDeviceId:deviceId];
         [[GLManager sharedManager] saveNewAPIEndpoint:endpoint andAccessToken:token];
     }
     

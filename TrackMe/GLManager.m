@@ -327,10 +327,10 @@ const double MPH_to_METERSPERSECOND = 0.447;
                                                                                       @"properties": @{
                                                                                               @"timestamp": timestamp,
                                                                                               @"action": action,
-                                                                                              @"battery_state": [self currentBatteryState],
-                                                                                              @"battery_level": [self currentBatteryLevel],
-                                                                                              @"wifi": [GLManager currentWifiHotSpotName],
-                                                                                              @"device_id": _deviceId
+                                                                                              //@"battery_state": [self currentBatteryState],
+                                                                                              //@"battery_level": [self currentBatteryLevel],
+                                                                                              //@"wifi": [GLManager currentWifiHotSpotName],
+                                                                                              //@"device_id": _deviceId
                                                                                               }
                                                                                       }];
         if(self.lastLocation) {
@@ -669,9 +669,9 @@ const double MPH_to_METERSPERSECOND = 0.447;
                                               @"duration": [NSNumber numberWithDouble:self.currentTripDuration],
                                               @"distance": [NSNumber numberWithDouble:self.currentTripDistance],
                                               @"stopped_automatically": @(autopause),
-                                              @"steps": [NSNumber numberWithInteger:numberOfSteps],
-                                              @"wifi": [GLManager currentWifiHotSpotName],
-                                              @"device_id": _deviceId
+                                              @"steps": [NSNumber numberWithInteger:numberOfSteps]
+                                              //@"wifi": [GLManager currentWifiHotSpotName],
+                                              //@"device_id": _deviceId
                                               }
                                       };
         if(autopause) {
@@ -949,11 +949,11 @@ const double MPH_to_METERSPERSECOND = 0.447;
                                               @"action": @"visit",
                                               @"arrival_date": ([visit.arrivalDate isEqualToDate:[NSDate distantPast]] ? [NSNull null] : [GLManager iso8601DateStringFromDate:visit.arrivalDate]),
                                               @"departure_date": ([visit.departureDate isEqualToDate:[NSDate distantFuture]] ? [NSNull null] : [GLManager iso8601DateStringFromDate:visit.departureDate]),
-                                              @"horizontal_accuracy": [NSNumber numberWithInt:visit.horizontalAccuracy],
-                                              @"battery_state": [self currentBatteryState],
-                                              @"battery_level": [self currentBatteryLevel],
-                                              @"wifi": [GLManager currentWifiHotSpotName],
-                                              @"device_id": _deviceId
+                                              @"horizontal_accuracy": [NSNumber numberWithInt:visit.horizontalAccuracy]
+                                              //@"battery_state": [self currentBatteryState],
+                                              //@"battery_level": [self currentBatteryLevel],
+                                              //@"wifi": [GLManager currentWifiHotSpotName],
+                                              //@"device_id": _deviceId
                                               }
                                     };
             [accessor setDictionary:update forKey:[NSString stringWithFormat:@"%@-visit", timestamp]];
@@ -975,14 +975,14 @@ const double MPH_to_METERSPERSECOND = 0.447;
     self.lastLocation = (CLLocation *)locations[locations.count-1];
 
     // If a wifi override is configured, create a fake CLLocation object based on the location in the wifi mapping
-    if([GLManager currentWifiHotSpotName]) {
-        CLLocation *tmp = [self currentLocationFromWifiName:[GLManager currentWifiHotSpotName]];
-        if(tmp) {
-            self.lastLocation = tmp;
-            NSLog(@"Overriding location from wifi name");
-            locations = @[self.lastLocation];
-        }
-    }
+//    if([GLManager currentWifiHotSpotName]) {
+//        CLLocation *tmp = [self currentLocationFromWifiName:[GLManager currentWifiHotSpotName]];
+//        if(tmp) {
+//            self.lastLocation = tmp;
+//            NSLog(@"Overriding location from wifi name");
+//            locations = @[self.lastLocation];
+//        }
+//    }
     
     self.lastLocationDictionary = [self currentDictionaryFromLocation:self.lastLocation];
     
@@ -1068,16 +1068,16 @@ const double MPH_to_METERSPERSECOND = 0.447;
                      @"speed": [NSNumber numberWithInt:(int)round(loc.speed)],
                      @"horizontal_accuracy": [NSNumber numberWithInt:(int)round(loc.horizontalAccuracy)],
                      @"vertical_accuracy": [NSNumber numberWithInt:(int)round(loc.verticalAccuracy)],
-                     @"motion": [self motionArrayFromLastMotion],
-                     @"battery_state": [self currentBatteryState],
-                     @"battery_level": [self currentBatteryLevel],
-                     @"wifi": [GLManager currentWifiHotSpotName],
+                     @"motion": [self motionArrayFromLastMotion]
+                     //@"battery_state": [self currentBatteryState],
+                     //@"battery_level": [self currentBatteryLevel],
+                     //@"wifi": [GLManager currentWifiHotSpotName],
                      }]
              };
-    if(_deviceId && _deviceId.length > 0) {
-        NSMutableDictionary *properties = [update objectForKey:@"properties"];
-        [properties setValue:_deviceId forKey:@"device_id"];
-    }
+//    if(_deviceId && _deviceId.length > 0) {
+//        NSMutableDictionary *properties = [update objectForKey:@"properties"];
+//        [properties setValue:_deviceId forKey:@"device_id"];
+//    }
     return update;
 }
 
@@ -1351,17 +1351,17 @@ const double MPH_to_METERSPERSECOND = 0.447;
     return [[[defaults dictionaryRepresentation] allKeys] containsObject:key];
 }
 
-+ (NSString *)currentWifiHotSpotName {
-    NSString *wifiName = @"";
-    NSArray *ifs = (__bridge_transfer id)CNCopySupportedInterfaces();
-    for (NSString *ifnam in ifs) {
-        NSDictionary *info = (__bridge_transfer id)CNCopyCurrentNetworkInfo((__bridge CFStringRef)ifnam);
-        if (info[@"SSID"]) {
-            wifiName = info[@"SSID"];
-        }
-    }
-    return wifiName;
-}
+//+ (NSString *)currentWifiHotSpotName {
+//    NSString *wifiName = @"";
+//    NSArray *ifs = (__bridge_transfer id)CNCopySupportedInterfaces();
+//    for (NSString *ifnam in ifs) {
+//        NSDictionary *info = (__bridge_transfer id)CNCopyCurrentNetworkInfo((__bridge CFStringRef)ifnam);
+//        if (info[@"SSID"]) {
+//            wifiName = info[@"SSID"];
+//        }
+//    }
+//    return wifiName;
+//}
 
 #pragma mark - FMDB
 
