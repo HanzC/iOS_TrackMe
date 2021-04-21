@@ -28,7 +28,7 @@
         self.trackingEnabledToggle.selectedSegmentIndex = 1;
     
     self.pausesAutomatically.on = [GLManager sharedManager].pausesAutomatically;
-    self.includeTrackingStats.on = [GLManager sharedManager].includeTrackingStats;
+//    self.includeTrackingStats.on = [GLManager sharedManager].includeTrackingStats;
     self.enableNotifications.on = [GLManager sharedManager].notificationsEnabled;
 
     if([GLManager sharedManager].apiEndpointURL != nil)

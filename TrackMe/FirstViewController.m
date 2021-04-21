@@ -186,19 +186,27 @@ MKPointAnnotation *point;
 - (void)sendingStarted {
     self.sendNowButton.titleLabel.text = @"Sending...";
     self.sendNowButton.backgroundColor = [UIColor colorWithRed:74.0/255.0 green:150.0/255.0 blue:107.0/255.0 alpha:1.0];
-    //self.sendNowButton.enabled = NO;
+    self.sendNowButton.enabled = NO;
+    
+    [self.mapView removeAnnotations:self.mapView.annotations];
+    [_mapController.mapView removeAnnotations:_mapController.mapView.annotations];
 }
 
-- (void)sendingFinished {
+- (void)sendingFinished
+{
     self.sendNowButton.titleLabel.text = @"Send Now";
-    if([[GLManager sharedManager] apiEndpointURL] == nil) {
-        self.sendNowButton.backgroundColor = [UIColor colorWithRed:150.0/255.0 green:150.0/255.0 blue:150.0/255.0 alpha:1.0];
-        //self.sendNowButton.enabled = NO;
-    } else {
-        self.sendNowButton.backgroundColor = [UIColor colorWithRed:106.0/255.0 green:212.0/255.0 blue:150.0/255.0 alpha:1.0];
-        self.sendNowButton.enabled = YES;
-    }
-    [self.mapView removeAnnotations:self.mapView.annotations];
+//    if([[GLManager sharedManager] apiEndpointURL] == nil)
+//    {
+//        self.sendNowButton.backgroundColor = [UIColor colorWithRed:150.0/255.0 green:150.0/255.0 blue:150.0/255.0 alpha:1.0];
+//        self.sendNowButton.enabled = NO;
+//    }
+//    else
+//    {
+//        self.sendNowButton.backgroundColor = [UIColor colorWithRed:106.0/255.0 green:212.0/255.0 blue:150.0/255.0 alpha:1.0];
+//        self.sendNowButton.enabled = YES;
+//    }
+    self.sendNowButton.backgroundColor = [UIColor colorWithRed:106.0/255.0 green:212.0/255.0 blue:150.0/255.0 alpha:1.0];
+    self.sendNowButton.enabled = YES;
 }
 
 - (NSString *)speedUnitText {
@@ -209,8 +217,8 @@ MKPointAnnotation *point;
     }
 }
 
-- (void)refreshView {
-    
+- (void)refreshView
+{
     NSString *stringLoc = [NSString stringWithFormat:@"%.06f", [GLManager sharedManager].lastLocation.coordinate.latitude];
     if (![stringLoc isEqualToString:tmpLabel])
     {
@@ -219,11 +227,16 @@ MKPointAnnotation *point;
         NSLog(@" *** FirstViewController > refreshView > Text:      %@", tmpLabel);
         NSLog(@"\n\n");
         
-        point = [[MKPointAnnotation alloc] init];
-        point.coordinate = [GLManager sharedManager].lastLocation.coordinate;
-        //point.title = @"Where am I?";
-        //point.subtitle = @"I'm here!!!";
-        [self.mapView addAnnotation:point];
+        if ([GLManager sharedManager].trackingEnabled == YES)
+        {
+            point = [[MKPointAnnotation alloc] init];
+            point.coordinate = [GLManager sharedManager].lastLocation.coordinate;
+            //point.title = @"Where am I?";
+            //point.subtitle = @"I'm here!!!";
+            [self.mapView addAnnotation:point];
+            [_mapController.mapView addAnnotation:point];
+        }
+        
     }
     
     CLLocation *location = [GLManager sharedManager].lastLocation;

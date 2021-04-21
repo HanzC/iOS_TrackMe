@@ -594,290 +594,298 @@ IAogA
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" bounces="NO" showsHorizontalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="s6m-75-ydN">
-                                <rect key="frame" x="0.0" y="20" width="375" height="647"/>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" showsHorizontalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="s6m-75-ydN">
+                                <rect key="frame" x="0.0" y="44" width="375" height="685"/>
                                 <subviews>
-                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="L89-ZH-Qhr">
-                                        <rect key="frame" x="20" y="0.0" width="335" height="830"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="SETTINGS" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Siy-jh-mw4">
+                                        <rect key="frame" x="154" y="10" width="67.333333333333314" height="17"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="17" id="cOQ-W5-gvf"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <color key="textColor" red="0.37715041040000002" green="0.37715041040000002" blue="0.37715041040000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="v1Q-fa-dfo">
+                                        <rect key="frame" x="10" y="37" width="355" height="100"/>
                                         <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="SETTINGS" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kAL-Fa-uAR">
-                                                <rect key="frame" x="0.0" y="0.0" width="335" height="17"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                <color key="textColor" red="0.37715041040000002" green="0.37715041040000002" blue="0.37715041040000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tracking Enabled" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yFA-G0-jXX">
+                                                <rect key="frame" x="0.0" y="0.0" width="355" height="20.333333333333332"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="calibratedWhite"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <stackView hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" distribution="equalSpacing" translatesAutoresizingMaskIntoConstraints="NO" id="ccS-vN-l8z">
-                                                <rect key="frame" x="0.0" y="22" width="335" height="0.0"/>
-                                                <subviews>
-                                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" translatesAutoresizingMaskIntoConstraints="NO" id="5OY-bz-e2k">
-                                                        <rect key="frame" x="0.0" y="0.0" width="41.333333333333336" height="0.0"/>
-                                                        <subviews>
-                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="W21-P1-baT">
-                                                                <rect key="frame" x="0.0" y="0.0" width="41.333333333333336" height="0.0"/>
-                                                                <gestureRecognizers/>
-                                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                                <nil key="textColor"/>
-                                                                <nil key="highlightedColor"/>
-                                                            </label>
-                                                        </subviews>
-                                                    </stackView>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="&gt;" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="12" translatesAutoresizingMaskIntoConstraints="NO" id="XAj-39-CuT">
-                                                        <rect key="frame" x="323.33333333333331" y="0.0" width="11.666666666666686" height="0.0"/>
-                                                        <fontDescription key="fontDescription" type="system" pointSize="19"/>
-                                                        <color key="textColor" red="0.45455878849999998" green="0.44347118140000003" blue="0.48514410619999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                        <nil key="highlightedColor"/>
-                                                    </label>
-                                                </subviews>
-                                                <gestureRecognizers/>
+                                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="MJJ-L8-wjD">
+                                                <rect key="frame" x="0.0" y="20.333333333333329" width="355" height="80.666666666666671"/>
+                                                <segments>
+                                                    <segment title="On"/>
+                                                    <segment title="Off"/>
+                                                </segments>
                                                 <connections>
-                                                    <outletCollection property="gestureRecognizers" destination="KJi-Ar-JJw" appends="YES" id="83T-0O-UWc"/>
+                                                    <action selector="toggleLogging:" destination="TeO-S6-mi9" eventType="valueChanged" id="LpF-QW-Rm5"/>
                                                 </connections>
-                                            </stackView>
-                                            <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="ObN-kL-2ZG">
-                                                <rect key="frame" x="0.0" y="27" width="335" height="190.33333333333334"/>
-                                                <subviews>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tracking Enabled" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ay5-vK-7h2">
-                                                        <rect key="frame" x="0.0" y="0.0" width="335" height="20.333333333333332"/>
-                                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                        <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="calibratedWhite"/>
-                                                        <nil key="highlightedColor"/>
-                                                    </label>
-                                                    <segmentedControl opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="ZRD-nt-J6L">
-                                                        <rect key="frame" x="0.0" y="20.333333333333329" width="335" height="171"/>
-                                                        <segments>
-                                                            <segment title="On"/>
-                                                            <segment title="Off"/>
-                                                        </segments>
-                                                        <connections>
-                                                            <action selector="toggleLogging:" destination="TeO-S6-mi9" eventType="valueChanged" id="STi-uE-rtu"/>
-                                                        </connections>
-                                                    </segmentedControl>
-                                                </subviews>
-                                            </stackView>
-                                            <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="5wp-Qe-wHu">
-                                                <rect key="frame" x="0.0" y="227.33333333333331" width="335" height="51.333333333333314"/>
-                                                <subviews>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Significant Location" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jvC-J2-uYu">
-                                                        <rect key="frame" x="0.0" y="0.0" width="335" height="20.333333333333332"/>
-                                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                        <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="calibratedWhite"/>
-                                                        <nil key="highlightedColor"/>
-                                                    </label>
-                                                    <segmentedControl opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="H5Q-82-Nsc">
-                                                        <rect key="frame" x="0.0" y="20.333333333333371" width="335" height="32"/>
-                                                        <segments>
-                                                            <segment title="Disabled"/>
-                                                            <segment title="Enabled"/>
-                                                            <segment title="Significant Only"/>
-                                                        </segments>
-                                                        <connections>
-                                                            <action selector="activityTypeControlWasChanged:" destination="TeO-S6-mi9" eventType="valueChanged" id="aEy-LH-NUF"/>
-                                                            <action selector="significantLocationModeWasChanged:" destination="TeO-S6-mi9" eventType="valueChanged" id="PhT-LC-SJQ"/>
-                                                        </connections>
-                                                    </segmentedControl>
-                                                </subviews>
-                                            </stackView>
-                                            <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="pxd-E2-11C">
-                                                <rect key="frame" x="0.0" y="288.66666666666669" width="335" height="51.333333333333314"/>
-                                                <subviews>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Activity Type" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="X6D-Iu-S6j">
-                                                        <rect key="frame" x="0.0" y="0.0" width="335" height="20.333333333333332"/>
-                                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                        <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="calibratedWhite"/>
-                                                        <nil key="highlightedColor"/>
-                                                    </label>
-                                                    <segmentedControl opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" apportionsSegmentWidthsByContent="YES" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="rdI-MX-iEr">
-                                                        <rect key="frame" x="0.0" y="20.333333333333314" width="335" height="32"/>
-                                                        <segments>
-                                                            <segment title="Other"/>
-                                                            <segment title="Car"/>
-                                                            <segment title="Fitness"/>
-                                                            <segment title="Nav"/>
-                                                            <segment title="Air"/>
-                                                        </segments>
-                                                        <connections>
-                                                            <action selector="activityTypeControlWasChanged:" destination="TeO-S6-mi9" eventType="valueChanged" id="dQO-G3-iZ3"/>
-                                                        </connections>
-                                                    </segmentedControl>
-                                                </subviews>
-                                            </stackView>
-                                            <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="uuW-lo-B1X">
-                                                <rect key="frame" x="0.0" y="350" width="335" height="51.333333333333314"/>
-                                                <subviews>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Desired Accuracy" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="No6-Db-K1u">
-                                                        <rect key="frame" x="0.0" y="0.0" width="335" height="20.333333333333332"/>
-                                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                        <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="calibratedWhite"/>
-                                                        <nil key="highlightedColor"/>
-                                                    </label>
-                                                    <segmentedControl opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="VD1-cY-h7S">
-                                                        <rect key="frame" x="0.0" y="20.333333333333314" width="335" height="32"/>
-                                                        <segments>
-                                                            <segment title="Nav"/>
-                                                            <segment title="Best"/>
-                                                            <segment title="10m"/>
-                                                            <segment title="100m"/>
-                                                            <segment title="1km"/>
-                                                            <segment title="3km"/>
-                                                        </segments>
-                                                        <connections>
-                                                            <action selector="desiredAccuracyWasChanged:" destination="TeO-S6-mi9" eventType="valueChanged" id="x68-ds-UDK"/>
-                                                        </connections>
-                                                    </segmentedControl>
-                                                </subviews>
-                                            </stackView>
-                                            <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="Hop-1H-JUT">
-                                                <rect key="frame" x="0.0" y="411.33333333333331" width="335" height="51.333333333333314"/>
-                                                <subviews>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Defer Location Updates" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fZe-zg-bNk">
-                                                        <rect key="frame" x="0.0" y="0.0" width="335" height="20.333333333333332"/>
-                                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                        <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="calibratedWhite"/>
-                                                        <nil key="highlightedColor"/>
-                                                    </label>
-                                                    <segmentedControl opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="hqn-JX-LBh">
-                                                        <rect key="frame" x="0.0" y="20.333333333333371" width="335" height="32"/>
-                                                        <segments>
-                                                            <segment title="Never"/>
-                                                            <segment title="100m"/>
-                                                            <segment title="1km"/>
-                                                            <segment title="5km"/>
-                                                            <segment title="Max"/>
-                                                        </segments>
-                                                        <connections>
-                                                            <action selector="defersLocationUpdatesWasChanged:" destination="TeO-S6-mi9" eventType="valueChanged" id="2YL-zZ-uBb"/>
-                                                        </connections>
-                                                    </segmentedControl>
-                                                </subviews>
-                                            </stackView>
-                                            <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="jKb-rX-HYA">
-                                                <rect key="frame" x="0.0" y="472.66666666666663" width="335" height="51.333333333333371"/>
-                                                <subviews>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Points per Batch" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pNR-HE-VNI">
-                                                        <rect key="frame" x="0.0" y="0.0" width="335" height="20.333333333333332"/>
-                                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                        <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="calibratedWhite"/>
-                                                        <nil key="highlightedColor"/>
-                                                    </label>
-                                                    <segmentedControl opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="mNL-bN-jDz">
-                                                        <rect key="frame" x="0.0" y="20.333333333333371" width="335" height="32"/>
-                                                        <segments>
-                                                            <segment title="50"/>
-                                                            <segment title="100"/>
-                                                            <segment title="200"/>
-                                                            <segment title="500"/>
-                                                            <segment title="1000"/>
-                                                        </segments>
-                                                        <connections>
-                                                            <action selector="pointsPerBatchWasChanged:" destination="TeO-S6-mi9" eventType="valueChanged" id="uH5-2m-lBZ"/>
-                                                        </connections>
-                                                    </segmentedControl>
-                                                </subviews>
-                                            </stackView>
-                                            <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="yko-l8-b1t">
-                                                <rect key="frame" x="0.0" y="534" width="335" height="31"/>
-                                                <subviews>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Pause Updates Automatically" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wUk-ym-2jx">
-                                                        <rect key="frame" x="0.0" y="0.0" width="286" height="31"/>
-                                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                        <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="calibratedWhite"/>
-                                                        <nil key="highlightedColor"/>
-                                                    </label>
-                                                    <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bqm-Iw-GaS">
-                                                        <rect key="frame" x="286" y="0.0" width="51" height="31"/>
-                                                        <connections>
-                                                            <action selector="togglePausesAutomatically:" destination="TeO-S6-mi9" eventType="valueChanged" id="KBt-zE-gZ8"/>
-                                                        </connections>
-                                                    </switch>
-                                                </subviews>
-                                            </stackView>
-                                            <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="dWx-x4-sxY">
-                                                <rect key="frame" x="0.0" y="575" width="335" height="51.333333333333371"/>
-                                                <subviews>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Resume with Geofence" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yBr-TK-tik">
-                                                        <rect key="frame" x="0.0" y="0.0" width="335" height="20.333333333333332"/>
-                                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                        <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="calibratedWhite"/>
-                                                        <nil key="highlightedColor"/>
-                                                    </label>
-                                                    <segmentedControl opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="Mog-ZD-722">
-                                                        <rect key="frame" x="0.0" y="20.333333333333371" width="335" height="32"/>
-                                                        <segments>
-                                                            <segment title="Off"/>
-                                                            <segment title="100m"/>
-                                                            <segment title="200m"/>
-                                                            <segment title="500m"/>
-                                                            <segment title="1km"/>
-                                                            <segment title="2km"/>
-                                                        </segments>
-                                                        <connections>
-                                                            <action selector="resumeWithGeofenceWasChanged:" destination="TeO-S6-mi9" eventType="valueChanged" id="kM0-Tq-90P"/>
-                                                        </connections>
-                                                    </segmentedControl>
-                                                </subviews>
-                                            </stackView>
-                                            <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6KU-wU-ZoS">
-                                                <rect key="frame" x="0.0" y="636.33333333333337" width="335" height="31"/>
-                                                <subviews>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Include tracking stats" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="O6r-Bm-NJ2">
-                                                        <rect key="frame" x="0.0" y="0.0" width="286" height="31"/>
-                                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                        <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="calibratedWhite"/>
-                                                        <nil key="highlightedColor"/>
-                                                    </label>
-                                                    <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="YsT-MV-ET0">
-                                                        <rect key="frame" x="286" y="0.0" width="51" height="31"/>
-                                                        <connections>
-                                                            <action selector="toggleTrackingStats:" destination="TeO-S6-mi9" eventType="valueChanged" id="y3R-Gf-GNv"/>
-                                                        </connections>
-                                                    </switch>
-                                                </subviews>
-                                            </stackView>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="In addition to the location data, also log data about visits and other app activity." lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lq2-Bc-LtP">
-                                                <rect key="frame" x="0.0" y="677.33333333333337" width="335" height="40.666666666666629"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="calibratedWhite"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                            <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bC0-an-cQw">
-                                                <rect key="frame" x="0.0" y="728" width="335" height="31"/>
-                                                <subviews>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Enable notifications" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="o5t-uK-y9e">
-                                                        <rect key="frame" x="0.0" y="0.0" width="286" height="31"/>
-                                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                        <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="calibratedWhite"/>
-                                                        <nil key="highlightedColor"/>
-                                                    </label>
-                                                    <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="aZK-aO-UlI">
-                                                        <rect key="frame" x="286" y="0.0" width="51" height="31"/>
-                                                        <connections>
-                                                            <action selector="toggleNotificationsEnabled:" destination="TeO-S6-mi9" eventType="valueChanged" id="OKg-fr-itg"/>
-                                                        </connections>
-                                                    </switch>
-                                                </subviews>
-                                            </stackView>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Enable local notifications of app events such as when tracking has been automatically stopped" lineBreakMode="wordWrap" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wn4-6i-f9p">
-                                                <rect key="frame" x="0.0" y="769" width="335" height="61"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="calibratedWhite"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Hah-dp-ET3">
-                                                <rect key="frame" x="0.0" y="830" width="335" height="0.0"/>
-                                                <state key="normal" title="Configure Wifi Zones"/>
-                                            </button>
+                                            </segmentedControl>
                                         </subviews>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="830" id="FYU-1x-VCh"/>
+                                            <constraint firstAttribute="height" constant="100" id="6eE-5Y-Y3J"/>
                                         </constraints>
                                     </stackView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="Pc4-39-8I7">
+                                        <rect key="frame" x="10" y="152" width="355" height="51.333333333333343"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Significant Location" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TtJ-RZ-GNx">
+                                                <rect key="frame" x="0.0" y="0.0" width="355" height="20.333333333333332"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="calibratedWhite"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <segmentedControl opaque="NO" contentMode="scaleToFill" verticalCompressionResistancePriority="751" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="uVf-cR-cPf">
+                                                <rect key="frame" x="0.0" y="20.333333333333343" width="355" height="32"/>
+                                                <segments>
+                                                    <segment title="Disabled"/>
+                                                    <segment title="Enabled"/>
+                                                    <segment title="Significant Only"/>
+                                                </segments>
+                                                <connections>
+                                                    <action selector="activityTypeControlWasChanged:" destination="TeO-S6-mi9" eventType="valueChanged" id="jCt-cu-mzw"/>
+                                                    <action selector="significantLocationModeWasChanged:" destination="TeO-S6-mi9" eventType="valueChanged" id="zqG-sb-6nX"/>
+                                                </connections>
+                                            </segmentedControl>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="51.329999999999998" id="M0d-B4-yJc"/>
+                                        </constraints>
+                                    </stackView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="ndK-yx-Waw">
+                                        <rect key="frame" x="10" y="218.33333333333331" width="355" height="51.333333333333314"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" text="Activity Type" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KZf-W4-hRe">
+                                                <rect key="frame" x="0.0" y="0.0" width="355" height="20.333333333333332"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="calibratedWhite"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" apportionsSegmentWidthsByContent="YES" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="dcg-JI-9A6">
+                                                <rect key="frame" x="0.0" y="20.333333333333371" width="355" height="32"/>
+                                                <segments>
+                                                    <segment title="Other"/>
+                                                    <segment title="Car"/>
+                                                    <segment title="Fitness"/>
+                                                    <segment title="Nav"/>
+                                                    <segment title="Air"/>
+                                                </segments>
+                                                <connections>
+                                                    <action selector="activityTypeControlWasChanged:" destination="TeO-S6-mi9" eventType="valueChanged" id="2w7-3Z-0q1"/>
+                                                </connections>
+                                            </segmentedControl>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="51.329999999999998" id="yDN-78-Iyf"/>
+                                        </constraints>
+                                    </stackView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="deV-VX-sYU">
+                                        <rect key="frame" x="10" y="284.66666666666669" width="355" height="51.333333333333314"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" text="Desired Accuracy" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Nqv-Dt-tlg">
+                                                <rect key="frame" x="0.0" y="0.0" width="355" height="20.333333333333332"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="calibratedWhite"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="8iw-wy-13s">
+                                                <rect key="frame" x="0.0" y="20.333333333333314" width="355" height="32"/>
+                                                <segments>
+                                                    <segment title="Nav"/>
+                                                    <segment title="Best"/>
+                                                    <segment title="10m"/>
+                                                    <segment title="100m"/>
+                                                    <segment title="1km"/>
+                                                    <segment title="3km"/>
+                                                </segments>
+                                                <connections>
+                                                    <action selector="desiredAccuracyWasChanged:" destination="TeO-S6-mi9" eventType="valueChanged" id="zdg-ri-bue"/>
+                                                </connections>
+                                            </segmentedControl>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="51.329999999999998" id="QL9-Bd-tTa"/>
+                                        </constraints>
+                                    </stackView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="7LN-K7-DMb">
+                                        <rect key="frame" x="10" y="351" width="355" height="51.333333333333314"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" text="Defer Location Updates" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vSd-rb-ztr">
+                                                <rect key="frame" x="0.0" y="0.0" width="355" height="20.333333333333332"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="calibratedWhite"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="07a-QB-ZaH">
+                                                <rect key="frame" x="0.0" y="20.333333333333314" width="355" height="32"/>
+                                                <segments>
+                                                    <segment title="Never"/>
+                                                    <segment title="100m"/>
+                                                    <segment title="1km"/>
+                                                    <segment title="5km"/>
+                                                    <segment title="Max"/>
+                                                </segments>
+                                                <connections>
+                                                    <action selector="defersLocationUpdatesWasChanged:" destination="TeO-S6-mi9" eventType="valueChanged" id="oXW-n1-MxS"/>
+                                                </connections>
+                                            </segmentedControl>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="51.329999999999998" id="8rS-HD-u6M"/>
+                                        </constraints>
+                                    </stackView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="zBG-i0-5WL">
+                                        <rect key="frame" x="10" y="417.33333333333331" width="355" height="51.333333333333314"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Points per Batch" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LYU-6p-UdP">
+                                                <rect key="frame" x="0.0" y="0.0" width="355" height="20.333333333333332"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="calibratedWhite"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <segmentedControl opaque="NO" contentMode="scaleToFill" verticalCompressionResistancePriority="751" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="pag-LR-YN8">
+                                                <rect key="frame" x="0.0" y="20.333333333333371" width="355" height="32"/>
+                                                <segments>
+                                                    <segment title="50"/>
+                                                    <segment title="100"/>
+                                                    <segment title="200"/>
+                                                    <segment title="500"/>
+                                                    <segment title="1000"/>
+                                                </segments>
+                                                <connections>
+                                                    <action selector="pointsPerBatchWasChanged:" destination="TeO-S6-mi9" eventType="valueChanged" id="2uS-UF-2Sg"/>
+                                                </connections>
+                                            </segmentedControl>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="51.329999999999998" id="xpC-M0-G6f"/>
+                                        </constraints>
+                                    </stackView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pIk-95-5MQ">
+                                        <rect key="frame" x="10" y="483.66666666666663" width="355" height="31"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Pause Updates Automatically" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GDI-HT-j4y">
+                                                <rect key="frame" x="0.0" y="0.0" width="306" height="31"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="calibratedWhite"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eXG-iF-CJa">
+                                                <rect key="frame" x="306" y="0.0" width="51" height="31"/>
+                                                <connections>
+                                                    <action selector="togglePausesAutomatically:" destination="TeO-S6-mi9" eventType="valueChanged" id="XH2-yI-Okk"/>
+                                                </connections>
+                                            </switch>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="31" id="0mX-2v-h0h"/>
+                                        </constraints>
+                                    </stackView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="yEc-Eq-yH1">
+                                        <rect key="frame" x="10" y="529.66666666666663" width="355" height="51.333333333333371"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Resume with Geofence" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6Y0-Kj-dmE">
+                                                <rect key="frame" x="0.0" y="0.0" width="355" height="20.333333333333332"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="calibratedWhite"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <segmentedControl opaque="NO" contentMode="scaleToFill" verticalCompressionResistancePriority="751" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="17h-ao-4rE">
+                                                <rect key="frame" x="0.0" y="20.333333333333371" width="355" height="32"/>
+                                                <segments>
+                                                    <segment title="Off"/>
+                                                    <segment title="100m"/>
+                                                    <segment title="200m"/>
+                                                    <segment title="500m"/>
+                                                    <segment title="1km"/>
+                                                    <segment title="2km"/>
+                                                </segments>
+                                                <connections>
+                                                    <action selector="resumeWithGeofenceWasChanged:" destination="TeO-S6-mi9" eventType="valueChanged" id="7UK-38-kGO"/>
+                                                </connections>
+                                            </segmentedControl>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="51.329999999999998" id="Py8-4F-Rgn"/>
+                                        </constraints>
+                                    </stackView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Wp8-Od-3GR">
+                                        <rect key="frame" x="10" y="596" width="355" height="31"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Enable notifications" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1Dj-z9-3dq">
+                                                <rect key="frame" x="0.0" y="0.0" width="306" height="31"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="calibratedWhite"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="GRy-Ht-5j5">
+                                                <rect key="frame" x="306" y="0.0" width="51" height="31"/>
+                                                <connections>
+                                                    <action selector="toggleNotificationsEnabled:" destination="TeO-S6-mi9" eventType="valueChanged" id="zY9-vw-RBA"/>
+                                                </connections>
+                                            </switch>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="31" id="lnI-Ua-VOe"/>
+                                        </constraints>
+                                    </stackView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Enable local notifications of app events such as when tracking has been automatically stopped" lineBreakMode="wordWrap" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="b9r-Yy-583">
+                                        <rect key="frame" x="10" y="637" width="355" height="61"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="61" id="EDf-cy-iO9"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="calibratedWhite"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                 </subviews>
                                 <constraints>
-                                    <constraint firstAttribute="bottom" secondItem="L89-ZH-Qhr" secondAttribute="bottom" constant="10" id="816-Fu-CE7"/>
-                                    <constraint firstItem="L89-ZH-Qhr" firstAttribute="top" secondItem="s6m-75-ydN" secondAttribute="top" id="FZ1-ow-FtK"/>
-                                    <constraint firstAttribute="trailing" secondItem="L89-ZH-Qhr" secondAttribute="trailing" constant="20" id="Hok-K0-dgH"/>
-                                    <constraint firstItem="L89-ZH-Qhr" firstAttribute="leading" secondItem="s6m-75-ydN" secondAttribute="leading" constant="20" id="MIf-9m-Skv"/>
-                                    <constraint firstItem="L89-ZH-Qhr" firstAttribute="centerX" secondItem="s6m-75-ydN" secondAttribute="centerX" id="W2n-jC-ja2"/>
+                                    <constraint firstAttribute="trailing" secondItem="7LN-K7-DMb" secondAttribute="trailing" constant="10" id="0Dk-VS-Bqu"/>
+                                    <constraint firstItem="zBG-i0-5WL" firstAttribute="top" secondItem="7LN-K7-DMb" secondAttribute="bottom" constant="15" id="0He-cI-vgB"/>
+                                    <constraint firstItem="ndK-yx-Waw" firstAttribute="top" secondItem="Pc4-39-8I7" secondAttribute="bottom" constant="15" id="3p1-p5-Acx"/>
+                                    <constraint firstItem="deV-VX-sYU" firstAttribute="leading" secondItem="s6m-75-ydN" secondAttribute="leading" constant="10" id="5EA-w3-fAE"/>
+                                    <constraint firstItem="Wp8-Od-3GR" firstAttribute="top" secondItem="yEc-Eq-yH1" secondAttribute="bottom" constant="15" id="5dt-CR-ScJ"/>
+                                    <constraint firstAttribute="trailing" secondItem="b9r-Yy-583" secondAttribute="trailing" constant="10" id="7SY-Wb-nii"/>
+                                    <constraint firstItem="v1Q-fa-dfo" firstAttribute="centerX" secondItem="s6m-75-ydN" secondAttribute="centerX" id="8qD-6v-edP"/>
+                                    <constraint firstItem="yEc-Eq-yH1" firstAttribute="leading" secondItem="s6m-75-ydN" secondAttribute="leading" constant="10" id="API-Ig-Ehg"/>
+                                    <constraint firstAttribute="trailing" secondItem="zBG-i0-5WL" secondAttribute="trailing" constant="10" id="AYz-Bk-NN9"/>
+                                    <constraint firstAttribute="trailing" secondItem="deV-VX-sYU" secondAttribute="trailing" constant="10" id="Abj-od-zEF"/>
+                                    <constraint firstItem="Wp8-Od-3GR" firstAttribute="centerX" secondItem="s6m-75-ydN" secondAttribute="centerX" id="C8o-3B-eQM"/>
+                                    <constraint firstItem="pIk-95-5MQ" firstAttribute="centerX" secondItem="s6m-75-ydN" secondAttribute="centerX" id="Cih-in-08f"/>
+                                    <constraint firstItem="zBG-i0-5WL" firstAttribute="leading" secondItem="s6m-75-ydN" secondAttribute="leading" constant="10" id="G0C-PX-h6d"/>
+                                    <constraint firstItem="Wp8-Od-3GR" firstAttribute="leading" secondItem="s6m-75-ydN" secondAttribute="leading" constant="10" id="Gsd-XF-MSY"/>
+                                    <constraint firstItem="7LN-K7-DMb" firstAttribute="leading" secondItem="s6m-75-ydN" secondAttribute="leading" constant="10" id="J4u-21-ygA"/>
+                                    <constraint firstItem="7LN-K7-DMb" firstAttribute="centerX" secondItem="s6m-75-ydN" secondAttribute="centerX" id="Jd0-M6-DOv"/>
+                                    <constraint firstItem="yEc-Eq-yH1" firstAttribute="centerX" secondItem="s6m-75-ydN" secondAttribute="centerX" id="Jwo-PU-Rf5"/>
+                                    <constraint firstItem="ndK-yx-Waw" firstAttribute="centerX" secondItem="s6m-75-ydN" secondAttribute="centerX" id="OPu-97-Ju5"/>
+                                    <constraint firstItem="ndK-yx-Waw" firstAttribute="leading" secondItem="s6m-75-ydN" secondAttribute="leading" constant="10" id="PVR-Ab-FSR"/>
+                                    <constraint firstAttribute="trailing" secondItem="ndK-yx-Waw" secondAttribute="trailing" constant="10" id="Rnd-Do-3uI"/>
+                                    <constraint firstAttribute="bottom" secondItem="b9r-Yy-583" secondAttribute="bottom" id="UXu-HD-gVL"/>
+                                    <constraint firstItem="deV-VX-sYU" firstAttribute="top" secondItem="ndK-yx-Waw" secondAttribute="bottom" constant="15" id="WbS-Nv-8qm"/>
+                                    <constraint firstAttribute="trailing" secondItem="Pc4-39-8I7" secondAttribute="trailing" constant="10" id="X3i-a0-a8a"/>
+                                    <constraint firstItem="b9r-Yy-583" firstAttribute="top" secondItem="Wp8-Od-3GR" secondAttribute="bottom" constant="10" id="dpv-lT-2NF"/>
+                                    <constraint firstItem="zBG-i0-5WL" firstAttribute="centerX" secondItem="s6m-75-ydN" secondAttribute="centerX" id="dwi-02-ynr"/>
+                                    <constraint firstItem="pIk-95-5MQ" firstAttribute="leading" secondItem="s6m-75-ydN" secondAttribute="leading" constant="10" id="eCx-XO-9nB"/>
+                                    <constraint firstItem="b9r-Yy-583" firstAttribute="leading" secondItem="s6m-75-ydN" secondAttribute="leading" constant="10" id="eKu-Cx-Dyt"/>
+                                    <constraint firstItem="Siy-jh-mw4" firstAttribute="centerX" secondItem="s6m-75-ydN" secondAttribute="centerX" id="eto-Xd-Tck"/>
+                                    <constraint firstItem="pIk-95-5MQ" firstAttribute="top" secondItem="zBG-i0-5WL" secondAttribute="bottom" constant="15" id="fJT-IS-roY"/>
+                                    <constraint firstAttribute="trailing" secondItem="Wp8-Od-3GR" secondAttribute="trailing" constant="10" id="fuG-9X-hBh"/>
+                                    <constraint firstAttribute="trailing" secondItem="v1Q-fa-dfo" secondAttribute="trailing" constant="10" id="g2o-u5-nLE"/>
+                                    <constraint firstAttribute="trailing" secondItem="yEc-Eq-yH1" secondAttribute="trailing" constant="10" id="hyK-SV-Av3"/>
+                                    <constraint firstItem="yEc-Eq-yH1" firstAttribute="top" secondItem="pIk-95-5MQ" secondAttribute="bottom" constant="15" id="m8k-tM-HEo"/>
+                                    <constraint firstItem="Pc4-39-8I7" firstAttribute="centerX" secondItem="s6m-75-ydN" secondAttribute="centerX" id="nCH-P7-0AN"/>
+                                    <constraint firstItem="Pc4-39-8I7" firstAttribute="leading" secondItem="s6m-75-ydN" secondAttribute="leading" constant="10" id="nkF-Ks-nR7"/>
+                                    <constraint firstAttribute="trailing" secondItem="pIk-95-5MQ" secondAttribute="trailing" constant="10" id="o8e-5Z-4Ms"/>
+                                    <constraint firstItem="v1Q-fa-dfo" firstAttribute="leading" secondItem="s6m-75-ydN" secondAttribute="leading" constant="10" id="pUS-k1-yli"/>
+                                    <constraint firstItem="deV-VX-sYU" firstAttribute="centerX" secondItem="s6m-75-ydN" secondAttribute="centerX" id="tXr-i0-YEa"/>
+                                    <constraint firstItem="v1Q-fa-dfo" firstAttribute="top" secondItem="Siy-jh-mw4" secondAttribute="bottom" constant="10" id="xUu-Gu-YcA"/>
+                                    <constraint firstItem="Siy-jh-mw4" firstAttribute="top" secondItem="s6m-75-ydN" secondAttribute="top" constant="10" id="xeb-ZZ-1ue"/>
+                                    <constraint firstItem="Pc4-39-8I7" firstAttribute="top" secondItem="v1Q-fa-dfo" secondAttribute="bottom" constant="15" id="yAY-9N-RHc"/>
+                                    <constraint firstItem="7LN-K7-DMb" firstAttribute="top" secondItem="deV-VX-sYU" secondAttribute="bottom" constant="15" id="yPE-bD-X3f"/>
                                 </constraints>
                             </scrollView>
                         </subviews>
@@ -892,23 +900,379 @@ IAogA
                     </view>
                     <tabBarItem key="tabBarItem" title="Settings" image="settings" id="ocZ-z0-bpI"/>
                     <connections>
-                        <outlet property="activityType" destination="rdI-MX-iEr" id="zne-d3-i3y"/>
-                        <outlet property="apiEndpointField" destination="W21-P1-baT" id="YKm-Fe-GGm"/>
-                        <outlet property="defersLocationUpdates" destination="hqn-JX-LBh" id="cUn-h2-2ND"/>
-                        <outlet property="desiredAccuracy" destination="VD1-cY-h7S" id="MfM-ud-R7V"/>
-                        <outlet property="enableNotifications" destination="aZK-aO-UlI" id="gWK-rN-Ixg"/>
-                        <outlet property="includeTrackingStats" destination="YsT-MV-ET0" id="1Te-02-Nia"/>
-                        <outlet property="pausesAutomatically" destination="bqm-Iw-GaS" id="vHn-OM-rQk"/>
-                        <outlet property="pointsPerBatchControl" destination="mNL-bN-jDz" id="DZv-cO-6PM"/>
-                        <outlet property="resumesWithGeofence" destination="Mog-ZD-722" id="DRc-lQ-VGk"/>
-                        <outlet property="significantLocationMode" destination="H5Q-82-Nsc" id="RL5-O6-ywa"/>
-                        <outlet property="trackingEnabledToggle" destination="ZRD-nt-J6L" id="uB1-Op-gGC"/>
+                        <outlet property="activityType" destination="dcg-JI-9A6" id="QOz-Gb-kU0"/>
+                        <outlet property="defersLocationUpdates" destination="07a-QB-ZaH" id="yFM-KP-6y0"/>
+                        <outlet property="desiredAccuracy" destination="8iw-wy-13s" id="olC-CZ-MAc"/>
+                        <outlet property="enableNotifications" destination="GRy-Ht-5j5" id="tei-Ck-h65"/>
+                        <outlet property="pausesAutomatically" destination="eXG-iF-CJa" id="w5E-8T-acj"/>
+                        <outlet property="pointsPerBatchControl" destination="pag-LR-YN8" id="65i-ON-h6F"/>
+                        <outlet property="resumesWithGeofence" destination="17h-ao-4rE" id="v7n-Hs-Vae"/>
+                        <outlet property="significantLocationMode" destination="uVf-cR-cPf" id="xZM-mE-KuG"/>
+                        <outlet property="trackingEnabledToggle" destination="MJJ-L8-wjD" id="gU8-5O-1LI"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="MEn-WS-qv5" sceneMemberID="firstResponder"/>
                 <tapGestureRecognizer id="KJi-Ar-JJw"/>
             </objects>
             <point key="canvasLocation" x="158" y="495"/>
+        </scene>
+        <!--Settings-->
+        <scene sceneID="LJe-GD-D7k">
+            <objects>
+                <viewController id="uqF-le-lQ2" customClass="SecondViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="gTG-et-PuH"/>
+                        <viewControllerLayoutGuide type="bottom" id="eCu-iB-i9F"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="G0k-eU-nLw" userLabel="View">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" bounces="NO" showsHorizontalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WCY-PL-9CZ">
+                                <rect key="frame" x="0.0" y="20" width="375" height="647"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="fHw-cP-rPG">
+                                        <rect key="frame" x="20" y="0.0" width="335" height="830"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="SETTINGS" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XmZ-tb-T0f">
+                                                <rect key="frame" x="0.0" y="0.0" width="335" height="17"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <color key="textColor" red="0.37715041040000002" green="0.37715041040000002" blue="0.37715041040000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <stackView hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" distribution="equalSpacing" translatesAutoresizingMaskIntoConstraints="NO" id="RwC-Rw-GO5">
+                                                <rect key="frame" x="0.0" y="22" width="335" height="0.0"/>
+                                                <subviews>
+                                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" translatesAutoresizingMaskIntoConstraints="NO" id="k6a-No-O8L">
+                                                        <rect key="frame" x="0.0" y="0.0" width="41.333333333333336" height="0.0"/>
+                                                        <subviews>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="scy-ht-rG7">
+                                                                <rect key="frame" x="0.0" y="0.0" width="41.333333333333336" height="0.0"/>
+                                                                <gestureRecognizers/>
+                                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                                <nil key="textColor"/>
+                                                                <nil key="highlightedColor"/>
+                                                            </label>
+                                                        </subviews>
+                                                    </stackView>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="&gt;" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="12" translatesAutoresizingMaskIntoConstraints="NO" id="eR5-yp-6a7">
+                                                        <rect key="frame" x="323.33333333333331" y="0.0" width="11.666666666666686" height="0.0"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="19"/>
+                                                        <color key="textColor" red="0.45455878849999998" green="0.44347118140000003" blue="0.48514410619999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                </subviews>
+                                                <gestureRecognizers/>
+                                                <connections>
+                                                    <outletCollection property="gestureRecognizers" destination="bxZ-Xl-Ddn" appends="YES" id="end-Ly-7xW"/>
+                                                </connections>
+                                            </stackView>
+                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="mFI-J7-wlG">
+                                                <rect key="frame" x="0.0" y="27" width="335" height="282"/>
+                                                <subviews>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tracking Enabled" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="J7A-Wm-PBg">
+                                                        <rect key="frame" x="0.0" y="0.0" width="335" height="20.333333333333332"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                        <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="calibratedWhite"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="QjT-DS-Wyq">
+                                                        <rect key="frame" x="0.0" y="20.333333333333343" width="335" height="262.66666666666663"/>
+                                                        <segments>
+                                                            <segment title="On"/>
+                                                            <segment title="Off"/>
+                                                        </segments>
+                                                        <connections>
+                                                            <action selector="toggleLogging:" destination="uqF-le-lQ2" eventType="valueChanged" id="1eG-eV-X2z"/>
+                                                        </connections>
+                                                    </segmentedControl>
+                                                </subviews>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="282" id="IQb-3D-q22"/>
+                                                </constraints>
+                                            </stackView>
+                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="hhA-ep-cyt">
+                                                <rect key="frame" x="0.0" y="319" width="335" height="51.333333333333314"/>
+                                                <subviews>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Significant Location" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OgA-Wp-b7G">
+                                                        <rect key="frame" x="0.0" y="0.0" width="335" height="20.333333333333332"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                        <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="calibratedWhite"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <segmentedControl opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="TPI-en-vyl">
+                                                        <rect key="frame" x="0.0" y="20.333333333333314" width="335" height="32"/>
+                                                        <segments>
+                                                            <segment title="Disabled"/>
+                                                            <segment title="Enabled"/>
+                                                            <segment title="Significant Only"/>
+                                                        </segments>
+                                                        <connections>
+                                                            <action selector="activityTypeControlWasChanged:" destination="uqF-le-lQ2" eventType="valueChanged" id="Myn-KB-efd"/>
+                                                            <action selector="significantLocationModeWasChanged:" destination="uqF-le-lQ2" eventType="valueChanged" id="QaJ-2X-zmq"/>
+                                                        </connections>
+                                                    </segmentedControl>
+                                                </subviews>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="51.329999999999998" id="Ygu-fC-4g0"/>
+                                                </constraints>
+                                            </stackView>
+                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="Vyp-3g-gDk">
+                                                <rect key="frame" x="0.0" y="380.33333333333331" width="335" height="51.333333333333314"/>
+                                                <subviews>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Activity Type" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="awu-OA-G7b">
+                                                        <rect key="frame" x="0.0" y="0.0" width="335" height="20.333333333333332"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                        <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="calibratedWhite"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <segmentedControl opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" apportionsSegmentWidthsByContent="YES" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="21r-dO-MNR">
+                                                        <rect key="frame" x="0.0" y="20.333333333333371" width="335" height="32"/>
+                                                        <segments>
+                                                            <segment title="Other"/>
+                                                            <segment title="Car"/>
+                                                            <segment title="Fitness"/>
+                                                            <segment title="Nav"/>
+                                                            <segment title="Air"/>
+                                                        </segments>
+                                                        <connections>
+                                                            <action selector="activityTypeControlWasChanged:" destination="uqF-le-lQ2" eventType="valueChanged" id="fo0-cI-eyV"/>
+                                                        </connections>
+                                                    </segmentedControl>
+                                                </subviews>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="51.329999999999998" id="Qgv-2z-GAj"/>
+                                                </constraints>
+                                            </stackView>
+                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="3It-gU-WAy">
+                                                <rect key="frame" x="0.0" y="441.66666666666669" width="335" height="51.333333333333314"/>
+                                                <subviews>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Desired Accuracy" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vk6-T5-xgL">
+                                                        <rect key="frame" x="0.0" y="0.0" width="335" height="20.333333333333332"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                        <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="calibratedWhite"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <segmentedControl opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="NDZ-22-kkE">
+                                                        <rect key="frame" x="0.0" y="20.333333333333314" width="335" height="32"/>
+                                                        <segments>
+                                                            <segment title="Nav"/>
+                                                            <segment title="Best"/>
+                                                            <segment title="10m"/>
+                                                            <segment title="100m"/>
+                                                            <segment title="1km"/>
+                                                            <segment title="3km"/>
+                                                        </segments>
+                                                        <connections>
+                                                            <action selector="desiredAccuracyWasChanged:" destination="uqF-le-lQ2" eventType="valueChanged" id="yTO-cq-9kh"/>
+                                                        </connections>
+                                                    </segmentedControl>
+                                                </subviews>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="51.329999999999998" id="mh9-jG-TsG"/>
+                                                </constraints>
+                                            </stackView>
+                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="g37-0B-MHN">
+                                                <rect key="frame" x="0.0" y="502.99999999999994" width="335" height="51.333333333333314"/>
+                                                <subviews>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Defer Location Updates" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="29p-W8-KTi">
+                                                        <rect key="frame" x="0.0" y="0.0" width="335" height="20.333333333333332"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                        <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="calibratedWhite"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <segmentedControl opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="aX8-1a-DuW">
+                                                        <rect key="frame" x="0.0" y="20.333333333333371" width="335" height="32"/>
+                                                        <segments>
+                                                            <segment title="Never"/>
+                                                            <segment title="100m"/>
+                                                            <segment title="1km"/>
+                                                            <segment title="5km"/>
+                                                            <segment title="Max"/>
+                                                        </segments>
+                                                        <connections>
+                                                            <action selector="defersLocationUpdatesWasChanged:" destination="uqF-le-lQ2" eventType="valueChanged" id="P2q-Db-xt8"/>
+                                                        </connections>
+                                                    </segmentedControl>
+                                                </subviews>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="51.329999999999998" id="Usi-bW-mK1"/>
+                                                </constraints>
+                                            </stackView>
+                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="Aha-56-xyQ">
+                                                <rect key="frame" x="0.0" y="564.33333333333337" width="335" height="51.333333333333371"/>
+                                                <subviews>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Points per Batch" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Tj6-9w-lQh">
+                                                        <rect key="frame" x="0.0" y="0.0" width="335" height="20.333333333333332"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                        <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="calibratedWhite"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <segmentedControl opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="9Fg-Oq-nuR">
+                                                        <rect key="frame" x="0.0" y="20.333333333333258" width="335" height="32"/>
+                                                        <segments>
+                                                            <segment title="50"/>
+                                                            <segment title="100"/>
+                                                            <segment title="200"/>
+                                                            <segment title="500"/>
+                                                            <segment title="1000"/>
+                                                        </segments>
+                                                        <connections>
+                                                            <action selector="pointsPerBatchWasChanged:" destination="uqF-le-lQ2" eventType="valueChanged" id="Pt8-gE-v2Y"/>
+                                                        </connections>
+                                                    </segmentedControl>
+                                                </subviews>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="51.329999999999998" id="NMF-0c-mwQ"/>
+                                                </constraints>
+                                            </stackView>
+                                            <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dOi-nA-VWl">
+                                                <rect key="frame" x="0.0" y="625.66666666666663" width="335" height="31"/>
+                                                <subviews>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Pause Updates Automatically" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xZM-8Y-crJ">
+                                                        <rect key="frame" x="0.0" y="0.0" width="286" height="31"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                        <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="calibratedWhite"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pIt-CY-g2J">
+                                                        <rect key="frame" x="286" y="0.0" width="51" height="31"/>
+                                                        <connections>
+                                                            <action selector="togglePausesAutomatically:" destination="uqF-le-lQ2" eventType="valueChanged" id="0tT-qd-yKF"/>
+                                                        </connections>
+                                                    </switch>
+                                                </subviews>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="31" id="zjg-xh-yAE"/>
+                                                </constraints>
+                                            </stackView>
+                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="hI6-bh-t0T">
+                                                <rect key="frame" x="0.0" y="666.66666666666663" width="335" height="51.333333333333371"/>
+                                                <subviews>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Resume with Geofence" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bxb-UY-ThT">
+                                                        <rect key="frame" x="0.0" y="0.0" width="335" height="20.333333333333332"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                        <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="calibratedWhite"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <segmentedControl opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="xYm-E3-90x">
+                                                        <rect key="frame" x="0.0" y="20.333333333333371" width="335" height="32"/>
+                                                        <segments>
+                                                            <segment title="Off"/>
+                                                            <segment title="100m"/>
+                                                            <segment title="200m"/>
+                                                            <segment title="500m"/>
+                                                            <segment title="1km"/>
+                                                            <segment title="2km"/>
+                                                        </segments>
+                                                        <connections>
+                                                            <action selector="resumeWithGeofenceWasChanged:" destination="uqF-le-lQ2" eventType="valueChanged" id="uCh-hC-hvU"/>
+                                                        </connections>
+                                                    </segmentedControl>
+                                                </subviews>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="51.329999999999998" id="hEp-h4-Imy"/>
+                                                </constraints>
+                                            </stackView>
+                                            <stackView hidden="YES" opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="33a-kO-hqb">
+                                                <rect key="frame" x="0.0" y="723" width="335" height="0.0"/>
+                                                <subviews>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Include tracking stats" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="baE-I4-GwJ">
+                                                        <rect key="frame" x="0.0" y="0.0" width="286" height="0.0"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                        <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="calibratedWhite"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="BiV-is-EFF">
+                                                        <rect key="frame" x="286" y="0.0" width="51" height="0.0"/>
+                                                        <connections>
+                                                            <action selector="toggleTrackingStats:" destination="uqF-le-lQ2" eventType="valueChanged" id="84Z-6m-qmZ"/>
+                                                        </connections>
+                                                    </switch>
+                                                </subviews>
+                                            </stackView>
+                                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="In addition to the location data, also log data about visits and other app activity." lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RC7-Gt-MFH">
+                                                <rect key="frame" x="0.0" y="723" width="335" height="0.0"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="calibratedWhite"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HHW-WE-wnD">
+                                                <rect key="frame" x="0.0" y="728" width="335" height="31"/>
+                                                <subviews>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Enable notifications" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JzE-qu-8eo">
+                                                        <rect key="frame" x="0.0" y="0.0" width="286" height="31"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                        <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="calibratedWhite"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dyZ-Lp-2ZN">
+                                                        <rect key="frame" x="286" y="0.0" width="51" height="31"/>
+                                                        <connections>
+                                                            <action selector="toggleNotificationsEnabled:" destination="uqF-le-lQ2" eventType="valueChanged" id="kbf-sj-5WX"/>
+                                                        </connections>
+                                                    </switch>
+                                                </subviews>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="31" id="5uN-pG-D8I"/>
+                                                </constraints>
+                                            </stackView>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Enable local notifications of app events such as when tracking has been automatically stopped" lineBreakMode="wordWrap" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OX8-wx-bDm">
+                                                <rect key="frame" x="0.0" y="769" width="335" height="61"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="61" id="dhV-Wq-vpR"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="calibratedWhite"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Cgr-MX-XfP">
+                                                <rect key="frame" x="0.0" y="830" width="335" height="0.0"/>
+                                                <state key="normal" title="Configure Wifi Zones"/>
+                                            </button>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="830" id="rCo-HX-mpt"/>
+                                        </constraints>
+                                    </stackView>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="fHw-cP-rPG" firstAttribute="leading" secondItem="WCY-PL-9CZ" secondAttribute="leading" constant="20" id="TaC-Ad-JRo"/>
+                                    <constraint firstAttribute="bottom" secondItem="fHw-cP-rPG" secondAttribute="bottom" constant="10" id="VfW-RO-nLf"/>
+                                    <constraint firstAttribute="trailing" secondItem="fHw-cP-rPG" secondAttribute="trailing" constant="20" id="ZP1-h7-E5X"/>
+                                    <constraint firstItem="fHw-cP-rPG" firstAttribute="centerX" secondItem="WCY-PL-9CZ" secondAttribute="centerX" id="vyz-MD-hH6"/>
+                                    <constraint firstItem="fHw-cP-rPG" firstAttribute="top" secondItem="WCY-PL-9CZ" secondAttribute="top" id="yQo-rf-U5x"/>
+                                </constraints>
+                            </scrollView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="ygK-9w-zoI"/>
+                        <color key="backgroundColor" red="0.90196078430000004" green="0.90196078430000004" blue="0.90196078430000004" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstItem="eCu-iB-i9F" firstAttribute="top" secondItem="WCY-PL-9CZ" secondAttribute="bottom" id="N9k-OO-w6n"/>
+                            <constraint firstItem="WCY-PL-9CZ" firstAttribute="leading" secondItem="G0k-eU-nLw" secondAttribute="leading" id="dJv-xu-7eu"/>
+                            <constraint firstItem="WCY-PL-9CZ" firstAttribute="top" secondItem="gTG-et-PuH" secondAttribute="bottom" id="e7g-5Y-ocw"/>
+                            <constraint firstItem="WCY-PL-9CZ" firstAttribute="trailing" secondItem="G0k-eU-nLw" secondAttribute="trailing" id="ygh-Sg-bo6"/>
+                        </constraints>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="Settings" image="settings" id="gB7-3a-YX5"/>
+                    <connections>
+                        <outlet property="activityType" destination="21r-dO-MNR" id="RUf-qv-Lp5"/>
+                        <outlet property="apiEndpointField" destination="scy-ht-rG7" id="utI-rn-a2Y"/>
+                        <outlet property="defersLocationUpdates" destination="aX8-1a-DuW" id="g6p-YJ-KbW"/>
+                        <outlet property="desiredAccuracy" destination="NDZ-22-kkE" id="C4Y-CC-UUq"/>
+                        <outlet property="enableNotifications" destination="dyZ-Lp-2ZN" id="93M-ge-j6f"/>
+                        <outlet property="includeTrackingStats" destination="BiV-is-EFF" id="TJx-Ij-LwM"/>
+                        <outlet property="pausesAutomatically" destination="pIt-CY-g2J" id="8Kl-m6-4JT"/>
+                        <outlet property="pointsPerBatchControl" destination="9Fg-Oq-nuR" id="OWv-dj-Cos"/>
+                        <outlet property="resumesWithGeofence" destination="xYm-E3-90x" id="Cyq-Ue-hzg"/>
+                        <outlet property="significantLocationMode" destination="TPI-en-vyl" id="aQ9-BR-Vhb"/>
+                        <outlet property="trackingEnabledToggle" destination="QjT-DS-Wyq" id="pFO-dU-DJe"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Z9P-6n-jky" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="bxZ-Xl-Ddn"/>
+            </objects>
+            <point key="canvasLocation" x="1190" y="740"/>
         </scene>
     </scenes>
     <resources>
