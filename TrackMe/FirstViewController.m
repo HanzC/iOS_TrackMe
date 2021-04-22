@@ -291,7 +291,18 @@ MKPointAnnotation *point;
         self.queueAgeLabel.text = @"n/a";
     }
     
-    [[GLManager sharedManager] numberOfLocationsInQueue:^(long num) {
+    [[GLManager sharedManager] numberOfLocationsInQueue:^(long num)
+    {
+        if (num == 0)
+        {
+            self.sendNowButton.backgroundColor = [UIColor colorWithRed:150.0/255.0 green:150.0/255.0 blue:150.0/255.0 alpha:1.0];
+            self.sendNowButton.enabled = NO;
+        }
+        else
+        {
+            self.sendNowButton.backgroundColor = [UIColor colorWithRed:106.0/255.0 green:212.0/255.0 blue:150.0/255.0 alpha:1.0];
+            self.sendNowButton.enabled = YES;
+        }
         self.queueLabel.text = [NSString stringWithFormat:@"%ld", num];
         point.title = [NSString stringWithFormat:@"%ld", num];
     }];
