@@ -131,6 +131,7 @@ const double MPH_to_METERSPERSECOND = 0.447;
 - (void)sendQueueNow {
     NSMutableSet *syncedUpdates = [NSMutableSet set];
     NSMutableArray *locationUpdates = [NSMutableArray array];
+    self.transferLocationUpdates = [NSMutableArray array];
     
     NSString *endpoint = [[NSUserDefaults standardUserDefaults] stringForKey:GLAPIEndpointDefaultsName];
     
@@ -169,6 +170,18 @@ const double MPH_to_METERSPERSECOND = 0.447;
     NSLog(@" *** LocationUpdates: %@", locationUpdates);
     NSLog(@" *** PointsPerBatch:  %d", _pointsPerBatch);
     
+    self.transferLocationUpdates = locationUpdates;
+//    if (self.transferLocationUpdates.count > 0)
+//    {
+//        for (id string in self.transferLocationUpdates)
+//        {
+//            NSLog(@" *** String:    %@", [[string objectForKey:@"geometry"] objectForKey:@"coordinates"]);
+//            NSLog(@" *** TimeStamp: %@", [[string objectForKey:@"properties"] objectForKey:@"timestamp"]);
+//            NSLog(@" \n\n\n ");
+//        }
+//    }
+    
+    
     NSMutableDictionary *postData = [NSMutableDictionary dictionaryWithDictionary:@{@"locations": locationUpdates}];
     //[self sendingFinished];
     //return;
@@ -199,16 +212,6 @@ const double MPH_to_METERSPERSECOND = 0.447;
     
     //==================
     self.lastSentDate = NSDate.date;
-//    NSDictionary *geocode = [responseObject objectForKey:@"geocode"];
-//    if(geocode && ![geocode isEqual:[NSNull null]])
-//    {
-//        self.lastLocationName = [geocode objectForKey:@"full_name"];
-//    }
-//    else
-//    {
-//        self.lastLocationName = @"";
-//    }
-    
     [self.db accessCollection:GLLocationQueueName withBlock:^(id<LOLDatabaseAccessor> accessor)
     {
         for(NSString *key in syncedUpdates)
@@ -237,7 +240,7 @@ const double MPH_to_METERSPERSECOND = 0.447;
     }];
     return;
     //==================
-
+/*
     [_httpClient POST:endpoint parameters:postData progress:NULL success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject)
     {
         NSLog(@"Response: %@", responseObject);
@@ -312,7 +315,7 @@ const double MPH_to_METERSPERSECOND = 0.447;
         [self notify:error.localizedDescription withTitle:@"HTTP Error"];
         [self sendingFinished];
     }];
-    
+*/
 }
 
 - (void)logAction:(NSString *)action {

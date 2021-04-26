@@ -6,10 +6,12 @@
 //
 
 #import "TableViewController.h"
+#import "GLManager.h"
 
 @interface TableViewController () <UITableViewDataSource, UITableViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UIView *popUpView;
+@property (weak, nonatomic) IBOutlet UIButton *closeBtn;
 
 @end
 
@@ -27,8 +29,17 @@
     self.popUpView.layer.cornerRadius = 5;
     self.popUpView.layer.shadowOpacity = 0.8;
     self.popUpView.layer.shadowOffset = CGSizeMake(0.0f, 0.0f);
-    self.popUpView.alpha = 0;
+    //self.popUpView.alpha = 0;
 
+//    if ([GLManager sharedManager].transferLocationUpdates.count > 0)
+//    {
+//        for (id string in [GLManager sharedManager].transferLocationUpdates)
+//        {
+//            NSLog(@" *** String:    %@", [[string objectForKey:@"geometry"] objectForKey:@"coordinates"]);
+//            NSLog(@" *** TimeStamp: %@", [[string objectForKey:@"properties"] objectForKey:@"timestamp"]);
+//            NSLog(@" \n\n\n ");
+//        }
+//    }
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -127,7 +138,7 @@
 //
 //    [self presentViewController:alert animated:YES completion:nil];
     
-    [self showAnimate];
+//    [self showAnimate];
 }
 
 
@@ -136,6 +147,11 @@
     //[self performSegueWithIdentifier:@"detailsView" sender:self];
     
     //[self showAnimate];
+}
+
+- (IBAction)closeAction:(id)sender
+{
+    [self removeAnimate];
 }
 
 //- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender

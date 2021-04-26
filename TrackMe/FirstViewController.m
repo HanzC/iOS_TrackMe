@@ -15,6 +15,7 @@
 @property (strong, nonatomic) NSTimer *viewRefreshTimer;
 @property (strong, nonatomic) MapViewController *mapController;
 @property (nonatomic, assign) BOOL nextRegionChangeIsFromUserInteraction;
+@property (strong, nonatomic) UIButton *senderBtn;
 
 @end
 
@@ -106,6 +107,41 @@ MKPointAnnotation *point;
     } else {
         [UIApplication sharedApplication].idleTimerDisabled = NO;
     }
+    
+    if ([GLManager sharedManager].trackingEnabled == NO)
+    {
+        [[GLManager sharedManager] numberOfLocationsInQueue:^(long num)
+        {
+            num = 0;
+            self.sendNowButton.backgroundColor = [UIColor colorWithRed:150.0/255.0 green:150.0/255.0 blue:150.0/255.0 alpha:1.0];
+            self.sendNowButton.enabled = NO;
+            self.locationAgeLabel.enabled = NO;
+            self.locationLabel.enabled = NO;
+            self.locationSpeedLabel.enabled = NO;
+            self.tripStartStopButton.enabled = NO;
+            self.tripStartStopButton.backgroundColor = [UIColor colorWithRed:150.0/255.0 green:150.0/255.0 blue:150.0/255.0 alpha:1.0];
+//            self.mapView.userTrackingMode = MKUserTrackingModeNone;
+//            self.mapView.showsUserLocation = NO;
+//            self.mapController.mapView.userTrackingMode = MKUserTrackingModeNone;
+            
+            self.queueLabel.text = [NSString stringWithFormat:@"%ld", num];
+            point.title = [NSString stringWithFormat:@"%ld", num];
+        }];
+    }
+    else
+    {
+        self.sendNowButton.backgroundColor = [UIColor colorWithRed:74.0/255.0 green:150.0/255.0 blue:107.0/255.0 alpha:1.0];
+        self.sendNowButton.enabled = YES;
+        self.locationAgeLabel.enabled = YES;
+        self.locationAgeLabel.textColor = [UIColor whiteColor];
+        self.locationLabel.enabled = YES;
+        self.locationSpeedLabel.enabled = YES;
+        self.tripStartStopButton.enabled = YES;
+        self.tripStartStopButton.backgroundColor = [UIColor colorWithRed:106.f/255.f green:212.f/255.f blue:150.f/255.f alpha:1];
+//        self.mapView.userTrackingMode = MKUserTrackingModeFollow;
+//        self.mapView.showsUserLocation = YES;
+//        self.mapController.mapView.userTrackingMode = MKUserTrackingModeFollow;
+    }
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -184,7 +220,7 @@ MKPointAnnotation *point;
 }
 
 - (void)sendingStarted {
-    self.sendNowButton.titleLabel.text = @"Sending...";
+    self.sendNowButton.titleLabel.text = @"Saving...";
     self.sendNowButton.backgroundColor = [UIColor colorWithRed:74.0/255.0 green:150.0/255.0 blue:107.0/255.0 alpha:1.0];
     self.sendNowButton.enabled = NO;
     
@@ -194,7 +230,7 @@ MKPointAnnotation *point;
 
 - (void)sendingFinished
 {
-    self.sendNowButton.titleLabel.text = @"Send Now";
+    self.sendNowButton.titleLabel.text = @"Save";
 //    if([[GLManager sharedManager] apiEndpointURL] == nil)
 //    {
 //        self.sendNowButton.backgroundColor = [UIColor colorWithRed:150.0/255.0 green:150.0/255.0 blue:150.0/255.0 alpha:1.0];
@@ -219,6 +255,31 @@ MKPointAnnotation *point;
 
 - (void)refreshView
 {
+    if ([GLManager sharedManager].trackingEnabled == NO)
+    {
+//        [[GLManager sharedManager] numberOfLocationsInQueue:^(long num)
+//        {
+//            num = 0;
+//            self.sendNowButton.backgroundColor = [UIColor colorWithRed:150.0/255.0 green:150.0/255.0 blue:150.0/255.0 alpha:1.0];
+//            self.sendNowButton.enabled = NO;
+//            self.locationAgeLabel.enabled = NO;
+//            self.locationLabel.enabled = NO;
+//            self.locationSpeedLabel.enabled = NO;
+//
+//            self.queueLabel.text = [NSString stringWithFormat:@"%ld", num];
+//            point.title = [NSString stringWithFormat:@"%ld", num];
+//        }];
+        return;
+    }
+//    else
+//    {
+//        self.sendNowButton.backgroundColor = [UIColor colorWithRed:74.0/255.0 green:150.0/255.0 blue:107.0/255.0 alpha:1.0];
+//        self.sendNowButton.enabled = YES;
+//        self.locationAgeLabel.enabled = YES;
+//        self.locationLabel.enabled = YES;
+//        self.locationSpeedLabel.enabled = YES;
+//    }
+    
     NSString *stringLoc = [NSString stringWithFormat:@"%.06f", [GLManager sharedManager].lastLocation.coordinate.latitude];
     if (![stringLoc isEqualToString:tmpLabel])
     {
@@ -227,7 +288,7 @@ MKPointAnnotation *point;
         NSLog(@" *** FirstViewController > refreshView > Text:      %@", tmpLabel);
         NSLog(@"\n\n");
         
-        if ([GLManager sharedManager].trackingEnabled == YES)
+//        if ([GLManager sharedManager].trackingEnabled == YES)
         {
             point = [[MKPointAnnotation alloc] init];
             point.coordinate = [GLManager sharedManager].lastLocation.coordinate;
@@ -342,9 +403,15 @@ MKPointAnnotation *point;
     }
 }
 
-- (IBAction)locationAgeWasTapped:(id)sender {
+- (IBAction)locationAgeWasTapped:(id)sender
+{
     self.locationAgeLabel.textColor = [UIColor colorWithRed:(210.f/255.f) green:(30.f/255.f) blue:(30.f/255.f) alpha:1];
-    [[GLManager sharedManager] refreshLocation];
+//    [[GLManager sharedManager] refreshLocation];
+    self.senderBtn = sender;
+    if ([GLManager sharedManager].trackingEnabled == YES)
+    {
+        [[GLManager sharedManager] refreshLocation];
+    }
 }
 
 - (IBAction)locationCoordinatesWasTapped:(UILongPressGestureRecognizer *)sender {
