@@ -12,6 +12,8 @@
 
 @property (strong, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) IBOutlet UITableViewCell *tableViewCell;
+@property (strong, nonatomic) IBOutlet UILabel *dateLbl;
+@property (strong, nonatomic) IBOutlet UILabel *pointsLbl;
 
 @end
 

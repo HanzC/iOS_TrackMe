@@ -8,6 +8,7 @@
 #import <Foundation/Foundation.h>
 #import <CoreLocation/CoreLocation.h>
 #import <CoreMotion/CoreMotion.h>
+#import "Location+CoreDataClass.h"
 @import UserNotifications;
 
 static NSString *const GLNewDataNotification = @"GLNewDataNotification";
@@ -55,7 +56,7 @@ typedef enum {
     kGLSignificantLocationExclusive
 } GLSignificantLocationMode;
 
-@interface GLManager : NSObject <CLLocationManagerDelegate, UNUserNotificationCenterDelegate>
+@interface GLManager : NSObject <CLLocationManagerDelegate, UNUserNotificationCenterDelegate, NSFetchedResultsControllerDelegate>
 
 + (GLManager *)sharedManager;
 
@@ -87,6 +88,11 @@ typedef enum {
 @property (strong, nonatomic, readonly) NSString *lastLocationName;
 @property (strong, nonatomic, readonly) NSString *currentFlightSummary;
 @property (strong, nonatomic) NSMutableArray *transferLocationUpdates;
+
+@property (strong, nonatomic) NSManagedObjectModel *managedObjectModel;
+@property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
+@property (strong, nonatomic) NSPersistentStoreCoordinator *persistentStoreCoordinator;
+@property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
 
 - (void)startAllUpdates;
 - (void)stopAllUpdates;

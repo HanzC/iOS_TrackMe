@@ -10,6 +10,7 @@
 #import "LOLDatabase.h"
 #import "FMDatabase.h"
 #import "SystemConfiguration/CaptiveNetwork.h"
+#import "Location+CoreDataClass.h"
 @import UserNotifications;
 
 @interface GLManager()
@@ -48,6 +49,10 @@ long _currentPointsInQueue;
 NSString *_deviceId;
 CLLocationDistance _currentTripDistanceCached;
 AFHTTPSessionManager *_httpClient;
+
+//NSManagedObjectModel *managedObjectModel;
+//NSManagedObjectContext *managedObjectContext;
+//NSPersistentStoreCoordinator *persistentStoreCoordinator;
 
 const double FEET_TO_METERS = 0.304;
 const double MPH_to_METERSPERSECOND = 0.447;
@@ -128,6 +133,71 @@ const double MPH_to_METERSPERSECOND = 0.447;
     [self.locationManager performSelector:@selector(startUpdatingLocation) withObject:nil afterDelay:1.0];
 }
 
+
+#pragma mark - Core Data
+
+//- (NSManagedObjectContext *)managedObjectContext
+//{
+//    NSManagedObjectContext *context = nil;
+//    id delegate = [[UIApplication sharedApplication] delegate];
+//    if ([delegate performSelector:@selector(managedObjectContext)])
+//    {
+//        context = [delegate managedObjectContext];
+//    }
+//    return context;
+//}
+
+- (NSManagedObjectContext *)managedObjectContext
+{
+    if (_managedObjectContext != nil)
+    {
+        return _managedObjectContext;
+    }
+    NSPersistentStoreCoordinator *coordinator = [self persistentStoreCoordinator];
+    if (coordinator != nil)
+    {
+        //managedObjectContext = [[NSManagedObjectContext alloc] init]; // Deprecated //
+        _managedObjectContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSMainQueueConcurrencyType];
+        [_managedObjectContext setPersistentStoreCoordinator: coordinator];
+    }
+
+    return _managedObjectContext;
+}
+
+- (NSManagedObjectModel *)managedObjectModel
+{
+    if (_managedObjectModel != nil)
+    {
+        return _managedObjectModel;
+    }
+    _managedObjectModel = [NSManagedObjectModel mergedModelFromBundles:nil];
+    
+    return _managedObjectModel;
+}
+
+- (NSPersistentStoreCoordinator *)persistentStoreCoordinator
+ {
+
+    if (_persistentStoreCoordinator != nil)
+    {
+        return _persistentStoreCoordinator;
+    }
+    NSURL *storeUrl = [NSURL fileURLWithPath: [[self applicationDocumentsDirectory] stringByAppendingPathComponent: @"Location.sqlite"]];
+    NSError *error = nil;
+    _persistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:[self managedObjectModel]];
+    if(![_persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeUrl options:nil error:&error])
+    {
+        /*Error for store creation should be handled in here*/
+    }
+
+    return _persistentStoreCoordinator;
+}
+- (NSString *)applicationDocumentsDirectory
+{
+    return [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
+}
+
+
 - (void)sendQueueNow {
     NSMutableSet *syncedUpdates = [NSMutableSet set];
     NSMutableArray *locationUpdates = [NSMutableArray array];
@@ -171,15 +241,40 @@ const double MPH_to_METERSPERSECOND = 0.447;
     NSLog(@" *** PointsPerBatch:  %d", _pointsPerBatch);
     
     self.transferLocationUpdates = locationUpdates;
-//    if (self.transferLocationUpdates.count > 0)
-//    {
-//        for (id string in self.transferLocationUpdates)
-//        {
-//            NSLog(@" *** String:    %@", [[string objectForKey:@"geometry"] objectForKey:@"coordinates"]);
-//            NSLog(@" *** TimeStamp: %@", [[string objectForKey:@"properties"] objectForKey:@"timestamp"]);
-//            NSLog(@" \n\n\n ");
-//        }
-//    }
+    if (self.transferLocationUpdates.count > 0)
+    {
+        for (id string in self.transferLocationUpdates)
+        {
+            NSLog(@" *** String:    %@", [[string objectForKey:@"geometry"] objectForKey:@"coordinates"]);
+            NSLog(@" *** Long:    %@", [[[string objectForKey:@"geometry"] objectForKey:@"coordinates"] objectAtIndex:0]);
+            NSLog(@" *** Lat:     %@", [[[string objectForKey:@"geometry"] objectForKey:@"coordinates"] objectAtIndex:1]);
+            NSLog(@" *** TimeStamp: %@", [[string objectForKey:@"properties"] objectForKey:@"timestamp"]);
+            NSLog(@" \n\n\n ");
+            
+            
+            NSDictionary *tempDictionary = @{@"time": [[string objectForKey:@"properties"] objectForKey:@"timestamp"],
+                                             @"latitude": [[[string objectForKey:@"geometry"] objectForKey:@"coordinates"] objectAtIndex:1]
+            };
+            
+            /*
+            // === Save to Core Data === //
+            NSManagedObjectContext *context = [self managedObjectContext];
+            
+            // Create a new managed object
+            NSManagedObject *newObject = [NSEntityDescription insertNewObjectForEntityForName:@"Location" inManagedObjectContext:context];
+            [newObject setValue:[[string objectForKey:@"properties"] objectForKey:@"timestamp"] forKey:@"timestamp"];
+            [newObject setValue:[[[string objectForKey:@"geometry"] objectForKey:@"coordinates"] objectAtIndex:1] forKey:@"latitude"];
+            [newObject setValue:[[[string objectForKey:@"geometry"] objectForKey:@"coordinates"] objectAtIndex:0] forKey:@"longitude"];
+            
+            NSError *error = nil;
+            // Save the object to persistent store
+            if (![context save:&error])
+            {
+                NSLog(@" *** Can't Save! %@ %@", error, [error localizedDescription]);
+            }
+            */
+        }
+    }
     
     
     NSMutableDictionary *postData = [NSMutableDictionary dictionaryWithDictionary:@{@"locations": locationUpdates}];
