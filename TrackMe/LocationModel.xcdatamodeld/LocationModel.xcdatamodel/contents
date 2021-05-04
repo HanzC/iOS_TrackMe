@@ -1,11 +1,17 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="17709" systemVersion="20D91" minimumToolsVersion="Automatic" sourceLanguage="Objective-C" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="18154" systemVersion="20E232" minimumToolsVersion="Automatic" sourceLanguage="Objective-C" userDefinedModelVersionIdentifier="">
     <entity name="Location" representedClassName="Location" syncable="YES" codeGenerationType="class">
         <attribute name="latitude" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="longitude" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="timestamp" optional="YES" attributeType="String"/>
+        <relationship name="times" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="TimeLocation" inverseName="time_location" inverseEntity="TimeLocation"/>
+    </entity>
+    <entity name="TimeLocation" representedClassName="TimeLocation" syncable="YES" codeGenerationType="class">
+        <attribute name="timestamp" optional="YES" attributeType="String"/>
+        <relationship name="time_location" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Location" inverseName="times" inverseEntity="Location"/>
     </entity>
     <elements>
-        <element name="Location" positionX="-63" positionY="-18" width="128" height="74"/>
+        <element name="Location" positionX="-323.12890625" positionY="-204.4296875" width="260.9296875" height="103"/>
+        <element name="TimeLocation" positionX="-126" positionY="18" width="128" height="73"/>
     </elements>
 </model>

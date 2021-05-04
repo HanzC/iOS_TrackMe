@@ -56,7 +56,58 @@
     // Fetch the devices from persistent data store
     NSManagedObjectContext *managedObjectContext = [self managedObjectContext];
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"Location"];
-    self.dataArray = [[managedObjectContext executeFetchRequest:fetchRequest error:nil] mutableCopy];
+    NSFetchRequest *fetchRequestTime = [[NSFetchRequest alloc] initWithEntityName:@"TimeLocation"];
+//    self.dataArray = [[managedObjectContext executeFetchRequest:fetchRequest error:nil] mutableCopy];
+    self.dataArray = [[managedObjectContext executeFetchRequest:fetchRequestTime error:nil] mutableCopy];
+    
+    
+//    // Execute Fetch Request For Location
+//    NSError *fetchError = nil;
+//    NSArray *result = [managedObjectContext executeFetchRequest:fetchRequest error:&fetchError];
+//    if (!fetchError)
+//    {
+//        for (NSManagedObject *managedObject in result)
+//        {
+//            NSLog(@" *** TimeStamp:    %@", [managedObject valueForKey:@"timestamp"]);
+//            NSLog(@" *** TimeLoc Lat:  %@", [managedObject valueForKey:@"latitude"]);
+//            NSLog(@"**\n\n");
+//        }
+//
+//    }
+//    else
+//    {
+//        NSLog(@" *** Error fetching data.");
+//        NSLog(@" *** %@, %@", fetchError, fetchError.localizedDescription);
+//    }
+    
+    
+    // Execute Fetch Request For Location
+    NSMutableArray *tmpArrayLoc = [[managedObjectContext executeFetchRequest:fetchRequest error:nil] mutableCopy];
+    NSManagedObject *arrayObjLoc;
+    for (int x = 0; x < [tmpArrayLoc count]; x++)
+    {
+        arrayObjLoc = [tmpArrayLoc objectAtIndex:x];
+        NSLog(@" *** TimeStamp:      %@", [arrayObjLoc valueForKey:@"timestamp"]);
+        NSLog(@" *** TimeLoc Lat:    %@", [arrayObjLoc valueForKey:@"latitude"]);
+        NSLog(@" *** TimeLoc Long:   %@", [arrayObjLoc valueForKey:@"longitude"]);
+        NSLog(@"**\n\n");
+    }
+    NSLog(@"----\n\n\n---");
+    
+    
+    // Execute Fetch Request For Time Location
+    NSMutableArray *tmpArray = [[managedObjectContext executeFetchRequest:fetchRequestTime error:nil] mutableCopy];
+    NSLog(@" *** TVC > TmpArray:    %@", tmpArray);
+
+    NSManagedObject *arrayObj;
+    for (int x = 0; x < [tmpArray count]; x++)
+    {
+        arrayObj = [tmpArray objectAtIndex:x];
+        NSLog(@" *** TVC > TimeStamp: %@", [arrayObj valueForKey:@"timestamp"]);
+        //NSLog(@" *** TVC > TimeLoc Lat:   %@", [[arrayObj valueForKey:@"time_location"] valueForKey:@"latitude"]);
+        //NSLog(@" *** TVC > TimeLoc Long:  %@", [[arrayObj valueForKey:@"time_location"] valueForKey:@"longitude"]);
+        NSLog(@"**\n\n");
+    }
     
     [self.tableView reloadData];
 }
@@ -268,21 +319,42 @@
          */
          
          
-        NSNumber *soughtPid = [NSNumber numberWithInt:53];
-        NSEntityDescription *productEntity = [NSEntityDescription entityForName:@"Location" inManagedObjectContext:[GLManager sharedManager].managedObjectContext];
-        NSFetchRequest *fetch=[[NSFetchRequest alloc] init];
-        [fetch setEntity:productEntity];
-        NSPredicate *p=[NSPredicate predicateWithFormat:@"timestamp == %@", [_dataArray objectAtIndex:indexPath.row]];
-        [fetch setPredicate:p];
-        //... add sorts if you want them
-        NSError *fetchError;
-        NSArray *fetchedProducts = [[GLManager sharedManager].managedObjectContext executeFetchRequest:fetch error:&fetchError];
-        // handle error
+//        NSEntityDescription *productEntity = [NSEntityDescription entityForName:@"TimeLocation" inManagedObjectContext:[GLManager sharedManager].managedObjectContext];
+//        NSFetchRequest *fetch=[[NSFetchRequest alloc] init];
+//        [fetch setEntity:productEntity];
+//        NSPredicate *p=[NSPredicate predicateWithFormat:@"timestamp == %@", [_dataArray objectAtIndex:indexPath.row]];
+//        [fetch setPredicate:p];
+//        //... add sorts if you want them
+//        NSError *fetchError;
+//        NSArray *fetchedProducts = [[GLManager sharedManager].managedObjectContext executeFetchRequest:fetch error:&fetchError];
+//        // handle error
+//
+//         for (NSManagedObject *product in fetchedProducts)
+//         {
+//             [[GLManager sharedManager].managedObjectContext deleteObject:product];
+//         }
          
-         for (NSManagedObject *product in fetchedProducts)
+         
+         // create a fetch request
+         NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+         NSEntityDescription *entity = [NSEntityDescription entityForName:@"TimeLocation" inManagedObjectContext:self.managedObjectContext];
+         [fetchRequest setEntity:entity];
+      
+         // define a sort descriptor
+         NSSortDescriptor *descriptor = [[NSSortDescriptor alloc] initWithKey:@"timestamp" ascending:YES];
+         NSArray *scArray = [[NSArray alloc]initWithObjects:descriptor, nil];
+      
+         // give sort descriptor array to the fetch request
+         fetchRequest.sortDescriptors = scArray;
+      
+         // fetch all objects
+         NSError *error = nil;
+         NSArray *fetchedObjects = [self.managedObjectContext executeFetchRequest:fetchRequest error:&error];
+         if (fetchedObjects == nil)
          {
-             [[GLManager sharedManager].managedObjectContext deleteObject:product];
+             NSLog(@"Houston, we have a problem: %@", error);
          }
+         
          
          [self.tableView reloadData];
      }

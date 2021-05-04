@@ -243,6 +243,11 @@ const double MPH_to_METERSPERSECOND = 0.447;
     self.transferLocationUpdates = locationUpdates;
     if (self.transferLocationUpdates.count > 0)
     {
+        NSManagedObjectContext *context = [self managedObjectContext];
+        NSEntityDescription *entityTime = [NSEntityDescription entityForName:@"TimeLocation" inManagedObjectContext:context];
+        NSManagedObject *newTime = [[NSManagedObject alloc] initWithEntity:entityTime insertIntoManagedObjectContext:context];
+        [newTime setValue:[[[self.transferLocationUpdates objectAtIndex:0] objectForKey:@"properties"] objectForKey:@"timestamp"] forKey:@"timestamp"];
+        
         for (id string in self.transferLocationUpdates)
         {
             NSLog(@" *** String:    %@", [[string objectForKey:@"geometry"] objectForKey:@"coordinates"]);
@@ -252,9 +257,51 @@ const double MPH_to_METERSPERSECOND = 0.447;
             NSLog(@" \n\n\n ");
             
             
-            NSDictionary *tempDictionary = @{@"time": [[string objectForKey:@"properties"] objectForKey:@"timestamp"],
-                                             @"latitude": [[[string objectForKey:@"geometry"] objectForKey:@"coordinates"] objectAtIndex:1]
-            };
+            
+//            NSManagedObjectContext *context = [self managedObjectContext];
+            // Create a new managed object
+            //NSManagedObject *newObject = [NSEntityDescription insertNewObjectForEntityForName:@"Location" inManagedObjectContext:context];
+            
+            
+            // Create TimeLocation
+//            NSEntityDescription *entityTime = [NSEntityDescription entityForName:@"TimeLocation" inManagedObjectContext:context];
+//            NSManagedObject *newTime = [[NSManagedObject alloc] initWithEntity:entityTime insertIntoManagedObjectContext:context];
+            // Set TimeStamp
+//            [newTime setValue:[[[self.transferLocationUpdates objectAtIndex:0] objectForKey:@"properties"] objectForKey:@"timestamp"] forKey:@"timestamp"];
+            
+            NSManagedObjectContext *context2 = [self managedObjectContext];
+            // Create Location
+            NSEntityDescription *entityLocation = [NSEntityDescription entityForName:@"Location" inManagedObjectContext:context2];
+            NSManagedObject *newLocation = [[NSManagedObject alloc] initWithEntity:entityLocation insertIntoManagedObjectContext:context2];
+            // Set Location
+            [newLocation setValue:[[[string objectForKey:@"geometry"] objectForKey:@"coordinates"] objectAtIndex:1] forKey:@"latitude"];
+            [newLocation setValue:[[[string objectForKey:@"geometry"] objectForKey:@"coordinates"] objectAtIndex:0] forKey:@"longitude"];
+            [newLocation setValue:[[[self.transferLocationUpdates objectAtIndex:0] objectForKey:@"properties"] objectForKey:@"timestamp"] forKey:@"timestamp"];
+            
+            // Add TimeStamp to Location
+            [newTime setValue:[NSSet setWithObject:newLocation] forKey:@"time_location"];
+            
+            // Save Managed Object Context
+            NSError *error = nil;
+            if (![newTime.managedObjectContext save:&error])
+            {
+                NSLog(@" *** Unable to save managed object context.");
+                NSLog(@" *** %@, %@", error, error.localizedDescription);
+            }
+       
+
+            
+//            [newObject setValue:[[[self.transferLocationUpdates objectAtIndex:0] objectForKey:@"properties"] objectForKey:@"timestamp"] forKey:@"timestamp"];
+//            [newObject setValue:[[[string objectForKey:@"geometry"] objectForKey:@"coordinates"] objectAtIndex:1] forKey:@"latitude"];
+//            [newObject setValue:[[[string objectForKey:@"geometry"] objectForKey:@"coordinates"] objectAtIndex:0] forKey:@"longitude"];
+
+//            NSError *error = nil;
+//            // Save the object to persistent store
+//            if (![context save:&error])
+//            {
+//                NSLog(@" *** Can't Save! %@ %@", error, [error localizedDescription]);
+//            }
+            
             
             /*
             // === Save to Core Data === //
@@ -274,6 +321,16 @@ const double MPH_to_METERSPERSECOND = 0.447;
             }
             */
         }
+        
+//        NSLog(@" *** TimeStamp Here: %@", [[[self.transferLocationUpdates objectAtIndex:0] objectForKey:@"properties"] objectForKey:@"timestamp"]);
+//        [newObject setValue:[[[self.transferLocationUpdates objectAtIndex:0] objectForKey:@"properties"] objectForKey:@"timestamp"] forKey:@"timestamp"];
+//
+//        NSError *error = nil;
+//        // Save the object to persistent store
+//        if (![context save:&error])
+//        {
+//            NSLog(@" *** Can't Save! %@ %@", error, [error localizedDescription]);
+//        }
     }
     
     
