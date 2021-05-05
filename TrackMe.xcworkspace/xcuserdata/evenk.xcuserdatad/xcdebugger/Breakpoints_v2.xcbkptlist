@@ -35,16 +35,16 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "7AB6064C-2F45-4B15-9FD0-16CA6F76167C"
+            uuid = "B03B9A6E-CE50-46C0-A652-B56576B4929D"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "TrackMe/TableViewController.m"
+            filePath = "TrackMe/GLManager.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "353"
-            endingLineNumber = "353"
-            landmarkName = "-tableView:commitEditingStyle:forRowAtIndexPath:"
+            startingLineNumber = "811"
+            endingLineNumber = "811"
+            landmarkName = "-writeTripToDB:steps:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

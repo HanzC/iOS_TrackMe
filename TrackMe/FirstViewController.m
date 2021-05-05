@@ -174,22 +174,31 @@ MKPointAnnotation *point;
 {
     MKCoordinateRegion region;
 //    MKCoordinateSpan span;
-//    span.latitudeDelta = 0.005;
-//    span.longitudeDelta = 0.005;
+//    span.latitudeDelta = 0.5;
+//    span.longitudeDelta = 0.5;
 //    CLLocationCoordinate2D location;
 //    location.latitude = aUserLocation.coordinate.latitude;
 //    location.longitude = aUserLocation.coordinate.longitude;
 //    region.span = span;
 //    region.center = location;
 //    [aMapView setRegion:region animated:YES];
-//    [self.mapView setCenterCoordinate:aUserLocation.location.coordinate animated:YES];
     
-    if(self.nextRegionChangeIsFromUserInteraction)
-    {
-        self.nextRegionChangeIsFromUserInteraction = NO;
-        region = MKCoordinateRegionMakeWithDistance(self.mapView.userLocation.coordinate, 1000.0f, 1000.0f);
-        [self.mapView setRegion:region animated:YES];
-    }
+    //[self.mapView setCenterCoordinate:aUserLocation.location.coordinate animated:YES];
+    
+//    if(self.nextRegionChangeIsFromUserInteraction)
+//    {
+//        self.nextRegionChangeIsFromUserInteraction = NO;
+//        region = MKCoordinateRegionMakeWithDistance(self.mapView.userLocation.coordinate, 1000.0f, 1000.0f);
+//        [self.mapView setRegion:region animated:YES];
+//    }
+    
+//    region = MKCoordinateRegionMakeWithDistance(self.mapView.userLocation.coordinate, 10.0f, 10.0f);
+//    [self.mapView setRegion:region animated:YES];
+    
+    [self.mapView showAnnotations:self.mapView.annotations animated:YES];
+    MKMapRect rect = [self.mapView visibleMapRect];
+    UIEdgeInsets insets = UIEdgeInsetsMake(0, 0, 0, 0);
+    [self.mapView setVisibleMapRect:rect edgePadding:insets animated:YES];
 }
 
 - (void)mapView:(MKMapView *)mapView regionWillChangeAnimated:(BOOL)animated
@@ -206,6 +215,18 @@ MKPointAnnotation *point;
             //self.nextRegionChangeIsFromUserInteraction = YES;
         }
     }
+}
+
+- (void)mapView:(MKMapView *)mv didAddAnnotationViews:(NSArray *)views
+{
+//    id<MKAnnotation> mp = [annotationView point];
+//    MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance([mp coordinate] ,250,250);
+//    [mv setRegion:region animated:YES];
+    
+//    [self.mapView showAnnotations:self.mapView.annotations animated:YES];
+//    MKMapRect rect = [self.mapView visibleMapRect];
+//    UIEdgeInsets insets = UIEdgeInsetsMake(0, 0, 0, 0);
+//    [self.mapView setVisibleMapRect:rect edgePadding:insets animated:YES];
 }
 
 
@@ -257,6 +278,9 @@ MKPointAnnotation *point;
 {
     if ([GLManager sharedManager].trackingEnabled == NO)
     {
+        [self.mapView removeAnnotations:self.mapView.annotations];
+        [_mapController.mapView removeAnnotations:_mapController.mapView.annotations];
+        
 //        [[GLManager sharedManager] numberOfLocationsInQueue:^(long num)
 //        {
 //            num = 0;

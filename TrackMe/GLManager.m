@@ -247,6 +247,7 @@ const double MPH_to_METERSPERSECOND = 0.447;
         NSEntityDescription *entityTime = [NSEntityDescription entityForName:@"TimeLocation" inManagedObjectContext:context];
         NSManagedObject *newTime = [[NSManagedObject alloc] initWithEntity:entityTime insertIntoManagedObjectContext:context];
         [newTime setValue:[[[self.transferLocationUpdates objectAtIndex:0] objectForKey:@"properties"] objectForKey:@"timestamp"] forKey:@"timestamp"];
+        //NSLog(@" *** Distance: %@", [[[self.transferLocationUpdates objectAtIndex:[[locationUpdates lastObject] intValue] ] objectForKey:@"properties"] objectForKey:@"distance"]);
         
         for (id string in self.transferLocationUpdates)
         {
@@ -256,18 +257,6 @@ const double MPH_to_METERSPERSECOND = 0.447;
             NSLog(@" *** TimeStamp: %@", [[string objectForKey:@"properties"] objectForKey:@"timestamp"]);
             NSLog(@" \n\n\n ");
             
-            
-            
-//            NSManagedObjectContext *context = [self managedObjectContext];
-            // Create a new managed object
-            //NSManagedObject *newObject = [NSEntityDescription insertNewObjectForEntityForName:@"Location" inManagedObjectContext:context];
-            
-            
-            // Create TimeLocation
-//            NSEntityDescription *entityTime = [NSEntityDescription entityForName:@"TimeLocation" inManagedObjectContext:context];
-//            NSManagedObject *newTime = [[NSManagedObject alloc] initWithEntity:entityTime insertIntoManagedObjectContext:context];
-            // Set TimeStamp
-//            [newTime setValue:[[[self.transferLocationUpdates objectAtIndex:0] objectForKey:@"properties"] objectForKey:@"timestamp"] forKey:@"timestamp"];
             
             NSManagedObjectContext *context2 = [self managedObjectContext];
             // Create Location
@@ -289,19 +278,6 @@ const double MPH_to_METERSPERSECOND = 0.447;
                 NSLog(@" *** %@, %@", error, error.localizedDescription);
             }
        
-
-            
-//            [newObject setValue:[[[self.transferLocationUpdates objectAtIndex:0] objectForKey:@"properties"] objectForKey:@"timestamp"] forKey:@"timestamp"];
-//            [newObject setValue:[[[string objectForKey:@"geometry"] objectForKey:@"coordinates"] objectAtIndex:1] forKey:@"latitude"];
-//            [newObject setValue:[[[string objectForKey:@"geometry"] objectForKey:@"coordinates"] objectAtIndex:0] forKey:@"longitude"];
-
-//            NSError *error = nil;
-//            // Save the object to persistent store
-//            if (![context save:&error])
-//            {
-//                NSLog(@" *** Can't Save! %@ %@", error, [error localizedDescription]);
-//            }
-            
             
             /*
             // === Save to Core Data === //
