@@ -19,6 +19,8 @@
 
 @implementation TableViewController
 
+MKPointAnnotation *annotPoint;
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -32,6 +34,7 @@
     self.popUpView.layer.shadowOpacity = 0.8;
     self.popUpView.layer.shadowOffset = CGSizeMake(0.0f, 0.0f);
     //self.popUpView.alpha = 0;
+    self.mapView.delegate = self;
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -80,6 +83,36 @@
     }
     
     [self.tableView reloadData];
+}
+
+
+#pragma mark - MapView Delegates
+- (void)mapView:(MKMapView *)aMapView didUpdateUserLocation:(MKUserLocation *)aUserLocation
+{
+    
+}
+
+- (void)mapView:(MKMapView *)mv didAddAnnotationViews:(NSArray *)views
+{
+//    id<MKAnnotation> mp = [annotationView point];
+//    MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance([mp coordinate] ,250,250);
+//    [mv setRegion:region animated:YES];
+    
+    [self.mapView showAnnotations:self.mapView.annotations animated:YES];
+    MKMapRect rect = [self.mapView visibleMapRect];
+    UIEdgeInsets insets = UIEdgeInsetsMake(0, 0, 0, 0);
+    [self.mapView setVisibleMapRect:rect edgePadding:insets animated:YES];
+}
+
+
+- (void)mapViewWillStartLoadingMap:(MKMapView *)mapView
+{
+    
+}
+
+- (void)mapView:(MKMapView *)mapView regionWillChangeAnimated:(BOOL)animated;
+{
+    
 }
 
 
@@ -215,31 +248,11 @@
 - (NSInteger)tableView:(nonnull UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-    //return 2;
     return self.dataArray.count;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-//    UIAlertController *alert= [UIAlertController alertControllerWithTitle:@"Enter Folder Name" message:@"Keep it short and sweet" preferredStyle:UIAlertControllerStyleAlert];
-//    [alert addTextFieldWithConfigurationHandler:^(UITextField *textField)
-//    {
-//        textField.placeholder = @"folder name";
-//        textField.keyboardType = UIKeyboardTypeDefault;
-//    }];
-//
-//    UIAlertAction* cancel = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action)
-//    {
-//        NSLog(@"cancel btn");
-//        [alert dismissViewControllerAnimated:YES completion:nil];
-//    }];
-//    [alert addAction:cancel];
-//    [alert.view addSubview:_popUpView];
-//
-//    [self presentViewController:alert animated:YES completion:nil];
-    
-//    [self showAnimate];
-    
     // Create fetch request For Location
     NSEntityDescription *productEntityLoc = [NSEntityDescription entityForName:@"Location" inManagedObjectContext:self.managedObjectContext];
     NSFetchRequest *fetchLoc = [[NSFetchRequest alloc] init];
@@ -251,13 +264,63 @@
     NSArray *fetchedProductsLoc = [self.managedObjectContext executeFetchRequest:fetchLoc error:&fetchErrorLoc];
     // handle error
 
-    for (NSManagedObject *product in fetchedProductsLoc)
+    
+    NSLog(@"*** Start ***");
+    [UIView animateWithDuration:0.5 animations:^{
+            //self.view.alpha = self.view.alpha==1?0:1;
+        NSLog(@"*** IN Progress ***");
+        [self.mapView removeAnnotations:self.mapView.annotations];
+        
+        MKCoordinateRegion defaultRegion = MKCoordinateRegionMake(self.mapView.centerCoordinate, MKCoordinateSpanMake(50, 50)); //180, 360
+        [self.mapView setRegion:defaultRegion animated:YES];
+        
+    }completion:^(BOOL finished)
     {
-        NSLog(@" *** Fetched Loc Time:   %@", [product valueForKey:@"timestamp"]);
-        NSLog(@" *** Fetched Loc Lat:    %@", [product valueForKey:@"latitude"]);
-        NSLog(@" *** Fetched Loc Long:   %@", [product valueForKey:@"longitude"]);
-        NSLog(@"*\n\n\n*");
-    }
+        NSLog(@"*** Finish ***");
+        
+        for (NSManagedObject *product in fetchedProductsLoc)
+        {
+            NSLog(@" *** Fetched Loc Time:   %@", [product valueForKey:@"timestamp"]);
+            NSLog(@" *** Fetched Loc Lat:    %@", [product valueForKey:@"latitude"]);
+            NSLog(@" *** Fetched Loc Long:   %@", [product valueForKey:@"longitude"]);
+            NSLog(@"*\n\n\n*");
+            
+            annotPoint = [[MKPointAnnotation alloc] init];
+            
+            NSString *latString = [product valueForKey:@"latitude"];
+            NSString *longString = [product valueForKey:@"longitude"];
+            CLLocationCoordinate2D coordinates = CLLocationCoordinate2DMake( [latString doubleValue], [longString doubleValue]);
+            
+            annotPoint.coordinate = coordinates;
+            annotPoint.title = @"Here";
+            //point.subtitle = @"I'm here!!!";
+            [self.mapView addAnnotation:annotPoint];
+        }
+    }];
+    
+//    [self.mapView removeAnnotations:self.mapView.annotations];
+//    for (NSManagedObject *product in fetchedProductsLoc)
+//    {
+//        NSLog(@" *** Fetched Loc Time:   %@", [product valueForKey:@"timestamp"]);
+//        NSLog(@" *** Fetched Loc Lat:    %@", [product valueForKey:@"latitude"]);
+//        NSLog(@" *** Fetched Loc Long:   %@", [product valueForKey:@"longitude"]);
+//        NSLog(@"*\n\n\n*");
+//
+//        annotPoint = [[MKPointAnnotation alloc] init];
+//
+//        NSString *latString = [product valueForKey:@"latitude"];
+//        NSString *longString = [product valueForKey:@"longitude"];
+//        CLLocationCoordinate2D coordinates = CLLocationCoordinate2DMake( [latString doubleValue], [longString doubleValue]);
+//
+//        annotPoint.coordinate = coordinates;
+//        annotPoint.title = @"Here";
+//        //point.subtitle = @"I'm here!!!";
+//        [self.mapView addAnnotation:annotPoint];
+//    }
+    
+    
+//    MKCoordinateRegion defaultRegion = MKCoordinateRegionMake(self.mapView.centerCoordinate, MKCoordinateSpanMake(50, 50)); //180, 360
+//    [self.mapView setRegion:defaultRegion animated:YES];
 }
 
 
@@ -316,6 +379,7 @@
          [self.managedObjectContext save:&fetchError];
          
          [_dataArray removeObjectAtIndex:indexPath.row];
+         [self.mapView removeAnnotations:self.mapView.annotations];
          
          
          /*

@@ -16,6 +16,7 @@
 @property (strong, nonatomic) MapViewController *mapController;
 @property (nonatomic, assign) BOOL nextRegionChangeIsFromUserInteraction;
 @property (strong, nonatomic) UIButton *senderBtn;
+@property (nonatomic, retain) MKPolyline *polyLine;
 
 @end
 
@@ -26,6 +27,8 @@ NSArray *intervalMap;
 NSArray *intervalMapStrings;
 NSString *tmpLabel;
 MKPointAnnotation *point;
+NSString *latString;
+NSString *longString;
 
 - (void)viewDidLoad
 {
@@ -46,6 +49,7 @@ MKPointAnnotation *point;
 //    [self setNeedsStatusBarAppearanceUpdate];
     
     _mapController = [self.storyboard instantiateViewControllerWithIdentifier:@"MapView"];
+    _mapController.mapView.showsUserLocation = YES;
     
     _mapView.showsUserLocation = YES;
     _mapView.delegate = self;
@@ -229,6 +233,43 @@ MKPointAnnotation *point;
 //    [self.mapView setVisibleMapRect:rect edgePadding:insets animated:YES];
 }
 
+//- (MKOverlayView*)mapView:(MKMapView*)theMapView viewForOverlay:(id <MKOverlay>)overlay
+//{
+//    MKPolylineView *view = [[MKPolylineView alloc] initWithPolyline:self.polyLine];
+//    view.fillColor = [UIColor blackColor];
+//    view.strokeColor = [UIColor blackColor];
+//    view.lineWidth = 1;
+//    return view;
+//}
+
+-(MKOverlayRenderer *)mapView:(MKMapView *)mapView rendererForOverlay:(id<MKOverlay>)overlay
+{
+    MKPolylineRenderer *renderer = [[MKPolylineRenderer alloc] initWithOverlay:overlay];
+    renderer.strokeColor = [UIColor blueColor];
+    renderer.alpha = 0.75;
+    renderer.lineWidth = 1.0;
+
+    return renderer;
+}
+
+- (void)removeOverlays
+{
+    for (id<MKOverlay> overlayToRemove in self.mapView.overlays)
+    {
+       if ([overlayToRemove isKindOfClass:[MKPolyline class]])
+       {
+           [self.mapView removeOverlay:overlayToRemove];
+       }
+    }
+    
+    for (id<MKOverlay> overlayToRemove in _mapController.mapView.overlays)
+    {
+       if ([overlayToRemove isKindOfClass:[MKPolyline class]])
+       {
+           [_mapController.mapView removeOverlay:overlayToRemove];
+       }
+    }
+}
 
 #pragma mark - Tracking Interface
 
@@ -247,21 +288,14 @@ MKPointAnnotation *point;
     
     [self.mapView removeAnnotations:self.mapView.annotations];
     [_mapController.mapView removeAnnotations:_mapController.mapView.annotations];
+    
+    // Remove Overlay lines
+    [self removeOverlays];
 }
 
 - (void)sendingFinished
 {
     self.sendNowButton.titleLabel.text = @"Save";
-//    if([[GLManager sharedManager] apiEndpointURL] == nil)
-//    {
-//        self.sendNowButton.backgroundColor = [UIColor colorWithRed:150.0/255.0 green:150.0/255.0 blue:150.0/255.0 alpha:1.0];
-//        self.sendNowButton.enabled = NO;
-//    }
-//    else
-//    {
-//        self.sendNowButton.backgroundColor = [UIColor colorWithRed:106.0/255.0 green:212.0/255.0 blue:150.0/255.0 alpha:1.0];
-//        self.sendNowButton.enabled = YES;
-//    }
     self.sendNowButton.backgroundColor = [UIColor colorWithRed:106.0/255.0 green:212.0/255.0 blue:150.0/255.0 alpha:1.0];
     self.sendNowButton.enabled = YES;
 }
@@ -281,28 +315,10 @@ MKPointAnnotation *point;
         [self.mapView removeAnnotations:self.mapView.annotations];
         [_mapController.mapView removeAnnotations:_mapController.mapView.annotations];
         
-//        [[GLManager sharedManager] numberOfLocationsInQueue:^(long num)
-//        {
-//            num = 0;
-//            self.sendNowButton.backgroundColor = [UIColor colorWithRed:150.0/255.0 green:150.0/255.0 blue:150.0/255.0 alpha:1.0];
-//            self.sendNowButton.enabled = NO;
-//            self.locationAgeLabel.enabled = NO;
-//            self.locationLabel.enabled = NO;
-//            self.locationSpeedLabel.enabled = NO;
-//
-//            self.queueLabel.text = [NSString stringWithFormat:@"%ld", num];
-//            point.title = [NSString stringWithFormat:@"%ld", num];
-//        }];
+        // Remove Overlay lines
+        [self removeOverlays];
         return;
     }
-//    else
-//    {
-//        self.sendNowButton.backgroundColor = [UIColor colorWithRed:74.0/255.0 green:150.0/255.0 blue:107.0/255.0 alpha:1.0];
-//        self.sendNowButton.enabled = YES;
-//        self.locationAgeLabel.enabled = YES;
-//        self.locationLabel.enabled = YES;
-//        self.locationSpeedLabel.enabled = YES;
-//    }
     
     NSString *stringLoc = [NSString stringWithFormat:@"%.06f", [GLManager sharedManager].lastLocation.coordinate.latitude];
     if (![stringLoc isEqualToString:tmpLabel])
@@ -310,22 +326,46 @@ MKPointAnnotation *point;
         NSLog(@" *** FirstViewController > refreshView > NOT EQUAL *** ");
         NSLog(@" *** FirstViewController > refreshView > String:    %@", stringLoc);
         NSLog(@" *** FirstViewController > refreshView > Text:      %@", tmpLabel);
-        NSLog(@"\n\n");
         
-//        if ([GLManager sharedManager].trackingEnabled == YES)
+        // === Get Distance between Coordinates ===
+        if (tmpLabel.length != 0)
         {
-            point = [[MKPointAnnotation alloc] init];
-            point.coordinate = [GLManager sharedManager].lastLocation.coordinate;
-            //point.title = @"Where am I?";
-            //point.subtitle = @"I'm here!!!";
-            [self.mapView addAnnotation:point];
-            [_mapController.mapView addAnnotation:point];
-        }
+            CLLocation *startLocation = [[CLLocation alloc] initWithLatitude:[GLManager sharedManager].lastLocation.coordinate.latitude longitude:[GLManager sharedManager].lastLocation.coordinate.longitude];
+            CLLocation *endLocation = [[CLLocation alloc] initWithLatitude:[latString doubleValue] longitude:[longString doubleValue]];
+            CLLocationDistance distance = [startLocation distanceFromLocation:endLocation]; // aka double
+            NSLog(@" *** FirstViewController > Distance:    %.02f Km", distance/1000); // 1m = 3.28ft, Set to 100m
+            
+            if (distance/1000 > 90)
+            {
+                NSLog(@" *** Distance: %f", distance/1000);
         
+                point = [[MKPointAnnotation alloc] init];
+                point.coordinate = [GLManager sharedManager].lastLocation.coordinate;
+                //point.title = @"Where am I?";
+                //point.subtitle = @"I'm here!!!";
+                [self.mapView addAnnotation:point];
+                [_mapController.mapView addAnnotation:point];
+                
+                
+                CLLocationCoordinate2D location[2];
+                location[0] = CLLocationCoordinate2DMake([GLManager sharedManager].lastLocation.coordinate.latitude, [GLManager sharedManager].lastLocation.coordinate.longitude);
+                location[1] = CLLocationCoordinate2DMake([latString doubleValue], [longString doubleValue]);
+                
+                self.polyLine = [MKPolyline polylineWithCoordinates:location count:2];
+                [self.mapView setVisibleMapRect:[self.polyLine boundingMapRect]];
+                [self.mapView addOverlay:self.polyLine];
+                
+                [_mapController.mapView setVisibleMapRect:[self.polyLine boundingMapRect]];
+                [_mapController.mapView addOverlay:self.polyLine];
+            }
+        }
     }
+    NSLog(@"\n\n");
     
     CLLocation *location = [GLManager sharedManager].lastLocation;
     tmpLabel = [NSString stringWithFormat:@"%.06f", location.coordinate.latitude];
+    latString = [NSString stringWithFormat:@"%.06f", location.coordinate.latitude];
+    longString = [NSString stringWithFormat:@"%.06f", location.coordinate.longitude];
     self.locationLabel.text = [NSString stringWithFormat:@"%-4.4f\n%-4.4f", location.coordinate.latitude, location.coordinate.longitude];
     self.locationAltitudeLabel.text = [NSString stringWithFormat:@"+/-%dm %dm", (int)round(location.horizontalAccuracy), (int)round(location.altitude)];
 

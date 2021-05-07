@@ -8,7 +8,7 @@
 #import "MapViewController.h"
 #import <QuartzCore/QuartzCore.h>
 
-@interface MapViewController ()
+@interface MapViewController () <UIGestureRecognizerDelegate>
 
 @property (nonatomic, strong) IBOutlet UIButton *arrowButton;
 @property (nonatomic, assign) BOOL nextRegionChangeIsFromUserInteraction;
@@ -30,6 +30,11 @@
     _mapView.delegate = self;
     
     self.arrowButton.tag = 111;
+    
+    // Map drag handler
+    UIPanGestureRecognizer *panRec = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(didDragMap:)];
+    [panRec setDelegate:self];
+    [self.mapView addGestureRecognizer:panRec];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -64,12 +69,6 @@
 
 - (IBAction)changeRegion:(id)sender
 {
-    /*
-    MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(self.mapView.userLocation.coordinate, 200.0f, 200.0f);
-    //MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(self.mapView.centerCoordinate, 100.0f, 100.0f);
-    [self.mapView setRegion:region animated:YES];
-    */
-    
     MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(self.mapView.userLocation.coordinate, 300.0f, 300.0f);
     if(self.arrowButton.tag == 111)
     {
@@ -97,49 +96,74 @@
 }
 
 
-#pragma mark - MapView Delegates
-- (void)mapView:(MKMapView *)mapView regionWillChangeAnimated:(BOOL)animated
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer
 {
-    UIView *view = mapView.subviews.firstObject;
-    
-    //    Look through gesture recognizers to determine
-    //    whether this region change is from user interaction
-    for(UIGestureRecognizer* recognizer in view.gestureRecognizers)
-    {
-        //    The user cause of this...
-        if(recognizer.state == UIGestureRecognizerStateBegan || recognizer.state == UIGestureRecognizerStateEnded)
-        //if(recognizer.state == UIGestureRecognizerStateBegan)
-        {
-            self.nextRegionChangeIsFromUserInteraction = YES;
-            
-            CLLocationCoordinate2D center = self.mapView.userLocation.coordinate;
-            //center.latitude = self.mapView.region.span.latitudeDelta * 0.25;
-            //NSLog(@" *** MapViewController > regionWillChangeAnimated > Latitude: %f", center.latitude);
-            NSLog(@" *** MapViewController > regionWillChangeAnimated > Latitude: %f", self.mapView.region.center.latitude);
-            //if (center.latitude < (center.latitude + 0.000005))
-//            if ((center.latitude+=0.1) < center.latitude)
-//            {
-                [self.arrowButton setImage:[UIImage imageNamed:@"arrowClear"] forState:UIControlStateNormal];
-                self.arrowButton.tag = 111;
-//            }
-            //break;
-        }
-    }
+    return YES;
 }
 
-- (void)mapView:(MKMapView *)mapView regionDidChangeAnimated:(BOOL)animated
+- (void)didDragMap:(UIGestureRecognizer*)gestureRecognizer
 {
-    if(self.nextRegionChangeIsFromUserInteraction)
+    if (gestureRecognizer.state == UIGestureRecognizerStateBegan)
     {
-        self.nextRegionChangeIsFromUserInteraction = NO;
-        
-        //    Perform code here
+        //NSLog(@"Map drag begin");
         [self.arrowButton setImage:[UIImage imageNamed:@"arrowClear"] forState:UIControlStateNormal];
         self.arrowButton.tag = 111;
         self.mapView.userTrackingMode = MKUserTrackingModeNone;
     }
 }
 
+#pragma mark - MapView Delegates
+//- (void)mapView:(MKMapView *)mapView regionWillChangeAnimated:(BOOL)animated
+//{
+//    UIView *view = mapView.subviews.firstObject;
+//
+//    //    Look through gesture recognizers to determine
+//    //    whether this region change is from user interaction
+//    for(UIGestureRecognizer* recognizer in view.gestureRecognizers)
+//    {
+//        //    The user cause of this...
+//        if(recognizer.state == UIGestureRecognizerStateBegan || recognizer.state == UIGestureRecognizerStateEnded)
+//        //if(recognizer.state == UIGestureRecognizerStateBegan)
+//        {
+//            self.nextRegionChangeIsFromUserInteraction = YES;
+//
+//            CLLocationCoordinate2D center = self.mapView.userLocation.coordinate;
+//            //center.latitude = self.mapView.region.span.latitudeDelta * 0.25;
+//            //NSLog(@" *** MapViewController > regionWillChangeAnimated > Latitude: %f", center.latitude);
+//            NSLog(@" *** MapViewController > regionWillChangeAnimated > Latitude: %f", self.mapView.region.center.latitude);
+//            //if (center.latitude < (center.latitude + 0.000005))
+////            if ((center.latitude+=0.1) < center.latitude)
+////            {
+//                [self.arrowButton setImage:[UIImage imageNamed:@"arrowClear"] forState:UIControlStateNormal];
+//                self.arrowButton.tag = 111;
+////            }
+//            //break;
+//        }
+//    }
+//}
+
+//- (void)mapView:(MKMapView *)mapView regionDidChangeAnimated:(BOOL)animated
+//{
+//    if(self.nextRegionChangeIsFromUserInteraction)
+//    {
+//        self.nextRegionChangeIsFromUserInteraction = NO;
+//
+//        //    Perform code here
+//        [self.arrowButton setImage:[UIImage imageNamed:@"arrowClear"] forState:UIControlStateNormal];
+//        self.arrowButton.tag = 111;
+//        self.mapView.userTrackingMode = MKUserTrackingModeNone;
+//    }
+//}
+
+-(MKOverlayRenderer *)mapView:(MKMapView *)mapView rendererForOverlay:(id<MKOverlay>)overlay
+{
+    MKPolylineRenderer *renderer = [[MKPolylineRenderer alloc] initWithOverlay:overlay];
+    renderer.strokeColor = [UIColor blueColor];
+    renderer.alpha = 0.75;
+    renderer.lineWidth = 1.0;
+
+    return renderer;
+}
 
 /*
 #pragma mark - Navigation

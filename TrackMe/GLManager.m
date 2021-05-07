@@ -49,6 +49,8 @@ long _currentPointsInQueue;
 NSString *_deviceId;
 CLLocationDistance _currentTripDistanceCached;
 AFHTTPSessionManager *_httpClient;
+NSString *latString2;
+NSString *longString2;
 
 //NSManagedObjectModel *managedObjectModel;
 //NSManagedObjectContext *managedObjectContext;
@@ -251,7 +253,7 @@ const double MPH_to_METERSPERSECOND = 0.447;
         
         for (id string in self.transferLocationUpdates)
         {
-            NSLog(@" *** String:    %@", [[string objectForKey:@"geometry"] objectForKey:@"coordinates"]);
+            //NSLog(@" *** String:    %@", [[string objectForKey:@"geometry"] objectForKey:@"coordinates"]);
             NSLog(@" *** Long:    %@", [[[string objectForKey:@"geometry"] objectForKey:@"coordinates"] objectAtIndex:0]);
             NSLog(@" *** Lat:     %@", [[[string objectForKey:@"geometry"] objectForKey:@"coordinates"] objectAtIndex:1]);
             NSLog(@" *** TimeStamp: %@", [[string objectForKey:@"properties"] objectForKey:@"timestamp"]);
@@ -1103,83 +1105,108 @@ const double MPH_to_METERSPERSECOND = 0.447;
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations {
     [[NSNotificationCenter defaultCenter] postNotificationName:GLNewDataNotification object:self];
     
-    self.lastLocation = (CLLocation *)locations[locations.count-1];
-
-    // If a wifi override is configured, create a fake CLLocation object based on the location in the wifi mapping
-//    if([GLManager currentWifiHotSpotName]) {
-//        CLLocation *tmp = [self currentLocationFromWifiName:[GLManager currentWifiHotSpotName]];
-//        if(tmp) {
-//            self.lastLocation = tmp;
-//            NSLog(@"Overriding location from wifi name");
-//            locations = @[self.lastLocation];
-//        }
-//    }
+    NSLog(@"*\n\n");
+    CLLocation *location = (CLLocation *)[locations objectAtIndex:0];
+    NSLog(@" *** GLManager > didUpdateLocations > StartLoc  > Lat: %f, Long: %f", location.coordinate.latitude, location.coordinate.longitude);
+    NSLog(@" *** GLManager > didUpdateLocations > LastLoc   > Lat: %@, Long: %@", latString2, longString2);
+    //NSLog(@"*\n\n*");
     
-    self.lastLocationDictionary = [self currentDictionaryFromLocation:self.lastLocation];
-    
-    // NSLog(@"Received %d locations", (int)locations.count);
-    
-    // NSLog(@"%@", locations);
-    
-    // Queue the point in the database
-    [self.db accessCollection:GLLocationQueueName withBlock:^(id<LOLDatabaseAccessor> accessor) {
+    // === Get Distance between Coordinates ===
+    if (latString2.length != 0)
+    {
+        CLLocation *startLocation = [[CLLocation alloc] initWithLatitude:location.coordinate.latitude longitude:location.coordinate.longitude];
+        CLLocation *endLocation = [[CLLocation alloc] initWithLatitude:[latString2 doubleValue] longitude:[longString2 doubleValue]];
+        CLLocationDistance distance = [startLocation distanceFromLocation:endLocation]; // aka double
+        NSLog(@" *** GLManager > didUpdateLocations > Distance:    %.02f Km", distance/1000); // 1m = 3.28ft, Set to 100m
         
-        NSString *activityType = @"";
-        switch([GLManager sharedManager].activityType) {
-            case CLActivityTypeOther:
-                activityType = @"other";
-                break;
-            case CLActivityTypeAutomotiveNavigation:
-                activityType = @"automotive_navigation";
-                break;
-            case CLActivityTypeFitness:
-                activityType = @"fitness";
-                break;
-            case CLActivityTypeOtherNavigation:
-                activityType = @"other_navigation";
-                break;
-            case CLActivityTypeAirborne:
-                activityType = @"airborne";
-        }
-        
-        for(int i=0; i<locations.count; i++) {
-            CLLocation *loc = locations[i];
-            NSString *timestamp = [GLManager iso8601DateStringFromDate:loc.timestamp];
-            NSDictionary *update = [self currentDictionaryFromLocation:loc];
-            if(self.includeTrackingStats) {
-                NSMutableDictionary *properties = [update objectForKey:@"properties"];
-                [properties setValue:[NSNumber numberWithBool:self.locationManager.pausesLocationUpdatesAutomatically] forKey:@"pauses"];
-                [properties setValue:activityType forKey:@"activity"];
-                [properties setValue:[NSNumber numberWithDouble:self.locationManager.desiredAccuracy] forKey:@"desired_accuracy"];
-                [properties setValue:[NSNumber numberWithDouble:self.defersLocationUpdates] forKey:@"deferred"];
-                [properties setValue:[NSNumber numberWithInt:self.significantLocationMode] forKey:@"significant_change"];
-                [properties setValue:[NSNumber numberWithLong:locations.count] forKey:@"locations_in_payload"];
-            }
-            [accessor setDictionary:update forKey:timestamp];
+        if (distance/1000 > 90)
+        {
+            NSLog(@" *** Distance: %f", distance/1000);
             
-            if([loc.timestamp timeIntervalSinceDate:self.currentTripStart] >= 0  // only if the location is newer than the trip start
-               && loc.horizontalAccuracy <= 200 // only if the location is accurate enough
-               ) {
+        
+    
+    
+            self.lastLocation = (CLLocation *)locations[locations.count-1];
 
-                if(_storeNextLocationAsTripStart) {
-                    [[NSUserDefaults standardUserDefaults] setObject:update forKey:GLTripStartLocationDefaultsName];
-                    self.tripStartLocationDictionary = update;
-                    _storeNextLocationAsTripStart = NO;
+            // If a wifi override is configured, create a fake CLLocation object based on the location in the wifi mapping
+        //    if([GLManager currentWifiHotSpotName]) {
+        //        CLLocation *tmp = [self currentLocationFromWifiName:[GLManager currentWifiHotSpotName]];
+        //        if(tmp) {
+        //            self.lastLocation = tmp;
+        //            NSLog(@"Overriding location from wifi name");
+        //            locations = @[self.lastLocation];
+        //        }
+        //    }
+            
+            self.lastLocationDictionary = [self currentDictionaryFromLocation:self.lastLocation];
+            
+            // NSLog(@"Received %d locations", (int)locations.count);
+            
+            // NSLog(@"%@", locations);
+            
+            // Queue the point in the database
+            [self.db accessCollection:GLLocationQueueName withBlock:^(id<LOLDatabaseAccessor> accessor) {
+                
+                NSString *activityType = @"";
+                switch([GLManager sharedManager].activityType) {
+                    case CLActivityTypeOther:
+                        activityType = @"other";
+                        break;
+                    case CLActivityTypeAutomotiveNavigation:
+                        activityType = @"automotive_navigation";
+                        break;
+                    case CLActivityTypeFitness:
+                        activityType = @"fitness";
+                        break;
+                    case CLActivityTypeOtherNavigation:
+                        activityType = @"other_navigation";
+                        break;
+                    case CLActivityTypeAirborne:
+                        activityType = @"airborne";
                 }
                 
-                // If a trip is in progress, add to the trip's list too (for calculating trip distance)
-                if(self.tripInProgress) {
-                    [self.tripdb executeUpdate:@"INSERT INTO trips (timestamp, latitude, longitude) VALUES (?, ?, ?)", [NSNumber numberWithInt:[loc.timestamp timeIntervalSince1970]], [NSNumber numberWithDouble:loc.coordinate.latitude], [NSNumber numberWithDouble:loc.coordinate.longitude]];
-                    _currentTripHasNewData = YES;
+                for(int i=0; i<locations.count; i++) {
+                    CLLocation *loc = locations[i];
+                    NSString *timestamp = [GLManager iso8601DateStringFromDate:loc.timestamp];
+                    NSDictionary *update = [self currentDictionaryFromLocation:loc];
+                    if(self.includeTrackingStats) {
+                        NSMutableDictionary *properties = [update objectForKey:@"properties"];
+                        [properties setValue:[NSNumber numberWithBool:self.locationManager.pausesLocationUpdatesAutomatically] forKey:@"pauses"];
+                        [properties setValue:activityType forKey:@"activity"];
+                        [properties setValue:[NSNumber numberWithDouble:self.locationManager.desiredAccuracy] forKey:@"desired_accuracy"];
+                        [properties setValue:[NSNumber numberWithDouble:self.defersLocationUpdates] forKey:@"deferred"];
+                        [properties setValue:[NSNumber numberWithInt:self.significantLocationMode] forKey:@"significant_change"];
+                        [properties setValue:[NSNumber numberWithLong:locations.count] forKey:@"locations_in_payload"];
+                    }
+                    [accessor setDictionary:update forKey:timestamp];
+                    
+                    if([loc.timestamp timeIntervalSinceDate:self.currentTripStart] >= 0  // only if the location is newer than the trip start
+                       && loc.horizontalAccuracy <= 200 // only if the location is accurate enough
+                       ) {
+
+                        if(_storeNextLocationAsTripStart) {
+                            [[NSUserDefaults standardUserDefaults] setObject:update forKey:GLTripStartLocationDefaultsName];
+                            self.tripStartLocationDictionary = update;
+                            _storeNextLocationAsTripStart = NO;
+                        }
+                        
+                        // If a trip is in progress, add to the trip's list too (for calculating trip distance)
+                        if(self.tripInProgress) {
+                            [self.tripdb executeUpdate:@"INSERT INTO trips (timestamp, latitude, longitude) VALUES (?, ?, ?)", [NSNumber numberWithInt:[loc.timestamp timeIntervalSince1970]], [NSNumber numberWithDouble:loc.coordinate.latitude], [NSNumber numberWithDouble:loc.coordinate.longitude]];
+                            _currentTripHasNewData = YES;
+                        }
+                    }
                 }
-            }
-
-
-        }
-        
-    }];
+            }];
+            
+            [self sendQueueIfTimeElapsed];
     
-    [self sendQueueIfTimeElapsed];
+        }
+    }
+    
+    NSLog(@"*\n\n*");
+    latString2 = [NSString stringWithFormat:@"%.06f", self.lastLocation.coordinate.latitude];
+    longString2 = [NSString stringWithFormat:@"%.06f", self.lastLocation.coordinate.longitude];
 }
 
 - (NSDictionary *)currentDictionaryFromLocation:(CLLocation *)loc {

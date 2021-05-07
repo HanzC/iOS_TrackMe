@@ -6,14 +6,16 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <MapKit/MapKit.h>
 
 
-@interface TableViewController : UIViewController
+@interface TableViewController : UIViewController <MKMapViewDelegate>
 
 @property (strong, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) IBOutlet UITableViewCell *tableViewCell;
 @property (strong, nonatomic) IBOutlet UILabel *dateLbl;
 @property (strong, nonatomic) IBOutlet UILabel *pointsLbl;
+@property (strong, nonatomic) IBOutlet MKMapView *mapView;
 
 @end
 
