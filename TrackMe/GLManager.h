@@ -94,6 +94,8 @@ typedef enum {
 @property (strong, nonatomic) NSPersistentStoreCoordinator *persistentStoreCoordinator;
 @property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
 
+@property (nonatomic) int countLoc;
+
 - (void)startAllUpdates;
 - (void)stopAllUpdates;
 - (void)refreshLocation;

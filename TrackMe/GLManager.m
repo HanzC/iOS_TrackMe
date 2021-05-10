@@ -52,9 +52,6 @@ AFHTTPSessionManager *_httpClient;
 NSString *latString2;
 NSString *longString2;
 
-//NSManagedObjectModel *managedObjectModel;
-//NSManagedObjectContext *managedObjectContext;
-//NSPersistentStoreCoordinator *persistentStoreCoordinator;
 
 const double FEET_TO_METERS = 0.304;
 const double MPH_to_METERSPERSECOND = 0.447;
@@ -331,6 +328,7 @@ const double MPH_to_METERSPERSECOND = 0.447;
     //NSLog(@" *** postData: %@", postData); // //
     NSLog(@"Endpoint: %@", endpoint);
     NSLog(@"Updates in post: %lu", (unsigned long)locationUpdates.count);
+    _countLoc = 0;
     
     if(locationUpdates.count == 0) {
         self.batchInProgress = NO;
@@ -1114,12 +1112,13 @@ const double MPH_to_METERSPERSECOND = 0.447;
     // === Get Distance between Coordinates ===
     if (latString2.length != 0)
     {
+        _countLoc++;
         CLLocation *startLocation = [[CLLocation alloc] initWithLatitude:location.coordinate.latitude longitude:location.coordinate.longitude];
         CLLocation *endLocation = [[CLLocation alloc] initWithLatitude:[latString2 doubleValue] longitude:[longString2 doubleValue]];
         CLLocationDistance distance = [startLocation distanceFromLocation:endLocation]; // aka double
         NSLog(@" *** GLManager > didUpdateLocations > Distance:    %.02f Km", distance/1000); // 1m = 3.28ft, Set to 100m
         
-        if (distance/1000 > 90)
+        if (distance/1000 > 90 || _countLoc == 1)
         {
             NSLog(@" *** Distance: %f", distance/1000);
             

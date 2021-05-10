@@ -29,6 +29,13 @@ NSString *tmpLabel;
 MKPointAnnotation *point;
 NSString *latString;
 NSString *longString;
+int countLoc;
+
+CLLocationDegrees minLatitude = 90.0;
+CLLocationDegrees maxLatitude = -90.0;
+CLLocationDegrees minLongitude = 180.0;
+CLLocationDegrees maxLongitude = -180.0;
+  
 
 - (void)viewDidLoad
 {
@@ -55,6 +62,8 @@ NSString *longString;
     _mapView.delegate = self;
     
     self.nextRegionChangeIsFromUserInteraction = YES;
+    countLoc = 0;
+    [GLManager sharedManager].countLoc = 0;
 }
 
 - (UIStatusBarStyle)preferredStatusBarStyle {
@@ -233,15 +242,6 @@ NSString *longString;
 //    [self.mapView setVisibleMapRect:rect edgePadding:insets animated:YES];
 }
 
-//- (MKOverlayView*)mapView:(MKMapView*)theMapView viewForOverlay:(id <MKOverlay>)overlay
-//{
-//    MKPolylineView *view = [[MKPolylineView alloc] initWithPolyline:self.polyLine];
-//    view.fillColor = [UIColor blackColor];
-//    view.strokeColor = [UIColor blackColor];
-//    view.lineWidth = 1;
-//    return view;
-//}
-
 -(MKOverlayRenderer *)mapView:(MKMapView *)mapView rendererForOverlay:(id<MKOverlay>)overlay
 {
     MKPolylineRenderer *renderer = [[MKPolylineRenderer alloc] initWithOverlay:overlay];
@@ -291,6 +291,8 @@ NSString *longString;
     
     // Remove Overlay lines
     [self removeOverlays];
+    countLoc = 0;
+    [GLManager sharedManager].countLoc = 0;
 }
 
 - (void)sendingFinished
@@ -298,6 +300,7 @@ NSString *longString;
     self.sendNowButton.titleLabel.text = @"Save";
     self.sendNowButton.backgroundColor = [UIColor colorWithRed:106.0/255.0 green:212.0/255.0 blue:150.0/255.0 alpha:1.0];
     self.sendNowButton.enabled = YES;
+    [[GLManager sharedManager] refreshLocation];
 }
 
 - (NSString *)speedUnitText {
@@ -317,8 +320,13 @@ NSString *longString;
         
         // Remove Overlay lines
         [self removeOverlays];
+        countLoc = 0;
+        [GLManager sharedManager].countLoc = 0;
         return;
     }
+    
+    NSLog(@" *** FirstViewController > refreshView > LastLoc:      %@", [GLManager sharedManager].lastLocation);
+    NSLog(@" *** FirstViewController > refreshView > LastLoc 2:    %f", [GLManager sharedManager].lastLocation.coordinate.latitude);
     
     NSString *stringLoc = [NSString stringWithFormat:@"%.06f", [GLManager sharedManager].lastLocation.coordinate.latitude];
     if (![stringLoc isEqualToString:tmpLabel])
@@ -330,12 +338,14 @@ NSString *longString;
         // === Get Distance between Coordinates ===
         if (tmpLabel.length != 0)
         {
+            countLoc++;
+//            [GLManager sharedManager].countLoc++;
             CLLocation *startLocation = [[CLLocation alloc] initWithLatitude:[GLManager sharedManager].lastLocation.coordinate.latitude longitude:[GLManager sharedManager].lastLocation.coordinate.longitude];
             CLLocation *endLocation = [[CLLocation alloc] initWithLatitude:[latString doubleValue] longitude:[longString doubleValue]];
             CLLocationDistance distance = [startLocation distanceFromLocation:endLocation]; // aka double
             NSLog(@" *** FirstViewController > Distance:    %.02f Km", distance/1000); // 1m = 3.28ft, Set to 100m
             
-            if (distance/1000 > 90)
+            if (distance/1000 > 90 || countLoc == 1)
             {
                 NSLog(@" *** Distance: %f", distance/1000);
         
