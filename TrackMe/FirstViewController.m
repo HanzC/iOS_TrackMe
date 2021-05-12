@@ -344,8 +344,10 @@ CLLocationDegrees maxLongitude = -180.0;
             CLLocation *endLocation = [[CLLocation alloc] initWithLatitude:[latString doubleValue] longitude:[longString doubleValue]];
             CLLocationDistance distance = [startLocation distanceFromLocation:endLocation]; // aka double
             NSLog(@" *** FirstViewController > Distance:    %.02f Km", distance/1000); // 1m = 3.28ft, Set to 100m
+            NSLog(@" *** FirstViewController > TimeStamp:   %@", [GLManager sharedManager].lastLocation.timestamp);
+            NSLog(@" *** FirstViewController > Speed:       %f", [GLManager sharedManager].lastLocation.speed);
             
-            if (distance/1000 > 90 || countLoc == 1)
+            //if (distance/1000 > 90 || countLoc == 1)
             {
                 NSLog(@" *** Distance: %f", distance/1000);
         
@@ -362,11 +364,12 @@ CLLocationDegrees maxLongitude = -180.0;
                 location[1] = CLLocationCoordinate2DMake([latString doubleValue], [longString doubleValue]);
                 
                 self.polyLine = [MKPolyline polylineWithCoordinates:location count:2];
-                [self.mapView setVisibleMapRect:[self.polyLine boundingMapRect]];
+//                [self.mapView setVisibleMapRect:[self.polyLine boundingMapRect]];
                 [self.mapView addOverlay:self.polyLine];
                 
-                [_mapController.mapView setVisibleMapRect:[self.polyLine boundingMapRect]];
+//                [_mapController.mapView setVisibleMapRect:[self.polyLine boundingMapRect]];
                 [_mapController.mapView addOverlay:self.polyLine];
+                //self.mapView.userTrackingMode = MKUserTrackingModeFollowWithHeading;
             }
         }
     }

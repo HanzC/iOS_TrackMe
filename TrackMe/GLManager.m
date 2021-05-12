@@ -1118,7 +1118,7 @@ const double MPH_to_METERSPERSECOND = 0.447;
         CLLocationDistance distance = [startLocation distanceFromLocation:endLocation]; // aka double
         NSLog(@" *** GLManager > didUpdateLocations > Distance:    %.02f Km", distance/1000); // 1m = 3.28ft, Set to 100m
         
-        if (distance/1000 > 90 || _countLoc == 1)
+        //if (distance/1000 > 90 || _countLoc == 1)
         {
             NSLog(@" *** Distance: %f", distance/1000);
             

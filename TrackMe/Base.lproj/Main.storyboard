@@ -960,7 +960,7 @@ IAogA
                             <constraint firstItem="sie-6T-Egh" firstAttribute="trailing" secondItem="Zfb-sj-5w2" secondAttribute="trailing" constant="10" id="tns-4R-ETc"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="History" id="SgM-vL-Lkf"/>
+                    <tabBarItem key="tabBarItem" title="History" image="history" id="SgM-vL-Lkf"/>
                     <connections>
                         <outlet property="mapView" destination="grS-ft-zgp" id="rPt-Yw-W9x"/>
                         <outlet property="popUpView" destination="Zfb-sj-5w2" id="tfW-Yc-IrZ"/>
@@ -974,6 +974,7 @@ IAogA
     </scenes>
     <resources>
         <image name="arrowClear" width="47" height="47"/>
+        <image name="history" width="30" height="30"/>
         <image name="map-pin" width="30" height="30"/>
         <image name="settings" width="30" height="30"/>
         <systemColor name="systemBackgroundColor">

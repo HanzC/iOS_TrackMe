@@ -47,26 +47,6 @@
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
-
-- (void)mapView:(MKMapView *)aMapView didUpdateUserLocation:(MKUserLocation *)aUserLocation
-{
-    /*
-    MKCoordinateRegion region;
-    MKCoordinateSpan span;
-    span.latitudeDelta = 0.005;
-    span.longitudeDelta = 0.005;
-    CLLocationCoordinate2D location;
-    location.latitude = aUserLocation.coordinate.latitude;
-    location.longitude = aUserLocation.coordinate.longitude;
-    region.span = span;
-    region.center = location;
-    [aMapView setRegion:region animated:YES];
-    */
-    
-    //[self.mapView setCenterCoordinate:aUserLocation.location.coordinate animated:YES];
-}
-
-
 - (IBAction)changeRegion:(id)sender
 {
     MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(self.mapView.userLocation.coordinate, 300.0f, 300.0f);
@@ -113,6 +93,14 @@
 }
 
 #pragma mark - MapView Delegates
+- (void)mapView:(MKMapView *)aMapView didUpdateUserLocation:(MKUserLocation *)aUserLocation
+{
+    [self.mapView showAnnotations:self.mapView.annotations animated:YES];
+    MKMapRect rect = [self.mapView visibleMapRect];
+    UIEdgeInsets insets = UIEdgeInsetsMake(0, 0, 0, 0);
+    [self.mapView setVisibleMapRect:rect edgePadding:insets animated:YES];
+}
+
 //- (void)mapView:(MKMapView *)mapView regionWillChangeAnimated:(BOOL)animated
 //{
 //    UIView *view = mapView.subviews.firstObject;
