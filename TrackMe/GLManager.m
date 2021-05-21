@@ -560,7 +560,7 @@ const double MPH_to_METERSPERSECOND = 0.447;
         NSLog(@"Monitoring significant location changes");
     }
     
-    [UIDevice currentDevice].batteryMonitoringEnabled = YES;
+//    [UIDevice currentDevice].batteryMonitoringEnabled = YES;
     
     if(CMMotionActivityManager.isActivityAvailable) {
         [self.motionActivityManager startActivityUpdatesToQueue:[NSOperationQueue mainQueue] withHandler:^(CMMotionActivity *activity) {
@@ -581,7 +581,7 @@ const double MPH_to_METERSPERSECOND = 0.447;
 
 - (void)disableTracking {
     self.trackingEnabled = NO;
-    [UIDevice currentDevice].batteryMonitoringEnabled = NO;
+//    [UIDevice currentDevice].batteryMonitoringEnabled = NO;
     [self.locationManager stopMonitoringVisits];
     [self.locationManager stopUpdatingHeading];
     [self.locationManager stopUpdatingLocation];
@@ -1119,6 +1119,7 @@ const double MPH_to_METERSPERSECOND = 0.447;
         NSLog(@" *** GLManager > didUpdateLocations > Distance:    %.02f Km", distance/1000); // 1m = 3.28ft, Set to 100m
         
         //if (distance/1000 > 90 || _countLoc == 1)
+        if (location.speed > 1.0 || _countLoc == 1)
         {
             NSLog(@" *** Distance: %f", distance/1000);
             

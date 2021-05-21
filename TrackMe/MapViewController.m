@@ -95,10 +95,10 @@
 #pragma mark - MapView Delegates
 - (void)mapView:(MKMapView *)aMapView didUpdateUserLocation:(MKUserLocation *)aUserLocation
 {
-    [self.mapView showAnnotations:self.mapView.annotations animated:YES];
+    //[self.mapView showAnnotations:self.mapView.annotations animated:YES];
     MKMapRect rect = [self.mapView visibleMapRect];
     UIEdgeInsets insets = UIEdgeInsetsMake(0, 0, 0, 0);
-    [self.mapView setVisibleMapRect:rect edgePadding:insets animated:YES];
+    //[self.mapView setVisibleMapRect:rect edgePadding:insets animated:YES];
 }
 
 //- (void)mapView:(MKMapView *)mapView regionWillChangeAnimated:(BOOL)animated

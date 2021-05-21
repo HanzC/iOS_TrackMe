@@ -10,7 +10,7 @@
 #import "Location+CoreDataClass.h"
 #import <QuartzCore/QuartzCore.h>
 
-@interface TableViewController () <UITableViewDataSource, UITableViewDelegate>
+@interface TableViewController () <UITableViewDataSource, UITableViewDelegate, UIGestureRecognizerDelegate>
 
 @property (weak, nonatomic) IBOutlet UIView *popUpView;
 @property (weak, nonatomic) IBOutlet UIButton *closeBtn;
@@ -24,6 +24,7 @@
 MKPointAnnotation *annotPoint;
 CLGeocoder *geocoder;
 MKAnnotationView *pinView;
+MKPinAnnotationView *pinAnnotationView;
 
 NSString *street;
 NSString *city;
@@ -39,6 +40,10 @@ NSString *country;
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"newCell"];
+    
+    self.mapView.layer.cornerRadius = 5;
+    self.mapView.layer.shadowOpacity = 0.8;
+    self.mapView.layer.shadowOffset = CGSizeMake(0.0f, 0.0f);
 
     self.popUpView.layer.cornerRadius = 5;
     self.popUpView.layer.shadowOpacity = 0.8;
@@ -46,6 +51,11 @@ NSString *country;
     //self.popUpView.alpha = 0;
     self.mapView.delegate = self;
     geocoder = [[CLGeocoder alloc] init];
+    
+    // Map drag handler
+    UIPanGestureRecognizer *panRec = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(didDragMap:)];
+    [panRec setDelegate:self];
+    [self.mapView addGestureRecognizer:panRec];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -97,13 +107,30 @@ NSString *country;
 }
 
 
+#pragma mark - Gesture Recognizer
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer
+{
+    return YES;
+}
+
+- (void)didDragMap:(UIGestureRecognizer*)gestureRecognizer
+{
+    if (gestureRecognizer.state == UIGestureRecognizerStateBegan || gestureRecognizer.state == UIGestureRecognizerStateEnded)
+    {
+        //NSLog(@"Map drag begin");
+        self.mapView.userTrackingMode = MKUserTrackingModeNone;
+        self.mapView.showsUserLocation = NO;
+    }
+}
+
+
 #pragma mark - MapView Delegates
 - (void)mapView:(MKMapView *)mv didAddAnnotationViews:(NSArray *)views
 {
     [self.mapView showAnnotations:self.mapView.annotations animated:YES];
     MKMapRect rect = [self.mapView visibleMapRect];
     UIEdgeInsets insets = UIEdgeInsetsMake(0, 0, 0, 0);
-    [self.mapView setVisibleMapRect:rect edgePadding:insets animated:YES];
+    //[self.mapView setVisibleMapRect:rect edgePadding:insets animated:YES];
 }
 
 -(MKOverlayRenderer *)mapView:(MKMapView *)mapView rendererForOverlay:(id<MKOverlay>)overlay
@@ -111,14 +138,14 @@ NSString *country;
     MKPolylineRenderer *renderer = [[MKPolylineRenderer alloc] initWithOverlay:overlay];
     renderer.strokeColor = [UIColor blueColor];
     renderer.alpha = 0.33;
-    renderer.lineWidth = 4.0;
+    renderer.lineWidth = 5.0;
 
     return renderer;
 }
 
 - (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id <MKAnnotation>)annotation
 {
-    ///*
+    /*
     // If it's the user location, just return nil.
     if ([annotation isKindOfClass:[MKUserLocation class]])
         return nil;
@@ -145,14 +172,14 @@ NSString *country;
         return pinView;
     }
     return nil;
-    //*/
+    */
 
-    /*
+    ///*
     static NSString *AnnotationIdentifier = @"Annotation";
     if ([annotation isKindOfClass:MKUserLocation.class])
         return nil;
 
-    MKPinAnnotationView *pinAnnotationView = (MKPinAnnotationView *)[mapView dequeueReusableAnnotationViewWithIdentifier:AnnotationIdentifier];
+    pinAnnotationView = (MKPinAnnotationView *)[mapView dequeueReusableAnnotationViewWithIdentifier:AnnotationIdentifier];
 
     if (!pinAnnotationView)
     {
@@ -160,10 +187,12 @@ NSString *country;
         pinAnnotationView.canShowCallout = YES;
         pinAnnotationView.calloutOffset = CGPointMake(-7, 0);
         //pinAnnotationView.rightCalloutAccessoryView = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
+        NSLog(@" *** viewForAnnotation > Pin: %f", pinAnnotationView.annotation.coordinate.latitude);
+        NSLog(@" *** viewForAnnotation > Title: %@", pinAnnotationView.annotation.title);
     }
 
     return pinAnnotationView;
-    */
+    //*/
 }
 
 //- (void)mapView:(MKMapView *)mapView annotationView:(MKAnnotationView *)view calloutAccessoryControlTapped:(UIControl *)control
@@ -173,10 +202,11 @@ NSString *country;
 
 //- (void)mapView:(MKMapView *)mapView didSelectAnnotationView:(MKAnnotationView *)view
 //{
-//    NSLog(@" *** Annot Title:    %@", view.annotation.title);
+//    //NSLog(@" *** Annot Title:    %@", view.annotation.title);
 //
 //    self.mapView.centerCoordinate = view.annotation.coordinate;
-//    NSLog(@" *** Annot Selected: %f", view.annotation.coordinate.latitude);
+//    NSLog(@" *** Annot Selected Lat, Long: %f, %f", view.annotation.coordinate.latitude, view.annotation.coordinate.longitude);
+//    NSLog(@" *** Annot Selected Title:     %@", view.annotation.title);
 //
 //    //1. Location from latitude and longitude
 //    CLLocation *location = [[CLLocation alloc] initWithLatitude:view.annotation.coordinate.latitude longitude:view.annotation.coordinate.longitude];
@@ -192,9 +222,10 @@ NSString *country;
 //        posCode = placemark.postalCode;
 //        country = placemark.country;
 //        NSLog(@" *** Street: %@", state);
+//        //annotPoint.title = [NSString stringWithFormat:@"%@, %@", street, city];
+//        //annotPoint.subtitle = [NSString stringWithFormat:@"%@", country];
+//        NSLog(@"\n\n");
 //    }];
-//
-//    NSLog(@"\n\n");
 //}
 
 
@@ -295,8 +326,10 @@ NSString *country;
 #pragma mark - TableView Delegates
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"newCell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+    //static NSString *CellIdentifier = @"newCell";
+    NSString *CellIdentifier = [NSString stringWithFormat:@"Cell %ld",(long)indexPath.row];
+    //UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+    UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
 
     if (cell == nil)
     {
@@ -325,7 +358,7 @@ NSString *country;
     // Initialize TimeStamp Label
     UILabel *lblTemp = [[UILabel alloc] initWithFrame:CGRectMake(0, 5, _tableView.frame.size.width/2 + 25, 35)];
     lblTemp.font =  [UIFont fontWithName:@"Arial-BoldMT" size:15];
-    lblTemp.backgroundColor = [UIColor yellowColor];
+    lblTemp.backgroundColor = [UIColor clearColor];
     lblTemp.text = [NSString stringWithFormat:@"%@", [formatter stringFromDate:formattedDate]]; //[NSString stringWithFormat:@"%@", [device valueForKey:@"timestamp"]];
     lblTemp.adjustsFontSizeToFitWidth = YES;
     [cell.contentView addSubview:lblTemp];
@@ -355,14 +388,17 @@ NSString *country;
         }
         
         NSLog(@" *** cellForRowAtIndexPath > AnnotPoint Time:   %@", [product valueForKey:@"timestamp"]);
-        NSLog(@" *** cellForRowAtIndexPath > AnnotPoint:        %f", annotPoint.coordinate.latitude);
-        NSLog(@"\n\n\n");
+        //NSLog(@" *** cellForRowAtIndexPath > AnnotPoint:        %f", annotPoint.coordinate.latitude);
+        //NSLog(@" *** cellForRowAtIndexPath > Loc Lat:           %@", [product valueForKey:@"latitude"]);
+        //NSLog(@" *** cellForRowAtIndexPath > Loc Long:          %@", [product valueForKey:@"longitude"]);
+        NSLog(@"\n\n");
     }
     NSLog(@" *** cellForRowAtIndexPath > Count:   %d", countPins);
+    NSLog(@"\n\n\n");
     // Initialize Annotation Count Label
     UILabel *countTemp = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(_tableView.frame) - 55, 5, 50, 35)];
     countTemp.font =  [UIFont fontWithName:@"Arial-BoldMT" size:15];
-    countTemp.backgroundColor = [UIColor yellowColor];
+    countTemp.backgroundColor = [UIColor clearColor];
     countTemp.text = [NSString stringWithFormat:@"%d", countPins];
     countTemp.adjustsFontSizeToFitWidth = YES;
     [cell.contentView addSubview:countTemp];
@@ -410,7 +446,6 @@ NSString *country;
         
     }completion:^(BOOL finished)
     {
-        NSLog(@"*** Finish ***");
         
         for (NSManagedObject *product in fetchedProductsLoc)
         {
@@ -426,17 +461,28 @@ NSString *country;
             CLLocationCoordinate2D coordinates = CLLocationCoordinate2DMake( [latString doubleValue], [longString doubleValue]);
             
             // Add Annotation
-            [self callReverseGeocode:pinView]; //annotation isKindOfClass:[MKUserLocation class]]
             annotPoint.coordinate = coordinates;
-            annotPoint.title = [NSString stringWithFormat:@"%@", street];
+            annotPoint.title = [NSString stringWithFormat:@"%f", coordinates.latitude];//[NSString stringWithFormat:@"%@", street];
+//            annotPoint.subtitle = [NSString stringWithFormat:@"%f", coordinates.longitude];
             [self.mapView addAnnotation:annotPoint];
+//            [self callReverseGeocode:annotPoint];
+            //[coordsAry addObject:annotPoint];
             
             // Add Overlay
             CLLocationCoordinate2D location[2];
-            if (location[0].latitude == 0)
+//            if (location[0].latitude == 0)
+//                location[0] = CLLocationCoordinate2DMake([latString doubleValue], [longString doubleValue]);
+//            else
+//                location[0] = CLLocationCoordinate2DMake([firstLocLat doubleValue], [firstLocLong doubleValue]);
+//            location[1] = CLLocationCoordinate2DMake([latString doubleValue], [longString doubleValue]);
+            if (location[0].latitude == 0 || firstLocLat.length == 0)
+            {
                 location[0] = CLLocationCoordinate2DMake([latString doubleValue], [longString doubleValue]);
+            }
             else
+            {
                 location[0] = CLLocationCoordinate2DMake([firstLocLat doubleValue], [firstLocLong doubleValue]);
+            }
             location[1] = CLLocationCoordinate2DMake([latString doubleValue], [longString doubleValue]);
             
             self.polyLine = [MKPolyline polylineWithCoordinates:location count:2];
@@ -446,27 +492,42 @@ NSString *country;
             firstLocLat = [NSString stringWithFormat:@"%.06f", [latString doubleValue]];
             firstLocLong = [NSString stringWithFormat:@"%.06f", [longString doubleValue]];
         }
+        NSLog(@"*** Finish ***");
     }];
 }
-//- (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id <MKAnnotation>)annotation
-- (void)callReverseGeocode:(MKAnnotationView *)view
+
+- (void)callReverseGeocode:(MKPointAnnotation *)view
 {
+    NSLog(@"*** callReverseGeocode 1 ***");
     //1. Location from latitude and longitude
-    CLLocation *location = [[CLLocation alloc] initWithLatitude:view.annotation.coordinate.latitude longitude:view.annotation.coordinate.longitude];
+    CLLocation *location = [[CLLocation alloc] initWithLatitude:view.coordinate.latitude longitude:view.coordinate.longitude];
 
     //2. After we have current coordinates, we use this method to fetch the information data of fetched coordinate
     [geocoder reverseGeocodeLocation:location completionHandler:^(NSArray *placemarks, NSError *error)
     {
-        CLPlacemark *placemark = [placemarks lastObject];
+        if (error == nil && [placemarks count] > 0)
+        {
+            CLPlacemark *placemark = [placemarks lastObject];
 
-        street = placemark.thoroughfare;
-        city = placemark.locality;
-        state = placemark.administrativeArea;
-        posCode = placemark.postalCode;
-        country = placemark.country;
-        NSLog(@" *** Street: %@", state);
+            street = placemark.thoroughfare;
+            city = placemark.locality;
+            state = placemark.administrativeArea;
+            posCode = placemark.postalCode;
+            country = placemark.country;
+            NSLog(@" *** callReverseGeocode > Street: %@", street);
+        }
+        else
+        {
+            NSLog(@" *** callReverseGeocode > Error: %@", error.debugDescription);
+        }
     }];
+    
+    NSLog(@"*** callReverseGeocode 2 ***");
 }
+-(void)updateUIWithResponse:(NSString*)response
+ {
+     NSLog(@"Got a response: %@", response);
+ }
 
 
 - (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -532,6 +593,14 @@ NSString *country;
                 [self.mapView removeOverlay:overlayToRemove];
          }
          
+         [UIView animateWithDuration:0.5 animations:^{             
+             MKCoordinateRegion defaultRegion = MKCoordinateRegionMake(self.mapView.centerCoordinate, MKCoordinateSpanMake(50, 50)); //180, 360
+             [self.mapView setRegion:defaultRegion animated:YES];
+             
+         }completion:^(BOOL finished)
+         {
+         }];
+         
          [self.tableView reloadData];
      }
 }
@@ -541,21 +610,21 @@ NSString *country;
     UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, tableView.frame.size.width, 18)];
     
     /* Create Date Label */
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, tableView.frame.size.width/2 - 10, 18)];
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 4.5, tableView.frame.size.width/2 - 10, 18)];
     [label setFont:[UIFont boldSystemFontOfSize:18]];
     [label setText:@"Date & Time"];
-    [label setBackgroundColor:[UIColor blueColor]];
+    [label setBackgroundColor:[UIColor clearColor]];
     [view addSubview:label];
     
     /* Create Pin Count Label */
-    UILabel *countLbl = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(tableView.frame) - 110, 0, 100, 18)];
+    UILabel *countLbl = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(tableView.frame) - 110, 4.5, 100, 18)];
     [countLbl setFont:[UIFont boldSystemFontOfSize:18]];
     [countLbl setText:@"Pin Count"];
-    [countLbl setBackgroundColor:[UIColor greenColor]];
+    [countLbl setBackgroundColor:[UIColor clearColor]];
     [countLbl setTextAlignment:NSTextAlignmentRight];
     [view addSubview:countLbl];
     
-    [view setBackgroundColor:[UIColor colorWithRed:166/255.0 green:177/255.0 blue:186/255.0 alpha:1.0]];
+    [view setBackgroundColor:[UIColor lightGrayColor]]; //[UIColor colorWithRed:166/255.0 green:177/255.0 blue:186/255.0 alpha:1.0]];
     
     return view;
 }

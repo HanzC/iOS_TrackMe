@@ -10,7 +10,7 @@
 #import <QuartzCore/QuartzCore.h>
 #import "MapViewController.h"
 
-@interface FirstViewController ()
+@interface FirstViewController () <UIGestureRecognizerDelegate>
 
 @property (strong, nonatomic) NSTimer *viewRefreshTimer;
 @property (strong, nonatomic) MapViewController *mapController;
@@ -55,16 +55,54 @@ CLLocationDegrees maxLongitude = -180.0;
 //    [self.tripStartStopButton.layer setCornerRadius:4.0];
 //    [self setNeedsStatusBarAppearanceUpdate];
     
-    _mapController = [self.storyboard instantiateViewControllerWithIdentifier:@"MapView"];
-    _mapController.mapView.showsUserLocation = YES;
+//    _mapController = [self.storyboard instantiateViewControllerWithIdentifier:@"MapView"];
+//    _mapController.mapView.showsUserLocation = YES;
     
     _mapView.showsUserLocation = YES;
     _mapView.delegate = self;
+    self.mapView.userTrackingMode = MKUserTrackingModeFollowWithHeading;
+    
     
     self.nextRegionChangeIsFromUserInteraction = YES;
     countLoc = 0;
     [GLManager sharedManager].countLoc = 0;
+    
+    // Map drag handler
+    UIPanGestureRecognizer *panRec = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(didDragMap:)];
+    [panRec setDelegate:self];
+    [self.mapView addGestureRecognizer:panRec];
 }
+
+
+#pragma mark - Gesture Recognizer Delegate
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer
+{
+    return YES;
+}
+
+- (void)didDragMap:(UIGestureRecognizer*)gestureRecognizer
+{
+    if (gestureRecognizer.state == UIGestureRecognizerStateBegan)
+    {
+        //NSLog(@"Map drag begin");
+        self.mapView.userTrackingMode = MKUserTrackingModeNone;
+    }
+    if (gestureRecognizer.state == UIGestureRecognizerStateEnded)
+    {
+        MKCoordinateRegion region;
+        MKCoordinateSpan span;
+        span.latitudeDelta = 0.005;
+        span.longitudeDelta = 0.005;
+        CLLocationCoordinate2D location;
+        location.latitude = self.mapView.userLocation.coordinate.latitude;
+        location.longitude = self.mapView.userLocation.coordinate.longitude;
+        region.span = span;
+        region.center = location;
+        [self.mapView setRegion:region animated:YES];
+        self.mapView.userTrackingMode = MKUserTrackingModeFollowWithHeading;
+    }
+}
+
 
 - (UIStatusBarStyle)preferredStatusBarStyle {
     return UIStatusBarStyleLightContent;
@@ -185,7 +223,7 @@ CLLocationDegrees maxLongitude = -180.0;
 #pragma mark - MapView Delegates
 - (void)mapView:(MKMapView *)aMapView didUpdateUserLocation:(MKUserLocation *)aUserLocation
 {
-    MKCoordinateRegion region;
+//    MKCoordinateRegion region;
 //    MKCoordinateSpan span;
 //    span.latitudeDelta = 0.5;
 //    span.longitudeDelta = 0.5;
@@ -208,10 +246,10 @@ CLLocationDegrees maxLongitude = -180.0;
 //    region = MKCoordinateRegionMakeWithDistance(self.mapView.userLocation.coordinate, 10.0f, 10.0f);
 //    [self.mapView setRegion:region animated:YES];
     
-    [self.mapView showAnnotations:self.mapView.annotations animated:YES];
-    MKMapRect rect = [self.mapView visibleMapRect];
-    UIEdgeInsets insets = UIEdgeInsetsMake(0, 0, 0, 0);
-    [self.mapView setVisibleMapRect:rect edgePadding:insets animated:YES];
+//    [self.mapView showAnnotations:self.mapView.annotations animated:YES];
+//    MKMapRect rect = [self.mapView visibleMapRect];
+//    UIEdgeInsets insets = UIEdgeInsetsMake(0, 0, 0, 0);
+//    [self.mapView setVisibleMapRect:rect edgePadding:insets animated:YES];
 }
 
 - (void)mapView:(MKMapView *)mapView regionWillChangeAnimated:(BOOL)animated
@@ -327,6 +365,7 @@ CLLocationDegrees maxLongitude = -180.0;
     
     NSLog(@" *** FirstViewController > refreshView > LastLoc:      %@", [GLManager sharedManager].lastLocation);
     NSLog(@" *** FirstViewController > refreshView > LastLoc 2:    %f", [GLManager sharedManager].lastLocation.coordinate.latitude);
+    NSLog(@" *** FirstViewController > refreshView > Speed:        %f", [GLManager sharedManager].lastLocation.speed);
     
     NSString *stringLoc = [NSString stringWithFormat:@"%.06f", [GLManager sharedManager].lastLocation.coordinate.latitude];
     if (![stringLoc isEqualToString:tmpLabel])
@@ -348,6 +387,7 @@ CLLocationDegrees maxLongitude = -180.0;
             NSLog(@" *** FirstViewController > Speed:       %f", [GLManager sharedManager].lastLocation.speed);
             
             //if (distance/1000 > 90 || countLoc == 1)
+            if ([GLManager sharedManager].lastLocation.speed > 1.0 || countLoc == 1)
             {
                 NSLog(@" *** Distance: %f", distance/1000);
         
@@ -369,7 +409,6 @@ CLLocationDegrees maxLongitude = -180.0;
                 
 //                [_mapController.mapView setVisibleMapRect:[self.polyLine boundingMapRect]];
                 [_mapController.mapView addOverlay:self.polyLine];
-                //self.mapView.userTrackingMode = MKUserTrackingModeFollowWithHeading;
             }
         }
     }
