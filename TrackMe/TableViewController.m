@@ -10,6 +10,10 @@
 #import "Location+CoreDataClass.h"
 #import <QuartzCore/QuartzCore.h>
 
+#import <AddressBookUI/AddressBookUI.h>
+#import <CoreLocation/CLGeocoder.h>
+#import <CoreLocation/CLPlacemark.h>
+
 @interface TableViewController () <UITableViewDataSource, UITableViewDelegate, UIGestureRecognizerDelegate>
 
 @property (weak, nonatomic) IBOutlet UIView *popUpView;
@@ -31,6 +35,8 @@ NSString *city;
 NSString *state;
 NSString *posCode;
 NSString *country;
+UILabel *annotLbl;
+BOOL isFinished;
 
 - (void)viewDidLoad
 {
@@ -128,8 +134,8 @@ NSString *country;
 - (void)mapView:(MKMapView *)mv didAddAnnotationViews:(NSArray *)views
 {
     [self.mapView showAnnotations:self.mapView.annotations animated:YES];
-    MKMapRect rect = [self.mapView visibleMapRect];
-    UIEdgeInsets insets = UIEdgeInsetsMake(0, 0, 0, 0);
+    //MKMapRect rect = [self.mapView visibleMapRect];
+    //UIEdgeInsets insets = UIEdgeInsetsMake(0, 0, 0, 0);
     //[self.mapView setVisibleMapRect:rect edgePadding:insets animated:YES];
 }
 
@@ -173,6 +179,8 @@ NSString *country;
     }
     return nil;
     */
+    
+    NSLog(@" *** viewForAnnotation > annot: %f", annotation.coordinate.latitude);
 
     ///*
     static NSString *AnnotationIdentifier = @"Annotation";
@@ -180,54 +188,115 @@ NSString *country;
         return nil;
 
     pinAnnotationView = (MKPinAnnotationView *)[mapView dequeueReusableAnnotationViewWithIdentifier:AnnotationIdentifier];
-
     if (!pinAnnotationView)
     {
         pinAnnotationView = [[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:AnnotationIdentifier] ;
         pinAnnotationView.canShowCallout = YES;
         pinAnnotationView.calloutOffset = CGPointMake(-7, 0);
         //pinAnnotationView.rightCalloutAccessoryView = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
-        NSLog(@" *** viewForAnnotation > Pin: %f", pinAnnotationView.annotation.coordinate.latitude);
+        
+        NSLog(@" *** viewForAnnotation > Pin > Lat: %f, Lon: %f", pinAnnotationView.annotation.coordinate.latitude, pinAnnotationView.annotation.coordinate.longitude);
         NSLog(@" *** viewForAnnotation > Title: %@", pinAnnotationView.annotation.title);
+        NSLog(@"*\n\n\n*");
     }
-
     return pinAnnotationView;
     //*/
 }
 
 //- (void)mapView:(MKMapView *)mapView annotationView:(MKAnnotationView *)view calloutAccessoryControlTapped:(UIControl *)control
 //{
-//    NSLog(@" *** calloutAccessoryControlTapped > Annot Selected: %f", view.annotation.coordinate.latitude);
+//    NSLog(@" *** calloutAccessoryControlTapped > Annot Selected > Lat: %f, Lon: %f", view.annotation.coordinate.latitude, view.annotation.coordinate.longitude);
 //}
 
-//- (void)mapView:(MKMapView *)mapView didSelectAnnotationView:(MKAnnotationView *)view
-//{
-//    //NSLog(@" *** Annot Title:    %@", view.annotation.title);
+- (void)mapView:(MKMapView *)mapView didSelectAnnotationView:(MKAnnotationView *)view
+{
+    //NSLog(@" *** Annot Title:    %@", view.annotation.title);
+
+    self.mapView.centerCoordinate = view.annotation.coordinate;
+    NSLog(@" *** Annot Selected Lat, Long: %f, %f", view.annotation.coordinate.latitude, view.annotation.coordinate.longitude);
+    NSLog(@" *** Annot Selected Title:     %@", view.annotation.title);
+    
+    //1. Location from latitude and longitude
+    CLLocation *location = [[CLLocation alloc] initWithLatitude:view.annotation.coordinate.latitude longitude:view.annotation.coordinate.longitude];
+    
+    //=====
+//    pinAnnotationView = [[MKPinAnnotationView alloc] initWithAnnotation:view.annotation reuseIdentifier:@"Annotation"];
+//    pinAnnotationView.annotation = view.annotation;
 //
-//    self.mapView.centerCoordinate = view.annotation.coordinate;
-//    NSLog(@" *** Annot Selected Lat, Long: %f, %f", view.annotation.coordinate.latitude, view.annotation.coordinate.longitude);
-//    NSLog(@" *** Annot Selected Title:     %@", view.annotation.title);
-//
-//    //1. Location from latitude and longitude
-//    CLLocation *location = [[CLLocation alloc] initWithLatitude:view.annotation.coordinate.latitude longitude:view.annotation.coordinate.longitude];
-//
-//    //2. After we have current coordinates, we use this method to fetch the information data of fetched coordinate
-//    [geocoder reverseGeocodeLocation:location completionHandler:^(NSArray *placemarks, NSError *error)
+//    CLLocationCoordinate2D coordinates = CLLocationCoordinate2DMake( view.annotation.coordinate.latitude, view.annotation.coordinate.longitude);
+//    annotPoint = [[MKPointAnnotation alloc] init]; //[[MKPointAnnotation alloc] initWithCoordinate:coordinates];
+//    annotPoint.coordinate = coordinates;
+//    annotPoint.title = @"HERE";
+    //=====
+
+    //2. After we have current coordinates, we use this method to fetch the information data of fetched coordinate
+    [self reverseGeocode:location];
+    
+//    NSLog(@" *** AnnotPoint Title:          %f, %f", annotPoint.coordinate.latitude, annotPoint.coordinate.longitude);
+    NSLog(@" *** viewForAnnotation > Title: %@", pinAnnotationView.annotation.title);
+    
+//    for (int x = 0; x < mapView.annotations.count; x++)
 //    {
-//        CLPlacemark *placemark = [placemarks lastObject];
-//
-//        street = placemark.thoroughfare;
-//        city = placemark.locality;
-//        state = placemark.administrativeArea;
-//        posCode = placemark.postalCode;
-//        country = placemark.country;
-//        NSLog(@" *** Street: %@", state);
-//        //annotPoint.title = [NSString stringWithFormat:@"%@, %@", street, city];
-//        //annotPoint.subtitle = [NSString stringWithFormat:@"%@", country];
-//        NSLog(@"\n\n");
-//    }];
-//}
+//        NSLog(@" *** Map Annots: %@", [NSString stringWithFormat:@"%f, %f", [mapView.annotations objectAtIndex:x].coordinate.latitude, [mapView.annotations objectAtIndex:x].coordinate.longitude]);
+//        if ([view.annotation.title isEqualToString:[NSString stringWithFormat:@"%f, %f", [mapView.annotations objectAtIndex:x].coordinate.latitude, [mapView.annotations objectAtIndex:x].coordinate.longitude]])
+//        {
+//            annotPoint.subtitle = [NSString stringWithFormat:@"%@, %@", street, state];
+//            break;
+//        }
+//    }
+    
+    
+    NSLog(@"\n\n");
+}
 
+- (void)mapView:(MKMapView *)mapView didDeselectAnnotationView:(nonnull MKAnnotationView *)view
+{
+    [annotLbl removeFromSuperview];
+    // clear lastSelectedAnnotationView reference
+    //pinAnnotationView = nil;
+}
+
+- (void)reverseGeocode:(CLLocation *)location
+{
+    //geocoder = [[CLGeocoder alloc] init];
+    [geocoder reverseGeocodeLocation:location completionHandler:^(NSArray *placemarks, NSError *error) {
+        NSLog(@"Finding address");
+        if (error)
+        {
+            NSLog(@"Error %@", error.description);
+        }
+        else
+        {
+            CLPlacemark *placemark = [placemarks lastObject];
+            street = placemark.thoroughfare;
+            city = placemark.locality;
+            state = placemark.administrativeArea;
+            posCode = placemark.postalCode;
+            country = placemark.country;
+            NSLog(@" *** Street: %@", street);
+            //annotPoint.title = [NSString stringWithFormat:@"%@, %@", street, city];
+            //annotPoint.subtitle = [NSString stringWithFormat:@"%@", country];
+            
+            //annotPoint = [[MKPointAnnotation alloc] initWithCoordinate:location.coordinate title:[NSString stringWithFormat:@"%@", street] subtitle:[NSString stringWithFormat:@"%@", city]];
+            //annotPoint.subtitle = [NSString stringWithFormat:@"%@", city];
+            //[annotPoint setTitle:@"HERE"];
+            NSLog(@" *** AnnotPoint Coords: %f, %f", annotPoint.coordinate.latitude, annotPoint.coordinate.longitude);
+            NSLog(@" *** AnnotPoint Texts:  %@, %@", annotPoint.title, annotPoint.subtitle);
+            NSLog(@"\n\n");
+            
+            //====
+//            annotLbl = [[UILabel alloc] init];
+//            annotLbl.textColor = [UIColor blackColor];
+//            [annotLbl setFrame:CGRectMake(10, 10, 50, 50)];
+//            annotLbl.backgroundColor = [UIColor greenColor];
+//            annotLbl.textColor = [UIColor blackColor];
+//            annotLbl.userInteractionEnabled = NO;
+//            annotLbl.text= @"TEST";
+//            annotLbl.font = [UIFont fontWithName:@"Avenir-Light" size:10];
+            //====
+        }
+    }];
+}
 
 #pragma mark - Core Data
 - (NSManagedObjectContext *)managedObjectContext
@@ -436,6 +505,8 @@ NSString *country;
     __block NSString *firstLocLong;
     
     NSLog(@"*** Start ***");
+    NSMutableArray *coordsAry = [[NSMutableArray alloc] init];
+    isFinished = NO;
     [UIView animateWithDuration:0.25 animations:^{
             //self.view.alpha = self.view.alpha==1?0:1;
         NSLog(@"*** IN Progress ***");
@@ -452,7 +523,7 @@ NSString *country;
             NSLog(@" *** Fetched Loc Time:   %@", [product valueForKey:@"timestamp"]);
             NSLog(@" *** Fetched Loc Lat:    %@", [product valueForKey:@"latitude"]);
             NSLog(@" *** Fetched Loc Long:   %@", [product valueForKey:@"longitude"]);
-            NSLog(@"*\n\n\n*");
+//            NSLog(@"*\n\n\n*");
             
             annotPoint = [[MKPointAnnotation alloc] init];
             
@@ -462,27 +533,18 @@ NSString *country;
             
             // Add Annotation
             annotPoint.coordinate = coordinates;
-            annotPoint.title = [NSString stringWithFormat:@"%f", coordinates.latitude];//[NSString stringWithFormat:@"%@", street];
+//            annotPoint.title = [NSString stringWithFormat:@"%f, %f", coordinates.latitude, coordinates.longitude];//[NSString stringWithFormat:@"%@", street];
 //            annotPoint.subtitle = [NSString stringWithFormat:@"%f", coordinates.longitude];
-            [self.mapView addAnnotation:annotPoint];
+            //[self.mapView addAnnotation:annotPoint];
 //            [self callReverseGeocode:annotPoint];
-            //[coordsAry addObject:annotPoint];
+            [coordsAry addObject:annotPoint];
             
             // Add Overlay
             CLLocationCoordinate2D location[2];
-//            if (location[0].latitude == 0)
-//                location[0] = CLLocationCoordinate2DMake([latString doubleValue], [longString doubleValue]);
-//            else
-//                location[0] = CLLocationCoordinate2DMake([firstLocLat doubleValue], [firstLocLong doubleValue]);
-//            location[1] = CLLocationCoordinate2DMake([latString doubleValue], [longString doubleValue]);
             if (location[0].latitude == 0 || firstLocLat.length == 0)
-            {
                 location[0] = CLLocationCoordinate2DMake([latString doubleValue], [longString doubleValue]);
-            }
             else
-            {
                 location[0] = CLLocationCoordinate2DMake([firstLocLat doubleValue], [firstLocLong doubleValue]);
-            }
             location[1] = CLLocationCoordinate2DMake([latString doubleValue], [longString doubleValue]);
             
             self.polyLine = [MKPolyline polylineWithCoordinates:location count:2];
@@ -493,12 +555,39 @@ NSString *country;
             firstLocLong = [NSString stringWithFormat:@"%.06f", [longString doubleValue]];
         }
         NSLog(@"*** Finish ***");
+        
+        //=======
+        [self.mapView addAnnotations:coordsAry];
+        for (MKPointAnnotation *point in coordsAry)
+        {
+            NSLog(@" *** coordsAry: %f, %f", point.coordinate.latitude, point.coordinate.longitude);
+            
+            CLGeocoder *geocoder2 = [[CLGeocoder alloc] init];
+            [[NSOperationQueue new] addOperationWithBlock:^{
+                [geocoder2 reverseGeocodeLocation:[[CLLocation alloc] initWithLatitude:point.coordinate.latitude longitude:point.coordinate.longitude] completionHandler:^(NSArray *placemarks, NSError *error) {
+                    if (error)
+                    {
+                        NSLog(@"Geocode failed with error: %@", error);
+                        return;
+                    }
+                    CLPlacemark *myPlacemark = [placemarks objectAtIndex:0];
+                    //CLPlacemark *placemark = [placemarks lastObject];
+                    NSString *city = myPlacemark.locality;
+                    NSLog(@" *** callReverseGeocode > Street: %@", city);
+                    annotPoint.title = [NSString stringWithFormat:@"%@", city];
+                    //[self.mapView addAnnotation:point];
+                }];
+            }];
+        }
+        //=======
+        
     }];
 }
 
 - (void)callReverseGeocode:(MKPointAnnotation *)view
 {
     NSLog(@"*** callReverseGeocode 1 ***");
+    isFinished = YES;
     //1. Location from latitude and longitude
     CLLocation *location = [[CLLocation alloc] initWithLatitude:view.coordinate.latitude longitude:view.coordinate.longitude];
 
@@ -514,7 +603,8 @@ NSString *country;
             state = placemark.administrativeArea;
             posCode = placemark.postalCode;
             country = placemark.country;
-            NSLog(@" *** callReverseGeocode > Street: %@", street);
+            NSLog(@" *** callReverseGeocode > Street: %@", city);
+            isFinished = NO;
         }
         else
         {

@@ -198,6 +198,10 @@ const double MPH_to_METERSPERSECOND = 0.447;
 
 
 - (void)sendQueueNow {
+    
+//    if (self.trackingEnabled == NO)
+//        return;
+    
     NSMutableSet *syncedUpdates = [NSMutableSet set];
     NSMutableArray *locationUpdates = [NSMutableArray array];
     self.transferLocationUpdates = [NSMutableArray array];
@@ -216,6 +220,13 @@ const double MPH_to_METERSPERSECOND = 0.447;
     {
         [accessor enumerateKeysAndObjectsUsingBlock:^(NSString *key, NSDictionary *object)
         {
+            if (self.trackingEnabled == NO)
+            {
+                [syncedUpdates removeAllObjects];
+                [locationUpdates removeAllObjects];
+            }
+                
+            
             if(key && object)
             {
                 [syncedUpdates addObject:key];
@@ -234,6 +245,13 @@ const double MPH_to_METERSPERSECOND = 0.447;
         [accessor countObjectsUsingBlock:^(long num)
         {
             _numInQueue = num;
+            
+            if (self.trackingEnabled == NO)
+            {
+                _numInQueue = 0;
+                [syncedUpdates removeAllObjects];
+                [locationUpdates removeAllObjects];
+            }
         }];
     }];
     NSLog(@" *** LocationUpdates: %@", locationUpdates);
@@ -1101,12 +1119,15 @@ const double MPH_to_METERSPERSECOND = 0.447;
 }
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations {
+    if (self.trackingEnabled == NO)
+        return;
+    
     [[NSNotificationCenter defaultCenter] postNotificationName:GLNewDataNotification object:self];
     
-    NSLog(@"*\n\n");
+    //NSLog(@"*\n\n");
     CLLocation *location = (CLLocation *)[locations objectAtIndex:0];
-    NSLog(@" *** GLManager > didUpdateLocations > StartLoc  > Lat: %f, Long: %f", location.coordinate.latitude, location.coordinate.longitude);
-    NSLog(@" *** GLManager > didUpdateLocations > LastLoc   > Lat: %@, Long: %@", latString2, longString2);
+    //NSLog(@" *** GLManager > didUpdateLocations > StartLoc  > Lat: %f, Long: %f", location.coordinate.latitude, location.coordinate.longitude);
+    //NSLog(@" *** GLManager > didUpdateLocations > LastLoc   > Lat: %@, Long: %@", latString2, longString2);
     //NSLog(@"*\n\n*");
     
     // === Get Distance between Coordinates ===
@@ -1116,16 +1137,13 @@ const double MPH_to_METERSPERSECOND = 0.447;
         CLLocation *startLocation = [[CLLocation alloc] initWithLatitude:location.coordinate.latitude longitude:location.coordinate.longitude];
         CLLocation *endLocation = [[CLLocation alloc] initWithLatitude:[latString2 doubleValue] longitude:[longString2 doubleValue]];
         CLLocationDistance distance = [startLocation distanceFromLocation:endLocation]; // aka double
-        NSLog(@" *** GLManager > didUpdateLocations > Distance:    %.02f Km", distance/1000); // 1m = 3.28ft, Set to 100m
+        //NSLog(@" *** GLManager > didUpdateLocations > Distance:    %.02f Km", distance/1000); // 1m = 3.28ft, Set to 100m
         
         //if (distance/1000 > 90 || _countLoc == 1)
         if (location.speed > 1.0 || _countLoc == 1)
         {
             NSLog(@" *** Distance: %f", distance/1000);
             
-        
-    
-    
             self.lastLocation = (CLLocation *)locations[locations.count-1];
 
             // If a wifi override is configured, create a fake CLLocation object based on the location in the wifi mapping
@@ -1204,7 +1222,7 @@ const double MPH_to_METERSPERSECOND = 0.447;
         }
     }
     
-    NSLog(@"*\n\n*");
+    //NSLog(@"*\n\n*");
     latString2 = [NSString stringWithFormat:@"%.06f", self.lastLocation.coordinate.latitude];
     longString2 = [NSString stringWithFormat:@"%.06f", self.lastLocation.coordinate.longitude];
 }
